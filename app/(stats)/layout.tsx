@@ -1,4 +1,5 @@
 import Nav from '../components/layout/NavBar';
+import Header from '../components/layout/Header';
 
 export default function DashboardLayout({
   children,
@@ -9,7 +10,10 @@ export default function DashboardLayout({
     <section>
       {/* Include shared UI here e.g. nav, stats header, and tabs */}
       <Nav />
-      {children}
+      <div className="px-10">
+        <Header text="Vertex Stats" />
+        {children}
+      </div>
     </section>
   );
 }
