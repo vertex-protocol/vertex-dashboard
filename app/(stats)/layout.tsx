@@ -1,3 +1,5 @@
+import Nav from '../components/layout/NavBar';
+
 export default function DashboardLayout({
   children,
 }: {
@@ -6,8 +8,7 @@ export default function DashboardLayout({
   return (
     <section>
       {/* Include shared UI here e.g. nav, stats header, and tabs */}
-      <nav className="text-white">nav</nav>
-
+      <Nav />
       {children}
     </section>
   );
