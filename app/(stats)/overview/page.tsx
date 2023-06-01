@@ -1,7 +1,7 @@
-export default function Home() {
+export default function Overview() {
   return (
     <main className="text-white">
-      <p>Vertex Dashboard</p>
+      <p>Overview</p>
     </main>
   );
 }

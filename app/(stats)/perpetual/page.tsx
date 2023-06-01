@@ -1,7 +1,7 @@
-export default function Home() {
+export default function Perps() {
   return (
     <main className="text-white">
-      <p>Vertex Dashboard</p>
+      <p>Perps</p>
     </main>
   );
 }
