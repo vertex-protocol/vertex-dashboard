@@ -1,6 +1,8 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
+
 import Nav from '../components/layout/NavBar';
 import Header from '../components/layout/Header';
 import { Tabs, TabsList, TabsTrigger } from '../components/ui/Tabs';
@@ -11,9 +13,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
+  const [active, setActive] = useState(pathname);
 
   const handleTabChange = (value: string) => {
-    router.push(`/${value}`);
+    setActive(value);
+    router.push(`${value}`);
   };
 
   return (
@@ -21,12 +26,12 @@ export default function DashboardLayout({
       <Nav />
       <div className="px-10">
         <Header text="Vertex Stats" />
-        <Tabs defaultValue="overview" onValueChange={handleTabChange}>
+        <Tabs value={active} onValueChange={handleTabChange}>
           <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="perpetual">Perpetual</TabsTrigger>
-            <TabsTrigger value="spot">Spot</TabsTrigger>
-            <TabsTrigger value="money-market">Market</TabsTrigger>
+            <TabsTrigger value="/overview">Overview</TabsTrigger>
+            <TabsTrigger value="/perpetual">Perpetual</TabsTrigger>
+            <TabsTrigger value="/spot">Spot</TabsTrigger>
+            <TabsTrigger value="/money-market">Money Market</TabsTrigger>
           </TabsList>
         </Tabs>
         {children}
