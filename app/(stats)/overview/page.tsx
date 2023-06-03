@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import Card from '@/app/components/main/Card';
-import { Tabs, TabsList, TabsTrigger } from '../../components/ui/IntervalTabs';
+import Card from '../../components/main/Card';
+import IntervalTab from '../../components/main/IntervalTab';
 
 export default function Overview() {
   const [active, setActive] = useState('7');
@@ -16,13 +16,7 @@ export default function Overview() {
         <Card title="Fees (24h)" stat={2.21} daily={14.08} />
       </div>
       <div className="flex justify-end">
-        <Tabs value={active} onValueChange={(value) => setActive(value)}>
-          <TabsList>
-            <TabsTrigger value="7">7D</TabsTrigger>
-            <TabsTrigger value="30">30D</TabsTrigger>
-            <TabsTrigger value="90">90D</TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <IntervalTab active={active} setActive={setActive} />
       </div>
     </>
   );
