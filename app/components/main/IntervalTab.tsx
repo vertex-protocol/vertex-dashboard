@@ -8,7 +8,7 @@ interface IntervalProps {
   setActive: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function Card({ active, setActive }: IntervalProps) {
+export default function IntervalTab({ active, setActive }: IntervalProps) {
   return (
     <Tabs value={active} onValueChange={(value) => setActive(value)}>
       <TabsList>
