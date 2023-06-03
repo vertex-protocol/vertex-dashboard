@@ -3,8 +3,8 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import Nav from '../components/layout/NavBar';
-import Header from '../components/layout/Header';
+import Nav from '../components/main/NavBar';
+import Header from '../components/main/Header';
 import { Tabs, TabsList, TabsTrigger } from '../components/ui/Tabs';
 
 export default function DashboardLayout({
