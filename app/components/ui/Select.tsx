@@ -50,7 +50,7 @@ const SelectItem = React.forwardRef<
     className="py-2 px-3 m-1 focus:outline-none bg-transparent hover:bg-purple hover:text-white rounded"
     {...props}
   >
-    <span className="absolute right-2 mt-0.5 flex items-center justify-center">
+    <span className="absolute right-2.5 mt-0.5 flex items-center justify-center">
       <SelectPrimitive.ItemIndicator>
         <CheckIcon className="h-4 w-4" />
       </SelectPrimitive.ItemIndicator>

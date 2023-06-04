@@ -5,6 +5,7 @@ import Card from '../../components/main/Card';
 import IntervalTab from '../../components/main/IntervalTab';
 import FourGridLayout from '../../components/layout/FourGridLayout';
 import MktDropdown from '../../components/main/MktDropdown';
+import ControlsLayout from '../../components/layout/ControlsLayout';
 
 export default function Perps() {
   const [active, setActive] = useState('7');
@@ -18,10 +19,10 @@ export default function Perps() {
         <Card title="Total Open Interest" stat={1023} daily={14.08} />
         <Card title="Perpetual Trades (24h)" stat={2.21} daily={14.08} />
       </FourGridLayout>
-      <div className="flex justify-between">
+      <ControlsLayout justify="between">
         <MktDropdown market={market} setMarket={setMarket} />
         <IntervalTab active={active} setActive={setActive} />
-      </div>
+      </ControlsLayout>
     </>
   );
 }

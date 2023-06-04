@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Card from '../../components/main/Card';
 import IntervalTab from '../../components/main/IntervalTab';
 import FourGridLayout from '../../components/layout/FourGridLayout';
+import ControlsLayout from '@/app/components/layout/ControlsLayout';
 
 export default function Overview() {
   const [active, setActive] = useState('7');
@@ -16,9 +17,9 @@ export default function Overview() {
         <Card title="Users (24h)" stat={1023} daily={14.08} />
         <Card title="Fees (24h)" stat={2.21} daily={14.08} />
       </FourGridLayout>
-      <div className="flex justify-end">
+      <ControlsLayout justify="end">
         <IntervalTab active={active} setActive={setActive} />
-      </div>
+      </ControlsLayout>
     </>
   );
 }
