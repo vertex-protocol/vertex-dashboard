@@ -6,10 +6,11 @@ import IntervalTab from '../../components/main/IntervalTab';
 import ThreeGridLayout from '../../components/layout/ThreeGridLayout';
 import ControlsLayout from '../../components/layout/ControlsLayout';
 import MktDropdown from '../../components/main/MktDropdown';
+import { SpotValues } from './SpotValues';
 
 export default function Spot() {
   const [active, setActive] = useState('7');
-  const [market, setMarket] = useState('all-perp');
+  const [market, setMarket] = useState('all-spot');
 
   return (
     <>
@@ -19,7 +20,11 @@ export default function Spot() {
         <Card title="Spot Trades (24h)" stat={1023} daily={14.08} />
       </ThreeGridLayout>
       <ControlsLayout justify="between">
-        <MktDropdown market={market} setMarket={setMarket} />
+        <MktDropdown
+          market={market}
+          setMarket={setMarket}
+          values={SpotValues}
+        />
         <IntervalTab active={active} setActive={setActive} />
       </ControlsLayout>
     </>

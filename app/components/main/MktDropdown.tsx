@@ -7,14 +7,17 @@ import {
   SelectItem,
 } from '@/app/components/ui/Select';
 
-//TODO: Make it compatible w/ spot and mm
-
 interface IntervalProps {
   market: string;
   setMarket: React.Dispatch<React.SetStateAction<string>>;
+  values: { value: string; label: string }[];
 }
 
-export default function MarketDropdown({ market, setMarket }: IntervalProps) {
+export default function MarketDropdown({
+  market,
+  setMarket,
+  values,
+}: IntervalProps) {
   return (
     <Select defaultValue={market} onValueChange={(value) => setMarket(value)}>
       <SelectTrigger>
@@ -25,9 +28,11 @@ export default function MarketDropdown({ market, setMarket }: IntervalProps) {
         </div>
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="all-perp">All Perp Markets</SelectItem>
-        <SelectItem value="btc-perp">BTC-Perp</SelectItem>
-        <SelectItem value="eth-perp">ETH-Perp</SelectItem>
+        {values.map((item) => (
+          <SelectItem key={item.value} value={item.value}>
+            {item.label}
+          </SelectItem>
+        ))}
       </SelectContent>
     </Select>
   );
