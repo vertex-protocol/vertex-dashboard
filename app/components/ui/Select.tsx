@@ -47,7 +47,7 @@ const SelectItem = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Item
     ref={ref}
-    className="py-2 px-3 focus:outline-none hover:bg-purple hover:text-white rounded"
+    className="py-2 px-3 m-1 focus:outline-none bg-transparent hover:bg-purple hover:text-white rounded"
     {...props}
   >
     <span className="absolute right-2 mt-0.5 flex items-center justify-center">
