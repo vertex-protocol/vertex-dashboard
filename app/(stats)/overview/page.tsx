@@ -26,19 +26,31 @@ export default function Overview() {
       </ControlsLayout>
       <ChartsLayout>
         <ChartContainer>
-          <ChartHeader title="Trading Volume" />
+          <ChartHeader
+            title="Trading Volume"
+            text="The daily vs cumulative trading volume on Vertex."
+          />
           <LineBarChart />
         </ChartContainer>
         <ChartContainer>
-          <ChartHeader title="Users" />
+          <ChartHeader
+            title="Users"
+            text="The daily vs cumulative users on Vertex."
+          />
           <LineBarChart />
         </ChartContainer>
         <ChartContainer>
-          <ChartHeader title="Fees" />
+          <ChartHeader
+            title="Fees"
+            text="The daily vs cumulative fees on Vertex."
+          />
           <LineBarChart />
         </ChartContainer>
         <ChartContainer>
-          <ChartHeader title="Liquadations" />
+          <ChartHeader
+            title="Liquadations"
+            text="The daily vs cumulative liquidations on Vertex."
+          />
           <LineBarChart />
         </ChartContainer>
       </ChartsLayout>
