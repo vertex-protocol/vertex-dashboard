@@ -4,7 +4,8 @@ import { useState } from 'react';
 import Card from '../../components/main/Card';
 import IntervalTab from '../../components/main/IntervalTab';
 import FourGridLayout from '../../components/layout/FourGridLayout';
-import ControlsLayout from '@/app/components/layout/ControlsLayout';
+import ControlsLayout from '../../components/layout/ControlsLayout';
+import ChartsLayout from '../../components/layout/ChartsLayout';
 
 export default function Overview() {
   const [active, setActive] = useState('7');
@@ -20,6 +21,10 @@ export default function Overview() {
       <ControlsLayout justify="end">
         <IntervalTab active={active} setActive={setActive} />
       </ControlsLayout>
+      <ChartsLayout>
+        <div className="bg-gray-3 border border-gray-2 rounded">Chart</div>
+        <div className="bg-gray-3 border border-gray-2 rounded">Chart</div>
+      </ChartsLayout>
     </>
   );
 }
