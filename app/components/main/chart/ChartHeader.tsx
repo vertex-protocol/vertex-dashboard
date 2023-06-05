@@ -1,11 +1,14 @@
 interface ChartHeaderComponent {
-  text: string;
+  title: string;
 }
 
-export default function ChartHeader({ text }: ChartHeaderComponent) {
+export default function ChartHeader({ title }: ChartHeaderComponent) {
   return (
-    <div className="flex text-gray-1 px-3 py-2">
-      <p>{text}</p>
+    <div className=" text-white px-3 pb-4">
+      <p className="font-medium">{title}</p>
+      <p className="text-gray-1 text-sm mt-1">
+        The daily vs cumulative trading volume on Vertex.
+      </p>
     </div>
   );
 }

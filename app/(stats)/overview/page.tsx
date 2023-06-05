@@ -8,6 +8,7 @@ import ControlsLayout from '../../components/layout/ControlsLayout';
 import ChartsLayout from '../../components/layout/ChartsLayout';
 import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
+import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
 
 export default function Overview() {
   const [active, setActive] = useState('7');
@@ -25,10 +26,20 @@ export default function Overview() {
       </ControlsLayout>
       <ChartsLayout>
         <ChartContainer>
-          <ChartHeader text="Trading Volume" />
+          <ChartHeader title="Trading Volume" />
+          <LineBarChart />
         </ChartContainer>
         <ChartContainer>
-          <ChartHeader text="Users" />
+          <ChartHeader title="Users" />
+          <LineBarChart />
+        </ChartContainer>
+        <ChartContainer>
+          <ChartHeader title="Fees" />
+          <LineBarChart />
+        </ChartContainer>
+        <ChartContainer>
+          <ChartHeader title="Liquadations" />
+          <LineBarChart />
         </ChartContainer>
       </ChartsLayout>
     </>

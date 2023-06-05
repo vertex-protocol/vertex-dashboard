@@ -4,7 +4,7 @@ export default function ChartContainer({
   children: React.ReactNode;
 }) {
   return (
-    <section className="bg-gray-3 border border-gray-2 rounded h-96">
+    <section className="bg-gray-3 border border-gray-2 rounded pt-4 pb-3 px-2">
       {children}
     </section>
   );
