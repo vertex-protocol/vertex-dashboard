@@ -1,4 +1,4 @@
-export default function FourGridLayout({
+export default function ThreeGridLayout({
   children,
 }: {
   children: React.ReactNode;
