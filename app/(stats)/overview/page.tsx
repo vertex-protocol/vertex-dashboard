@@ -6,6 +6,8 @@ import IntervalTab from '../../components/main/IntervalTab';
 import FourGridLayout from '../../components/layout/FourGridLayout';
 import ControlsLayout from '../../components/layout/ControlsLayout';
 import ChartsLayout from '../../components/layout/ChartsLayout';
+import ChartContainer from '@/app/components/main/chart/ChartContainer';
+import ChartHeader from '@/app/components/main/chart/ChartHeader';
 
 export default function Overview() {
   const [active, setActive] = useState('7');
@@ -22,8 +24,12 @@ export default function Overview() {
         <IntervalTab active={active} setActive={setActive} />
       </ControlsLayout>
       <ChartsLayout>
-        <div className="bg-gray-3 border border-gray-2 rounded">Chart</div>
-        <div className="bg-gray-3 border border-gray-2 rounded">Chart</div>
+        <ChartContainer>
+          <ChartHeader text="Trading Volume" />
+        </ChartContainer>
+        <ChartContainer>
+          <ChartHeader text="Users" />
+        </ChartContainer>
       </ChartsLayout>
     </>
   );
