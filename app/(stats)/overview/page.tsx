@@ -9,8 +9,13 @@ import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
 import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
 import { IntervalProps } from '@/app/types/IntervalProps';
+import { useAppSelector } from '@/app/redux/store';
+import { queryTime } from '@/app/hooks/queryTime';
 
 export default function Overview({ interval, setInterval }: IntervalProps) {
+  const data = useAppSelector((state) => state.data.data);
+  const dates = queryTime(data);
+
   return (
     <>
       <FourGridLayout>
@@ -28,28 +33,28 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             title="Trading Volume"
             text="The daily vs cumulative trading volume on Vertex."
           />
-          <LineBarChart />
+          <LineBarChart dates={dates} />
         </ChartContainer>
         <ChartContainer>
           <ChartHeader
             title="Users"
             text="The daily vs cumulative users on Vertex."
           />
-          <LineBarChart />
+          <LineBarChart dates={dates} />
         </ChartContainer>
         <ChartContainer>
           <ChartHeader
             title="Fees"
             text="The daily vs cumulative fees on Vertex."
           />
-          <LineBarChart />
+          <LineBarChart dates={dates} />
         </ChartContainer>
         <ChartContainer>
           <ChartHeader
             title="Liquadations"
             text="The daily vs cumulative liquidations on Vertex."
           />
-          <LineBarChart />
+          <LineBarChart dates={dates} />
         </ChartContainer>
       </ChartsLayout>
     </>

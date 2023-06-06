@@ -1,7 +1,11 @@
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
 
-export default function LineBarChart() {
+interface LineBarProps {
+  dates: string[];
+}
+
+export default function LineBarChart({ dates }: LineBarProps) {
   const option = {
     tooltip: {
       trigger: 'axis',
@@ -36,10 +40,10 @@ export default function LineBarChart() {
     xAxis: [
       {
         type: 'category',
-        data: [
-          1682189823, 1682276223, 1682362623, 1682449023, 1682535423,
-          1682621823, 1682708223,
-        ],
+        data: dates,
+        axisTick: {
+          alignWithLabel: true,
+        },
       },
     ],
     yAxis: [
@@ -86,7 +90,7 @@ export default function LineBarChart() {
           ]),
           borderRadius: [2, 2, 0, 0],
         },
-        data: [15.6, 15.9, 19.0, 26.4, 28.7, 70.7, 63.6],
+        data: [15.6, 15.9, 19.0, 26.4, 28.7, 70.7, 63.6, 50],
       },
       {
         name: 'Cumulative',
