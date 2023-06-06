@@ -7,9 +7,9 @@ import ThreeGridLayout from '../../components/layout/ThreeGridLayout';
 import ControlsLayout from '../../components/layout/ControlsLayout';
 import MktDropdown from '../../components/main/MktDropdown';
 import { SpotValues } from './SpotValues';
+import { IntervalProps } from '@/app/types/IntervalProps';
 
-export default function Spot() {
-  const [active, setActive] = useState('7');
+export default function Spot({ interval, setInterval }: IntervalProps) {
   const [market, setMarket] = useState('all-spot');
 
   return (
@@ -25,7 +25,7 @@ export default function Spot() {
           setMarket={setMarket}
           values={SpotValues}
         />
-        <IntervalTab active={active} setActive={setActive} />
+        <IntervalTab interval={interval} setInterval={setInterval} />
       </ControlsLayout>
     </>
   );

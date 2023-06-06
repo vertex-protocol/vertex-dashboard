@@ -7,9 +7,9 @@ import FourGridLayout from '../../components/layout/FourGridLayout';
 import MktDropdown from '../../components/main/MktDropdown';
 import ControlsLayout from '../../components/layout/ControlsLayout';
 import { PerpValues } from './PerpValues';
+import { IntervalProps } from '@/app/types/IntervalProps';
 
-export default function Perps() {
-  const [active, setActive] = useState('7');
+export default function Perps({ interval, setInterval }: IntervalProps) {
   const [market, setMarket] = useState('all-perp');
 
   return (
@@ -26,7 +26,7 @@ export default function Perps() {
           setMarket={setMarket}
           values={PerpValues}
         />
-        <IntervalTab active={active} setActive={setActive} />
+        <IntervalTab interval={interval} setInterval={setInterval} />
       </ControlsLayout>
     </>
   );

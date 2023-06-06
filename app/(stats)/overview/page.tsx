@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Card from '../../components/main/Card';
 import IntervalTab from '../../components/main/IntervalTab';
 import FourGridLayout from '../../components/layout/FourGridLayout';
@@ -9,10 +8,9 @@ import ChartsLayout from '../../components/layout/ChartsLayout';
 import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
 import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
+import { IntervalProps } from '@/app/types/IntervalProps';
 
-export default function Overview() {
-  const [active, setActive] = useState('7');
-
+export default function Overview({ interval, setInterval }: IntervalProps) {
   return (
     <>
       <FourGridLayout>
@@ -22,7 +20,7 @@ export default function Overview() {
         <Card title="Fees (24h)" stat={2.21} daily={14.08} />
       </FourGridLayout>
       <ControlsLayout justify="end">
-        <IntervalTab active={active} setActive={setActive} />
+        <IntervalTab interval={interval} setInterval={setInterval} />
       </ControlsLayout>
       <ChartsLayout>
         <ChartContainer>

@@ -7,9 +7,9 @@ import ThreeGridLayout from '../../components/layout/ThreeGridLayout';
 import ControlsLayout from '../../components/layout/ControlsLayout';
 import MktDropdown from '../../components/main/MktDropdown';
 import { MarketValues } from './MarketValues';
+import { IntervalProps } from '@/app/types/IntervalProps';
 
-export default function MoneyMarket() {
-  const [active, setActive] = useState('7');
+export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
   const [market, setMarket] = useState('all-mkt');
 
   return (
@@ -25,7 +25,7 @@ export default function MoneyMarket() {
           setMarket={setMarket}
           values={MarketValues}
         />
-        <IntervalTab active={active} setActive={setActive} />
+        <IntervalTab interval={interval} setInterval={setInterval} />
       </ControlsLayout>
     </>
   );

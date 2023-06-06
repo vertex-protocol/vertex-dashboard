@@ -1,16 +1,12 @@
 import { Tabs, TabsList, TabsTrigger } from '../../components/ui/IntervalTabs';
+import { IntervalProps } from '@/app/types/IntervalProps';
 
 // TODO: Check if API request for interval is a string or num
 // TODO: Check if values need to be increased by 1 to calculate daily diff
 
-interface IntervalProps {
-  active: string;
-  setActive: React.Dispatch<React.SetStateAction<string>>;
-}
-
-export default function IntervalTab({ active, setActive }: IntervalProps) {
+export default function IntervalTab({ interval, setInterval }: IntervalProps) {
   return (
-    <Tabs value={active} onValueChange={(value) => setActive(value)}>
+    <Tabs value={interval} onValueChange={(value) => setInterval(value)}>
       <TabsList>
         <TabsTrigger value="7">7D</TabsTrigger>
         <TabsTrigger value="30">30D</TabsTrigger>
