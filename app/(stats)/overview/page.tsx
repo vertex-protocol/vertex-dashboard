@@ -11,10 +11,16 @@ import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
 import { IntervalProps } from '@/app/types/IntervalProps';
 import { useAppSelector } from '@/app/redux/store';
 import { queryTime } from '@/app/hooks/queryTime';
+import { queryTotal } from '@/app/hooks/queryTotal';
+import { queryUsers } from '@/app/hooks/queryUsers';
 
 export default function Overview({ interval, setInterval }: IntervalProps) {
   const data = useAppSelector((state) => state.data.data);
   const dates = queryTime(data);
+  const cumulativeVol = queryTotal(data, 'cumulative_volumes');
+  const cumulativeFees = queryTotal(data, 'cumulative_fees');
+  const cumulativeLiq = queryTotal(data, 'cumulative_liquidations');
+  const cumulativeUsers = queryUsers(data);
 
   return (
     <>
@@ -33,28 +39,28 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             title="Trading Volume"
             text="The daily vs cumulative trading volume on Vertex."
           />
-          <LineBarChart dates={dates} />
+          <LineBarChart dates={dates} cumulative={cumulativeVol} />
         </ChartContainer>
         <ChartContainer>
           <ChartHeader
             title="Users"
             text="The daily vs cumulative users on Vertex."
           />
-          <LineBarChart dates={dates} />
+          <LineBarChart dates={dates} cumulative={cumulativeUsers} />
         </ChartContainer>
         <ChartContainer>
           <ChartHeader
             title="Fees"
             text="The daily vs cumulative fees on Vertex."
           />
-          <LineBarChart dates={dates} />
+          <LineBarChart dates={dates} cumulative={cumulativeFees} />
         </ChartContainer>
         <ChartContainer>
           <ChartHeader
             title="Liquadations"
             text="The daily vs cumulative liquidations on Vertex."
           />
-          <LineBarChart dates={dates} />
+          <LineBarChart dates={dates} cumulative={cumulativeLiq} />
         </ChartContainer>
       </ChartsLayout>
     </>

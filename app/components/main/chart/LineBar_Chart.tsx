@@ -3,9 +3,10 @@ import * as echarts from 'echarts';
 
 interface LineBarProps {
   dates: string[];
+  cumulative: number[];
 }
 
-export default function LineBarChart({ dates }: LineBarProps) {
+export default function LineBarChart({ dates, cumulative }: LineBarProps) {
   const option = {
     tooltip: {
       trigger: 'axis',
@@ -63,14 +64,11 @@ export default function LineBarChart({ dates }: LineBarProps) {
       },
       {
         type: 'value',
-        min: 0,
-        max: 25,
-        interval: 5,
         splitLine: {
           show: false,
         },
         axisLabel: {
-          formatter: '{value} °C',
+          formatter: '{value}',
         },
       },
     ],
@@ -90,7 +88,7 @@ export default function LineBarChart({ dates }: LineBarProps) {
           ]),
           borderRadius: [2, 2, 0, 0],
         },
-        data: [15.6, 15.9, 19.0, 26.4, 28.7, 70.7, 63.6, 50],
+        data: [15.6, 15.9, 19.0, 26.4, 28.7, 70.7, 63.6],
       },
       {
         name: 'Cumulative',
@@ -103,10 +101,10 @@ export default function LineBarChart({ dates }: LineBarProps) {
         },
         tooltip: {
           valueFormatter: function (value: any) {
-            return (value as number) + ' °C';
+            return value as number;
           },
         },
-        data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3],
+        data: cumulative,
       },
     ],
   };
