@@ -1,4 +1,5 @@
 import './globals.css';
+import { Providers } from './redux/provider';
 import { DM_Sans } from 'next/font/google';
 
 const DMSans = DM_Sans({
@@ -19,7 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={DMSans.className}>{children}</body>
+      <body className={DMSans.className}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

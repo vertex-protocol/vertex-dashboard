@@ -1,7 +1,10 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../redux/store';
+import { fetchData } from '../redux/statsSlice';
 
 import Nav from '../components/main/NavBar';
 import Header from '../components/main/Header';
@@ -21,6 +24,11 @@ export default function DashboardLayout() {
     setPath(value);
     router.push(`${value}`);
   };
+
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(fetchData({ interval }));
+  }, [dispatch, interval]);
 
   return (
     <section>
