@@ -13,6 +13,7 @@ import { useAppSelector } from '@/app/redux/store';
 import { queryTime } from '@/app/hooks/queryTime';
 import { queryTotal } from '@/app/hooks/queryTotal';
 import { queryUsers } from '@/app/hooks/queryUsers';
+import { queryDaily } from '@/app/hooks/queryDaily';
 
 export default function Overview({ interval, setInterval }: IntervalProps) {
   const data = useAppSelector((state) => state.data.data);
@@ -21,6 +22,11 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
   const cumulativeFees = queryTotal(data, 'cumulative_fees');
   const cumulativeLiq = queryTotal(data, 'cumulative_liquidations');
   const cumulativeUsers = queryUsers(data);
+
+  const dailyVol = queryDaily(cumulativeVol);
+  const dailyFees = queryDaily(cumulativeFees);
+  const dailyLiq = queryDaily(cumulativeLiq);
+  const dailyUsers = queryDaily(cumulativeUsers);
 
   return (
     <>
@@ -39,28 +45,44 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             title="Trading Volume"
             text="The daily vs cumulative trading volume on Vertex."
           />
-          <LineBarChart dates={dates} cumulative={cumulativeVol} />
+          <LineBarChart
+            dates={dates}
+            cumulative={cumulativeVol}
+            daily={dailyVol}
+          />
         </ChartContainer>
         <ChartContainer>
           <ChartHeader
             title="Users"
             text="The daily vs cumulative users on Vertex."
           />
-          <LineBarChart dates={dates} cumulative={cumulativeUsers} />
+          <LineBarChart
+            dates={dates}
+            cumulative={cumulativeUsers}
+            daily={dailyUsers}
+          />
         </ChartContainer>
         <ChartContainer>
           <ChartHeader
             title="Fees"
             text="The daily vs cumulative fees on Vertex."
           />
-          <LineBarChart dates={dates} cumulative={cumulativeFees} />
+          <LineBarChart
+            dates={dates}
+            cumulative={cumulativeFees}
+            daily={dailyFees}
+          />
         </ChartContainer>
         <ChartContainer>
           <ChartHeader
             title="Liquadations"
             text="The daily vs cumulative liquidations on Vertex."
           />
-          <LineBarChart dates={dates} cumulative={cumulativeLiq} />
+          <LineBarChart
+            dates={dates}
+            cumulative={cumulativeLiq}
+            daily={dailyLiq}
+          />
         </ChartContainer>
       </ChartsLayout>
     </>

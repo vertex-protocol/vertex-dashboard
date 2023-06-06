@@ -4,9 +4,14 @@ import * as echarts from 'echarts';
 interface LineBarProps {
   dates: string[];
   cumulative: number[];
+  daily: number[];
 }
 
-export default function LineBarChart({ dates, cumulative }: LineBarProps) {
+export default function LineBarChart({
+  dates,
+  cumulative,
+  daily,
+}: LineBarProps) {
   const option = {
     tooltip: {
       trigger: 'axis',
@@ -50,16 +55,13 @@ export default function LineBarChart({ dates, cumulative }: LineBarProps) {
     yAxis: [
       {
         type: 'value',
-        min: 0,
-        max: 100,
-        interval: 20,
         splitLine: {
           lineStyle: {
             color: '#323237',
           },
         },
         axisLabel: {
-          formatter: '{value} ml',
+          formatter: '{value}',
         },
       },
       {
@@ -78,7 +80,7 @@ export default function LineBarChart({ dates, cumulative }: LineBarProps) {
         type: 'bar',
         tooltip: {
           valueFormatter: function (value: any) {
-            return (value as number) + ' ml';
+            return value as number;
           },
         },
         itemStyle: {
@@ -88,7 +90,7 @@ export default function LineBarChart({ dates, cumulative }: LineBarProps) {
           ]),
           borderRadius: [2, 2, 0, 0],
         },
-        data: [15.6, 15.9, 19.0, 26.4, 28.7, 70.7, 63.6],
+        data: daily,
       },
       {
         name: 'Cumulative',
