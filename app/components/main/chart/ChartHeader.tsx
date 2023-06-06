@@ -5,7 +5,7 @@ interface ChartHeaderComponent {
 
 export default function ChartHeader({ title, text }: ChartHeaderComponent) {
   return (
-    <div className=" text-white px-3 h-16">
+    <div className=" text-white px-3 h-16 mb-4">
       <p className="font-medium">{title}</p>
       <p className="text-gray-1 text-sm mt-1">{text}</p>
     </div>
