@@ -8,6 +8,10 @@ import ControlsLayout from '../../components/layout/ControlsLayout';
 import MktDropdown from '../../components/main/MktDropdown';
 import { SpotValues } from './SpotValues';
 import { IntervalProps } from '@/app/types/IntervalProps';
+import ChartsLayout from '@/app/components/layout/ChartsLayout';
+import ChartContainer from '@/app/components/main/chart/ChartContainer';
+import ChartHeader from '@/app/components/main/chart/ChartHeader';
+import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
 
 export default function Spot({ interval, setInterval }: IntervalProps) {
   const [market, setMarket] = useState('all-spot');
@@ -42,6 +46,22 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
         />
         <IntervalTab interval={interval} setInterval={setInterval} />
       </ControlsLayout>
+      <ChartsLayout>
+        <ChartContainer>
+          <ChartHeader
+            title="Spot Trading Volume"
+            text="The daily vs cumulative spot trading volume on Vertex."
+          />
+          <LineBarChart />
+        </ChartContainer>
+        <ChartContainer>
+          <ChartHeader
+            title="# of Spot Trades"
+            text="The number of spot trades over the set period."
+          />
+          <LineBarChart />
+        </ChartContainer>
+      </ChartsLayout>
     </>
   );
 }
