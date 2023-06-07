@@ -15,9 +15,9 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
   return (
     <>
       <ThreeGridLayout>
-        <Card title="Total TVL" stat={2.21} daily={14.08} />
-        <Card title="Deposited (24h)" stat={2.21} daily={14.08} />
-        <Card title="Borrowed (24h)" stat={1.23} daily={14.08} />
+        <Card title="Total TVL" stat={2.21} daily={14.08} format={true} />
+        <Card title="Deposited (24h)" stat={2.21} daily={14.08} format={true} />
+        <Card title="Borrowed (24h)" stat={1.23} daily={14.08} format={true} />
       </ThreeGridLayout>
       <ControlsLayout justify="between">
         <MktDropdown

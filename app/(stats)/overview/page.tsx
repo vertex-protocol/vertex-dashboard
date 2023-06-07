@@ -31,10 +31,20 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
   return (
     <>
       <FourGridLayout>
-        <Card title="Total Trading Volume" stat={2.21} daily={14.08} />
-        <Card title="Trading Volume (24h)" stat={2.21} daily={14.08} />
-        <Card title="Users (24h)" stat={1023} daily={14.08} />
-        <Card title="Fees (24h)" stat={2.21} daily={14.08} />
+        <Card
+          title="Total Trading Volume"
+          stat={2.21}
+          daily={14.08}
+          format={true}
+        />
+        <Card
+          title="Trading Volume (24h)"
+          stat={2.21}
+          daily={14.08}
+          format={true}
+        />
+        <Card title="Users (24h)" stat={1023} daily={14.08} format={false} />
+        <Card title="Fees (24h)" stat={2.21} daily={14.08} format={true} />
       </FourGridLayout>
       <ControlsLayout justify="end">
         <IntervalTab interval={interval} setInterval={setInterval} />

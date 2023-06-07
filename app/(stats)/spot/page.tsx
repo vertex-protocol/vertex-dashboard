@@ -15,9 +15,24 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
   return (
     <>
       <ThreeGridLayout>
-        <Card title="Total Spot Volume" stat={2.21} daily={14.08} />
-        <Card title="Spot Volume (24h)" stat={2.21} daily={14.08} />
-        <Card title="Spot Trades (24h)" stat={1023} daily={14.08} />
+        <Card
+          title="Total Spot Volume"
+          stat={2.21}
+          daily={14.08}
+          format={true}
+        />
+        <Card
+          title="Spot Volume (24h)"
+          stat={2.21}
+          daily={14.08}
+          format={true}
+        />
+        <Card
+          title="Spot Trades (24h)"
+          stat={1023}
+          daily={14.08}
+          format={false}
+        />
       </ThreeGridLayout>
       <ControlsLayout justify="between">
         <MktDropdown
