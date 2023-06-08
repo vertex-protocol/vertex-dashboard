@@ -7,7 +7,6 @@ import { AppDispatch } from '../redux/store';
 import { fetchData } from '../redux/statsSlice';
 
 import Nav from '../components/main/NavBar';
-import Header from '../components/main/Header';
 import { Tabs, TabsList, TabsTrigger } from '../components/ui/Tabs';
 import Overview from './overview/page';
 import Perpetual from './perpetual/page';
@@ -33,8 +32,7 @@ export default function DashboardLayout() {
   return (
     <section>
       <Nav />
-      <div className="px-10">
-        <Header text="Vertex Stats" />
+      <div className="px-10 mt-4">
         <Tabs value={path} onValueChange={handleTabChange}>
           <TabsList>
             <TabsTrigger value="/overview">Overview</TabsTrigger>
