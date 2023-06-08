@@ -16,6 +16,7 @@ import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
 import { queryTime } from '@/app/hooks/queryTime';
 import { queryProduct } from '@/app/hooks/queryProduct';
 import { queryDaily } from '@/app/hooks/queryDaily';
+import { queryFundingRates } from '@/app/hooks/queryFundingRates';
 
 export default function Perps({ interval, setInterval }: IntervalProps) {
   const [market, setMarket] = useState('all-perp');
@@ -31,6 +32,15 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
   // # of Perp Trades
   const [PerpTrades, setPerpTrades] = useState<number[]>([]);
   const [DailyPerpTrades, setDailyPerpTrades] = useState<number[]>([]);
+
+  // Hourly Funding Rate
+  const [hourlyFunding, setHourlyFunding] = useState<number[]>([]);
+
+  // Hourly Funding Rate
+  const [dailyFunding, setDailyFunding] = useState<number[]>([]);
+
+  // Hourly Funding Rate
+  const [annualFunding, setAnnualFunding] = useState<number[]>([]);
 
   const data = useAppSelector((state) => state.data.data);
   const dates = queryTime(data);
@@ -84,6 +94,13 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
           setDailyPerpTrades(DailyBTCPerpTrades);
 
           // TODO: Fetch fundingRates
+          const BTChourlyFunding = queryFundingRates(data, 'hourly', [2]);
+          const BTCdailyFunding = queryFundingRates(data, 'daily', [2]);
+          const BTCannualFunding = queryFundingRates(data, 'annual', [2]);
+          setHourlyFunding(BTChourlyFunding);
+          setDailyFunding(BTCdailyFunding);
+          setAnnualFunding(BTCannualFunding);
+
           break;
 
         case 'eth-perp':
@@ -106,6 +123,14 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
           const DailyETHPerpTrades = queryDaily(ETHPerpTrades);
           setPerpTrades(ETHPerpTrades);
           setDailyPerpTrades(DailyETHPerpTrades);
+
+          // TODO: Fetch fundingRates
+          const ETHhourlyFunding = queryFundingRates(data, 'hourly', [4]);
+          const ETHdailyFunding = queryFundingRates(data, 'daily', [4]);
+          const ETHannualFunding = queryFundingRates(data, 'annual', [4]);
+          setHourlyFunding(ETHhourlyFunding);
+          setDailyFunding(ETHdailyFunding);
+          setAnnualFunding(ETHannualFunding);
 
           break;
 
@@ -194,7 +219,7 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
                 title="Funding Rate (1h)"
                 text="The hourly funding rate over the set period."
               ></ChartHeader>
-              <LineBarChart dates={dates} />
+              <LineBarChart dates={dates} cumulative={hourlyFunding} />
             </ChartContainer>
             <ChartContainer>
               <ChartHeader
