@@ -13,6 +13,7 @@ import ChartsLayout from '@/app/components/layout/ChartsLayout';
 import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
 import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
+import LineChart from '@/app/components/main/chart/LineChart';
 import { queryTime } from '@/app/hooks/queryTime';
 import { queryProduct } from '@/app/hooks/queryProduct';
 import { queryDaily } from '@/app/hooks/queryDaily';
@@ -219,21 +220,21 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
                 title="Funding Rate (1h)"
                 text="The hourly funding rate over the set period."
               ></ChartHeader>
-              <LineBarChart dates={dates} cumulative={hourlyFunding} />
+              <LineChart dates={dates} data={hourlyFunding} />
             </ChartContainer>
             <ChartContainer>
               <ChartHeader
                 title="Funding Rate (Annualized)"
                 text="The annualized funding rate over the set period."
               ></ChartHeader>
-              <LineBarChart dates={dates} />
+              <LineChart dates={dates} data={annualFunding} />
             </ChartContainer>
             <ChartContainer>
               <ChartHeader
                 title="Funding Rate (24h)"
                 text="The daily funding rate over the set period."
               ></ChartHeader>
-              <LineBarChart dates={dates} />
+              <LineChart dates={dates} data={dailyFunding} />
             </ChartContainer>
           </>
         )}
