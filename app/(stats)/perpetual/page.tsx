@@ -178,13 +178,6 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
         </ChartContainer>
         <ChartContainer>
           <ChartHeader
-            title="Funding Rate (Annualized)"
-            text="The annualized funding rate over the set period."
-          ></ChartHeader>
-          <LineBarChart dates={dates} />
-        </ChartContainer>
-        <ChartContainer>
-          <ChartHeader
             title="# of Perp Trades"
             text="The number of perp trades over the set period."
           ></ChartHeader>
@@ -194,20 +187,31 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
             daily={DailyPerpTrades}
           />
         </ChartContainer>
-        <ChartContainer>
-          <ChartHeader
-            title="Funding Rate (1h)"
-            text="The hourly funding rate over the set period."
-          ></ChartHeader>
-          <LineBarChart dates={dates} />
-        </ChartContainer>
-        <ChartContainer>
-          <ChartHeader
-            title="Funding Rate (24h)"
-            text="The daily funding rate over the set period."
-          ></ChartHeader>
-          <LineBarChart dates={dates} />
-        </ChartContainer>
+        {market !== 'all-perp' && (
+          <>
+            <ChartContainer>
+              <ChartHeader
+                title="Funding Rate (1h)"
+                text="The hourly funding rate over the set period."
+              ></ChartHeader>
+              <LineBarChart dates={dates} />
+            </ChartContainer>
+            <ChartContainer>
+              <ChartHeader
+                title="Funding Rate (Annualized)"
+                text="The annualized funding rate over the set period."
+              ></ChartHeader>
+              <LineBarChart dates={dates} />
+            </ChartContainer>
+            <ChartContainer>
+              <ChartHeader
+                title="Funding Rate (24h)"
+                text="The daily funding rate over the set period."
+              ></ChartHeader>
+              <LineBarChart dates={dates} />
+            </ChartContainer>
+          </>
+        )}
       </ChartsLayout>
     </>
   );
