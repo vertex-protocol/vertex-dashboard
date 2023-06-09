@@ -183,7 +183,7 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
         <ChartContainer>
           <ChartHeader
             title="Perpetual Trading Volume"
-            text="The daily vs cumulative of perp trading volume on Vertex."
+            text="The daily vs cumulative perp trading volume on Vertex."
           ></ChartHeader>
           <LineBarChart
             dates={dates}
@@ -205,7 +205,8 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
         <ChartContainer>
           <ChartHeader
             title="# of Perp Trades"
-            text="The number of perp trades over the set period."
+            text="The daily vs cumulative perp trades over the set period.
+            "
           ></ChartHeader>
           <LineBarChart
             dates={dates}

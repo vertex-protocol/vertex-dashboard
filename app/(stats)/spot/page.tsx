@@ -134,7 +134,8 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
         <ChartContainer>
           <ChartHeader
             title="# of Spot Trades"
-            text="The number of spot trades over the set period."
+            text="The daily vs cumulative spot trades over the set period.
+            "
           />
           <LineBarChart
             dates={dates}
