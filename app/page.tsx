@@ -1,7 +1,5 @@
+import { redirect } from 'next/navigation';
+
 export default function Home() {
-  return (
-    <main className="text-white">
-      <p>Vertex Dashboard</p>
-    </main>
-  );
+  redirect('/overview');
 }
