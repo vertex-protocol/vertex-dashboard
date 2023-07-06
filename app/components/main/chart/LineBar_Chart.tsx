@@ -1,16 +1,19 @@
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
+import Spinner from '../Spinner';
 
 interface LineBarProps {
   dates: string[];
   cumulative: number[];
   daily: number[];
+  loading: boolean;
 }
 
 export default function LineBarChart({
   dates,
   cumulative,
   daily,
+  loading,
 }: LineBarProps) {
   const option = {
     tooltip: {
@@ -110,9 +113,5 @@ export default function LineBarChart({
       },
     ],
   };
-  return (
-    <div>
-      <ReactECharts option={option} />
-    </div>
-  );
+  return <div>{loading ? <Spinner /> : <ReactECharts option={option} />}</div>;
 }

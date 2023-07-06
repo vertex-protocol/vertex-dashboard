@@ -16,14 +16,16 @@ import { queryUsers } from '@/app/hooks/queryUsers';
 import { queryDaily } from '@/app/hooks/queryDaily';
 
 export default function Overview({ interval, setInterval }: IntervalProps) {
-  const data = useAppSelector((state) => state.data.snapshots);
-  console.log(data);
-  const dates = queryTime(data);
-  console.log(dates);
-  const cumulativeVol = queryTotal(data, 'cumulative_volumes');
-  const cumulativeFees = queryTotal(data, 'cumulative_fees');
-  const cumulativeLiq = queryTotal(data, 'cumulative_liquidations');
-  const cumulativeUsers = queryUsers(data);
+  const data = useAppSelector((state) => state.data);
+
+  const dates = queryTime(data.snapshots);
+  const cumulativeVol = queryTotal(data.snapshots, 'cumulative_volume');
+  const cumulativeFees = queryTotal(data.snapshots, 'cumulative_taker_fees');
+  const cumulativeLiq = queryTotal(
+    data.snapshots,
+    'cumulative_liquidation_amount',
+  );
+  const cumulativeUsers = queryUsers(data.snapshots);
 
   const dailyVol = queryDaily(cumulativeVol);
   const dailyFees = queryDaily(cumulativeFees);
@@ -61,6 +63,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={cumulativeVol}
             daily={dailyVol}
+            loading={data.loading}
           />
         </ChartContainer>
         <ChartContainer>
@@ -72,6 +75,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={cumulativeUsers}
             daily={dailyUsers}
+            loading={data.loading}
           />
         </ChartContainer>
         <ChartContainer>
@@ -83,6 +87,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={cumulativeFees}
             daily={dailyFees}
+            loading={data.loading}
           />
         </ChartContainer>
         <ChartContainer>
@@ -94,6 +99,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={cumulativeLiq}
             daily={dailyLiq}
+            loading={data.loading}
           />
         </ChartContainer>
       </ChartsLayout>

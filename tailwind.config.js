@@ -17,6 +17,11 @@ module.exports = {
       'green': '#4A9A7D',
       'red': '#AF5067',
     },
+    extend: {
+      height: {
+        'custom': '25.5rem',
+      }
+    }
   },
   plugins: [],
 }
