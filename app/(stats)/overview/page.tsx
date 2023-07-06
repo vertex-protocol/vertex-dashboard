@@ -16,8 +16,10 @@ import { queryUsers } from '@/app/hooks/queryUsers';
 import { queryDaily } from '@/app/hooks/queryDaily';
 
 export default function Overview({ interval, setInterval }: IntervalProps) {
-  const data = useAppSelector((state) => state.data.data);
+  const data = useAppSelector((state) => state.data.snapshots);
+  console.log(data);
   const dates = queryTime(data);
+  console.log(dates);
   const cumulativeVol = queryTotal(data, 'cumulative_volumes');
   const cumulativeFees = queryTotal(data, 'cumulative_fees');
   const cumulativeLiq = queryTotal(data, 'cumulative_liquidations');

@@ -6,18 +6,33 @@ import axios from 'axios';
 import { StatsProps } from '../types/statsProps';
 
 const initialState: StatsProps = {
-  data: null,
+  snapshots: null,
   loading: false,
   error: false,
 };
 
 // TODO: update w/ real API
-const base = 'http://localhost:4000';
+const base = 'https://prod.vertexprotocol-backend.com';
 
 export const fetchData = createAsyncThunk(
   'stats/fetchData',
   async ({ interval }: { interval: string }) => {
-    const response = await axios.get(`${base}/data`);
+    const response = await axios.post(
+      `${base}/indexer`,
+      {
+        market_snapshots: {
+          interval: {
+            count: 90,
+            granularity: 86400,
+          },
+        },
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
     console.log(response);
     return response.data;
   },
@@ -34,7 +49,7 @@ const statsSlice = createSlice({
         state.error = false;
       })
       .addCase(fetchData.fulfilled, (state, action) => {
-        state.data = action.payload;
+        state.snapshots = action.payload;
         state.loading = false;
         state.error = false;
       })
@@ -46,24 +61,3 @@ const statsSlice = createSlice({
 });
 
 export default statsSlice.reducer;
-
-// TODO: set up w/ real API
-/*
-export const fetchData = createAsyncThunk(
-  'stats/fetchData',
-  async ({ interval }: { interval: string }) => {
-    const response = await axios.post(
-      `${base}/data`,
-      {
-        interval: interval,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-    );
-    return response.data;
-  },
-);
-*/

@@ -41,7 +41,7 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
   // Hourly Funding Rate
   const [annualFunding, setAnnualFunding] = useState<number[]>([]);
 
-  const data = useAppSelector((state) => state.data.data);
+  const data = useAppSelector((state) => state.data.snapshots);
   const dates = queryTime(data);
 
   useEffect(() => {

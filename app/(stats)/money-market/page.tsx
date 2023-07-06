@@ -34,7 +34,7 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
   // Borrow Rate
   const [BorrowRate, setBorrowRate] = useState<number[]>([]);
 
-  const data = useAppSelector((state) => state.data.data);
+  const data = useAppSelector((state) => state.data.snapshots);
   const dates = queryTime(data);
 
   useEffect(() => {

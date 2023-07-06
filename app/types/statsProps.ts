@@ -1,18 +1,21 @@
 export interface StatsProps {
-  data:
+  snapshots:
     | {
         timestamp: number;
         cumulative_users: number;
-        cumulative_volumes: number[];
-        cumulative_fees: number[];
-        cumulative_trades: number[];
-        cumulative_liquidations: number[];
-        open_interests: number[];
-        total_deposits: number[];
-        total_borrows: number[];
-        funding_rates: number[][];
-        deposit_rates: number[];
-        borrow_rates: number[];
+        daily_active_users: number;
+        cumulative_volume: { [key: string]: string };
+        cumulative_taker_fees: { [key: string]: string };
+        cumulative_sequencer_fees: { [key: string]: string };
+        cumulative_maker_fees: { [key: string]: string };
+        cumulative_trades: { [key: string]: number };
+        cumulative_liquidation_amount: { [key: string]: string };
+        open_interest: { [key: string]: string };
+        total_deposits: { [key: string]: string };
+        total_borrows: { [key: string]: string };
+        funding_rates: { [key: string]: string };
+        deposit_rates: { [key: string]: string };
+        borrow_rates: { [key: string]: string };
       }[]
     | null;
   loading: boolean;
