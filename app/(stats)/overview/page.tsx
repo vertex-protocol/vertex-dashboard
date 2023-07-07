@@ -78,6 +78,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             cumulative={cumulativeVol}
             daily={dailyVol}
             loading={data.loading}
+            currency={true}
           />
         </ChartContainer>
         <ChartContainer>
@@ -90,6 +91,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             cumulative={cumulativeUsers}
             daily={dailyUsers}
             loading={data.loading}
+            currency={false}
           />
         </ChartContainer>
         <ChartContainer>
@@ -102,6 +104,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             cumulative={cumulativeFees}
             daily={dailyFees}
             loading={data.loading}
+            currency={true}
           />
         </ChartContainer>
         <ChartContainer>
@@ -114,6 +117,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             cumulative={cumulativeLiq}
             daily={dailyLiq}
             loading={data.loading}
+            currency={true}
           />
         </ChartContainer>
       </ChartsLayout>

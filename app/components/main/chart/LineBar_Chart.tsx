@@ -1,12 +1,14 @@
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
 import Spinner from '../Spinner';
+import numeral from 'numeral';
 
 interface LineBarProps {
   dates: string[];
   cumulative: number[] | string[];
   daily: number[];
   loading: boolean;
+  currency: boolean;
 }
 
 export default function LineBarChart({
@@ -14,7 +16,10 @@ export default function LineBarChart({
   cumulative,
   daily,
   loading,
+  currency,
 }: LineBarProps) {
+  const currencyFormat = currency ? '$0.a' : '0.a';
+
   const option = {
     tooltip: {
       trigger: 'axis',
@@ -64,7 +69,9 @@ export default function LineBarChart({
           },
         },
         axisLabel: {
-          formatter: '{value}',
+          formatter: (value: number) => {
+            return numeral(value).format(currencyFormat);
+          },
         },
       },
       {
@@ -73,7 +80,9 @@ export default function LineBarChart({
           show: false,
         },
         axisLabel: {
-          formatter: '{value}',
+          formatter: (value: number) => {
+            return numeral(value).format(currencyFormat);
+          },
         },
       },
     ],
