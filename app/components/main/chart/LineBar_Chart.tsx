@@ -113,5 +113,13 @@ export default function LineBarChart({
       },
     ],
   };
-  return <div>{loading ? <Spinner /> : <ReactECharts option={option} />}</div>;
+  return (
+    <>
+      {loading ? (
+        <Spinner className="h-64" />
+      ) : (
+        <ReactECharts option={option} />
+      )}
+    </>
+  );
 }
