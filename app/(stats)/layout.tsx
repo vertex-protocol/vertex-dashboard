@@ -16,7 +16,7 @@ import MoneyMarket from './money-market/page';
 export default function DashboardLayout() {
   const router = useRouter();
   const pathname = usePathname();
-  const [interval, setInterval] = useState('7');
+  const [interval, setInterval] = useState('31');
   const [path, setPath] = useState(pathname);
 
   const handleTabChange = (value: string) => {

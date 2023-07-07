@@ -11,18 +11,18 @@ const initialState: StatsProps = {
   error: false,
 };
 
-// TODO: update w/ real API
 const base = 'https://prod.vertexprotocol-backend.com';
 
 export const fetchData = createAsyncThunk(
   'stats/fetchData',
   async ({ interval }: { interval: string }) => {
+    const intInterval = parseInt(interval);
     const response = await axios.post(
       `${base}/indexer`,
       {
         market_snapshots: {
           interval: {
-            count: 90,
+            count: intInterval,
             granularity: 86400,
           },
         },
