@@ -15,7 +15,7 @@ export default function Card({ title, stat, daily, currency }: Card) {
           <p className="text-2xl text-white font-semibold">
             {currency
               ? numeral(stat).format('$0.00a')
-              : numeral(stat).format('0.00a')}
+              : numeral(stat).format('0.a')}
           </p>
         </div>
         <p className="text-gray-1 font-medium mt-1">{title}</p>

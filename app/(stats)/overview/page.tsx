@@ -14,6 +14,7 @@ import { queryTime } from '@/app/hooks/queryTime';
 import { queryTotal } from '@/app/hooks/queryTotal';
 import { queryUsers } from '@/app/hooks/queryUsers';
 import { queryDaily } from '@/app/hooks/queryDaily';
+import { queryDAU } from '@/app/hooks/queryDAU';
 
 export default function Overview({ interval, setInterval }: IntervalProps) {
   const data = useAppSelector((state) => state.data);
@@ -26,6 +27,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
     'cumulative_liquidation_amount',
   );
   const cumulativeUsers = queryUsers(data.snapshots);
+  const DAU = queryDAU(data.snapshots);
 
   const dailyVol = queryDaily(cumulativeVol);
   const dailyFees = queryDaily(cumulativeFees);
@@ -49,7 +51,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
         />
         <Card
           title="Daily Active Users"
-          stat={0}
+          stat={DAU}
           daily={14.08}
           currency={false}
         />
