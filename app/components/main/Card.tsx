@@ -3,7 +3,7 @@ import numeral from 'numeral';
 interface Card {
   title: string;
   stat: any;
-  daily: number;
+  daily?: number;
   currency: boolean;
 }
 

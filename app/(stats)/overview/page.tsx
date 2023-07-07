@@ -45,16 +45,10 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
         />
         <Card
           title="Trading Volume (24h)"
-          stat={2.21}
-          daily={14.08}
+          stat={dailyVol[dailyVol.length - 1]}
           currency={true}
         />
-        <Card
-          title="Daily Active Users"
-          stat={DAU}
-          daily={14.08}
-          currency={false}
-        />
+        <Card title="Daily Active Users" stat={DAU} currency={false} />
         <Card title="Fees (24h)" stat={2.21} daily={14.08} currency={true} />
       </FourGridLayout>
       <ControlsLayout justify="end">
