@@ -4,7 +4,7 @@ import Spinner from '../Spinner';
 
 interface LineBarProps {
   dates: string[];
-  cumulative: number[];
+  cumulative: number[] | string[];
   daily: number[];
   loading: boolean;
 }
