@@ -19,6 +19,7 @@ export default function LineBarChart({
   currency,
 }: LineBarProps) {
   const currencyFormat = currency ? '$0.a' : '0.a';
+  const tooltipFormat = currency ? '$0.[00]a' : '0.[00]a';
 
   const option = {
     tooltip: {
@@ -92,7 +93,7 @@ export default function LineBarChart({
         type: 'bar',
         tooltip: {
           valueFormatter: function (value: any) {
-            return value as number;
+            return numeral(value).format(tooltipFormat);
           },
         },
         itemStyle: {
@@ -115,7 +116,7 @@ export default function LineBarChart({
         },
         tooltip: {
           valueFormatter: function (value: any) {
-            return value as number;
+            return numeral(value).format(tooltipFormat);
           },
         },
         data: cumulative,
