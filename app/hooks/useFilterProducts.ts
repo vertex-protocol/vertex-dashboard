@@ -17,9 +17,11 @@ export function useFilterProducts(products: Product[] | null) {
     (product) => !product.symbol.includes('PERP'),
   );
 
-  return {
-    PerpProducts,
-    SpotProducts,
-    MMProducts,
+  const filteredProducts = {
+    PerpProducts: [{ product_id: 'all', symbol: 'ALL-PERP' }, ...PerpProducts],
+    SpotProducts: [{ product_id: 'all', symbol: 'ALL-SPOT' }, ...SpotProducts],
+    MMProducts: [{ product_id: 'all', symbol: 'ALL-MKTS' }, ...MMProducts],
   };
+
+  return filteredProducts;
 }
