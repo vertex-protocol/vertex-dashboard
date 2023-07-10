@@ -10,12 +10,16 @@ export function useFilterProducts(products: Product[] | null) {
   const PerpProducts = products.filter((product) =>
     product.symbol.includes('PERP'),
   );
-  const NonPerpProducts = products.filter(
+  const SpotProducts = products.filter(
+    (product) => !product.symbol.includes('PERP'),
+  );
+  const MMProducts = products.filter(
     (product) => !product.symbol.includes('PERP'),
   );
 
   return {
     PerpProducts,
-    NonPerpProducts,
+    SpotProducts,
+    MMProducts,
   };
 }
