@@ -20,7 +20,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
   const data = useAppSelector((state) => state.data);
 
   const dates = queryTime(data.snapshots);
-  const cumulativeVol = queryTotal(data.snapshots, 'cumulative_volume');
+  const cumulativeVol = queryTotal(data.snapshots, 'cumulative_volumes');
   const cumulativeFees = queryTotal(data.snapshots, 'cumulative_taker_fees');
   const cumulativeLiq = queryTotal(
     data.snapshots,
