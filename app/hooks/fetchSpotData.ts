@@ -1,64 +1,56 @@
 import { queryProduct } from './queryProduct';
+import { queryAllProduct } from './queryAllProduct';
+import { queryAllTrades } from './queryAllTrades';
+import { queryTrades } from './queryTrades';
 import { queryDaily } from './queryDaily';
 import { SpotDataProps } from '../types/SpotDataProps';
 
 export const fetchSpotData = ({
-  data,
+  snapshotData,
   market,
   setSpotVol,
   setDailySpotVol,
   setSpotTrades,
   setDailySpotTrades,
+  filterdProducts,
 }: SpotDataProps) => {
-  if (!data) return; // Return early if data is not available
+  if (!snapshotData) return; // Return early if data is not available
 
-  switch (market) {
-    case 'all-spot':
-      // Spot Trading Vol
-      const allSpotVol = queryProduct(data, 'cumulative_volumes', [1, 3]);
-      const allDailySpotVol = queryDaily(allSpotVol);
-      setSpotVol(allSpotVol);
-      setDailySpotVol(allDailySpotVol);
+  if (market === 'all') {
+    // Spot Trading Vol
+    const SpotVol = queryAllProduct(
+      snapshotData,
+      'cumulative_volumes',
+      filterdProducts.SpotProducts,
+    );
+    const DailySpotVol = queryDaily(SpotVol);
 
-      // # of Spot Trades
-      const allSpotTrades = queryProduct(data, 'cumulative_trades', [1, 3]);
-      const allDailySpotTrades = queryDaily(allSpotTrades);
-      setSpotTrades(allSpotTrades);
-      setDailySpotTrades(allDailySpotTrades);
+    setSpotVol(SpotVol);
+    setDailySpotVol(DailySpotVol);
 
-      break;
+    // Spot Trades
+    const SpotTrades = queryAllTrades(
+      snapshotData,
+      'cumulative_trades',
+      filterdProducts.SpotProducts,
+    );
+    const DailySpotTrades = queryDaily(SpotTrades);
 
-    case 'btc-spot':
-      // BTC-Spot Tarding Vol
-      const BTCSpotVol = queryProduct(data, 'cumulative_volumes', [1]);
-      const DailyBTCSpotVol = queryDaily(BTCSpotVol);
-      setSpotVol(BTCSpotVol);
-      setDailySpotVol(DailyBTCSpotVol);
+    setSpotTrades(SpotTrades);
+    setDailySpotTrades(DailySpotTrades);
+  } else {
+    // Spot Trading Vol
+    const SpotVol = queryProduct(snapshotData, 'cumulative_volumes', market);
+    const DailySpotVol = queryDaily(SpotVol);
 
-      // # of BTC Spot Trades
-      const BTCSpotTrades = queryProduct(data, 'cumulative_trades', [1]);
-      const DailyBTCSpotTrades = queryDaily(BTCSpotTrades);
-      setSpotTrades(BTCSpotTrades);
-      setDailySpotTrades(DailyBTCSpotTrades);
+    setSpotVol(SpotVol);
+    setDailySpotVol(DailySpotVol);
 
-      break;
+    // Spot Trades
+    const SpotTrades = queryTrades(snapshotData, 'cumulative_trades', market);
+    const DailySpotTrades = queryDaily(SpotTrades);
 
-    case 'eth-spot':
-      // ETH-Spot Trading Vol
-      const ETHSpotVol = queryProduct(data, 'cumulative_volumes', [3]);
-      const DailyETHSpotVol = queryDaily(ETHSpotVol);
-      setSpotVol(ETHSpotVol);
-      setDailySpotVol(DailyETHSpotVol);
-
-      // # of ETH Spot Trades
-      const ETHSpotTrades = queryProduct(data, 'cumulative_trades', [3]);
-      const DailyETHSpotTrades = queryDaily(ETHSpotTrades);
-      setSpotTrades(ETHSpotTrades);
-      setDailySpotTrades(DailyETHSpotTrades);
-
-      break;
-
-    default:
-      break;
+    setSpotTrades(SpotTrades);
+    setDailySpotTrades(DailySpotTrades);
   }
 };
