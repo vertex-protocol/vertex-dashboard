@@ -1,7 +1,10 @@
 import { queryProduct } from './queryProduct';
+import { queryAllProduct } from './queryAllProduct';
 import { queryDaily } from './queryDaily';
 import { queryFundingRates } from './queryFundingRates';
 import { PerpDataProps } from '../types/PerpDataProps';
+import { queryTrades } from './queryTrades';
+import { queryAllTrades } from './queryAllTrades';
 
 export const fetchPerpData = ({
   data,
@@ -15,90 +18,75 @@ export const fetchPerpData = ({
   setHourlyFunding,
   setDailyFunding,
   setAnnualFunding,
+  filterdProducts,
 }: PerpDataProps) => {
   if (!data) return; // Return early if data is not available
 
-  switch (market) {
-    case 'all-perp':
-      // Perp Trading Vol
-      const allPerpVol = queryProduct(data, 'cumulative_volumes', [2, 4]);
-      const allDailyPerpVol = queryDaily(allPerpVol);
-      setPerpVol(allPerpVol);
-      setDailyPerpVol(allDailyPerpVol);
+  if (market === 'all') {
+    // Perp Trading Vol
+    const PerpVol = queryAllProduct(
+      data.snapshots,
+      'cumulative_volumes',
+      filterdProducts,
+    );
+    const DailyPerpVol = queryDaily(PerpVol);
 
-      // Open Interest
-      const allOpenInt = queryProduct(data, 'open_interests', [2, 4]);
-      const allDailyOpenInt = queryDaily(allOpenInt);
-      setOpenInt(allOpenInt);
-      setDailyOpenInt(allDailyOpenInt);
+    setPerpVol(PerpVol);
+    setDailyPerpVol(DailyPerpVol);
 
-      // # of Perp Trades
-      const allPerpTrades = queryProduct(data, 'cumulative_trades', [2, 4]);
-      const allDailyPerpTrades = queryDaily(allPerpTrades);
-      setPerpTrades(allPerpTrades);
-      setDailyPerpTrades(allDailyPerpTrades);
+    // Open Interest
+    const OpenInt = queryAllProduct(
+      data.snapshots,
+      'open_interest',
+      filterdProducts,
+    );
+    const DailyOpenInt = queryDaily(OpenInt);
 
-      break;
+    setOpenInt(OpenInt);
+    setDailyOpenInt(DailyOpenInt);
 
-    case 'btc-perp':
-      // BTC-Perp Tarding Vol
-      const BTCPerpVol = queryProduct(data, 'cumulative_volumes', [2]);
-      const DailyBTCPerpVol = queryDaily(BTCPerpVol);
-      setPerpVol(BTCPerpVol);
-      setDailyPerpVol(DailyBTCPerpVol);
+    // Perp Trades
+    const PerpTrades = queryAllTrades(
+      data.snapshots,
+      'cumulative_trades',
+      filterdProducts,
+    );
+    const DailyPerpTrades = queryDaily(PerpTrades);
 
-      // BTC-Perp Open Interest
-      const BTCOpenInt = queryProduct(data, 'open_interests', [2]);
-      const DailyBTCOpenInt = queryDaily(BTCOpenInt);
-      setOpenInt(BTCOpenInt);
-      setDailyOpenInt(DailyBTCOpenInt);
+    setPerpTrades(PerpTrades);
+    setDailyPerpTrades(DailyPerpTrades);
+  } else {
+    // Perp Trading Vol
+    const PerpVol = queryProduct(data.snapshots, 'cumulative_volumes', market);
+    const DailyPerpVol = queryDaily(PerpVol);
 
-      // # of BTC Perp Trades
-      const BTCPerpTrades = queryProduct(data, 'cumulative_trades', [2]);
-      const DailyBTCPerpTrades = queryDaily(BTCPerpTrades);
-      setPerpTrades(BTCPerpTrades);
-      setDailyPerpTrades(DailyBTCPerpTrades);
+    setPerpVol(PerpVol);
+    setDailyPerpVol(DailyPerpVol);
 
-      // BTC fundingRates
-      const BTChourlyFunding = queryFundingRates(data, 'hourly', [2]);
-      const BTCdailyFunding = queryFundingRates(data, 'daily', [2]);
-      const BTCannualFunding = queryFundingRates(data, 'annual', [2]);
-      setHourlyFunding(BTChourlyFunding);
-      setDailyFunding(BTCdailyFunding);
-      setAnnualFunding(BTCannualFunding);
+    // Open Interest
+    const OpenInt = queryProduct(data.snapshots, 'open_interest', market);
+    const DailyOpenInt = queryDaily(OpenInt);
 
-      break;
+    setOpenInt(OpenInt);
+    setDailyOpenInt(DailyOpenInt);
 
-    case 'eth-perp':
-      // ETH-Perp Trading Vol
-      const ETHPerpVol = queryProduct(data, 'cumulative_volumes', [4]);
-      const DailyETHPerpVol = queryDaily(ETHPerpVol);
-      setPerpVol(ETHPerpVol);
-      setDailyPerpVol(DailyETHPerpVol);
+    // Perp Trades
+    const PerpTrades = queryTrades(data.snapshots, 'cumulative_trades', market);
+    const DailyPerpTrades = queryDaily(PerpTrades);
 
-      // ETH-Perp Open Interest
-      const ETHOpenInt = queryProduct(data, 'open_interests', [4]);
-      const DailyETHOpenInt = queryDaily(ETHOpenInt);
-      setOpenInt(ETHOpenInt);
-      setDailyOpenInt(DailyETHOpenInt);
+    setPerpTrades(PerpTrades);
+    setDailyPerpTrades(DailyPerpTrades);
 
-      // # of ETH Perp Trades
-      const ETHPerpTrades = queryProduct(data, 'cumulative_trades', [4]);
-      const DailyETHPerpTrades = queryDaily(ETHPerpTrades);
-      setPerpTrades(ETHPerpTrades);
-      setDailyPerpTrades(DailyETHPerpTrades);
+    // Hourly Funding
+    const HourlyFunding = queryFundingRates(data.snapshots, 'hourly', market);
+    setHourlyFunding(HourlyFunding);
 
-      // ETH fundingRates
-      const ETHhourlyFunding = queryFundingRates(data, 'hourly', [4]);
-      const ETHdailyFunding = queryFundingRates(data, 'daily', [4]);
-      const ETHannualFunding = queryFundingRates(data, 'annual', [4]);
-      setHourlyFunding(ETHhourlyFunding);
-      setDailyFunding(ETHdailyFunding);
-      setAnnualFunding(ETHannualFunding);
+    // Daily Funding
+    const DailyFunding = queryFundingRates(data.snapshots, 'daily', market);
+    setDailyFunding(DailyFunding);
 
-      break;
-
-    default:
-      break;
+    // Annualized Funding
+    const AnnualFunding = queryFundingRates(data.snapshots, 'annual', market);
+    setAnnualFunding(AnnualFunding);
   }
 };

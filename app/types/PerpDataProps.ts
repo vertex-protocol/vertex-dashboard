@@ -10,4 +10,5 @@ export interface PerpDataProps {
   setHourlyFunding: React.Dispatch<React.SetStateAction<number[]>>;
   setDailyFunding: React.Dispatch<React.SetStateAction<number[]>>;
   setAnnualFunding: React.Dispatch<React.SetStateAction<number[]>>;
+  filterdProducts: any;
 }

@@ -6,7 +6,6 @@ import IntervalTab from '../../components/main/IntervalTab';
 import FourGridLayout from '../../components/layout/FourGridLayout';
 import MktDropdown from '../../components/main/MktDropdown';
 import ControlsLayout from '../../components/layout/ControlsLayout';
-import { PerpValues } from './PerpValues';
 import { IntervalProps } from '@/app/types/IntervalProps';
 import { useAppSelector } from '@/app/redux/store';
 import ChartsLayout from '@/app/components/layout/ChartsLayout';
@@ -16,9 +15,10 @@ import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
 import LineChart from '@/app/components/main/chart/LineChart';
 import { queryTime } from '@/app/hooks/queryTime';
 import { fetchPerpData } from '@/app/hooks/fetchPerpData';
+import { useFilterProducts } from '@/app/hooks/useFilterProducts';
 
 export default function Perps({ interval, setInterval }: IntervalProps) {
-  const [market, setMarket] = useState('all-perp');
+  const [market, setMarket] = useState('all');
 
   // Perp Trading Vol
   const [PerpVol, setPerpVol] = useState<number[]>([]);
@@ -41,6 +41,9 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
   // Hourly Funding Rate
   const [annualFunding, setAnnualFunding] = useState<number[]>([]);
 
+  const products = useAppSelector((state) => state.product.products);
+  const filterdProducts = useFilterProducts(products);
+
   const data = useAppSelector((state) => state.data.snapshots);
   const dates = queryTime(data);
 
@@ -57,6 +60,7 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
       setHourlyFunding,
       setDailyFunding,
       setAnnualFunding,
+      filterdProducts,
     });
   }, [market, interval, data]);
 
@@ -67,32 +71,32 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
           title="Total Perpetual Volume"
           stat={2.21}
           daily={14.08}
-          format={true}
+          currency={true}
         />
         <Card
           title="Perpetual Volume (24h)"
           stat={2.21}
           daily={14.08}
-          format={true}
+          currency={true}
         />
         <Card
           title="Total Open Interest"
           stat={1023}
           daily={14.08}
-          format={true}
+          currency={true}
         />
         <Card
           title="Perpetual Trades (24h)"
           stat={202}
           daily={14}
-          format={false}
+          currency={false}
         />
       </FourGridLayout>
       <ControlsLayout justify="between">
         <MktDropdown
           market={market}
           setMarket={setMarket}
-          values={PerpValues}
+          values={filterdProducts?.PerpProducts}
         />
         <IntervalTab interval={interval} setInterval={setInterval} />
       </ControlsLayout>
@@ -131,7 +135,7 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
             daily={DailyPerpTrades}
           />
         </ChartContainer>
-        {market !== 'all-perp' && (
+        {market !== 'all' && (
           <>
             <ChartContainer>
               <ChartHeader

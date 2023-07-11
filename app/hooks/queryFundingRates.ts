@@ -1,54 +1,37 @@
-export function queryFundingRates(
-  data: any,
-  type: string,
-  productId: number[],
-) {
+import BigNumber from 'bignumber.js';
+
+export function queryFundingRates(data: any, type: string, productId: any) {
   const result: number[] = [];
 
   data.forEach((obj: any) => {
-    if (obj['funding_rates']) {
-      if (type == 'hourly') {
-        // search element based on productId
-        const arr = obj['funding_rates'][productId[0]];
-
-        // sum up the element
-        const sum = arr.reduce((acc: number, val: number) => acc + val, 0);
-
-        // divide by 24
-        const value = sum / 24;
-
-        result.push(value);
-      } else if (type == 'daily') {
-        // search element based on productId
-        const arr = obj['funding_rates'][productId[0]];
-
-        // formating to daily funding rate
-        const dailyArr = arr.map((element: number) => element * 24);
-
-        // sum up the element
-        const sum = dailyArr.reduce((acc: number, val: number) => acc + val, 0);
-
-        // divide by 24
-        const value = sum / 24;
-
-        result.push(value);
-      } else if (type == 'annual') {
-        // search element based on productId
-        const arr = obj['funding_rates'][productId[0]];
-
-        // formating to daily funding rate
-        const dailyArr = arr.map((element: number) => element * 24 * 365);
-
-        // sum up the element
-        const sum = dailyArr.reduce((acc: number, val: number) => acc + val, 0);
-
-        // divide by 24
-        const value = sum / 24;
-
-        result.push(value);
+    if (type === 'hourly') {
+      if (obj['funding_rates'][productId]) {
+        const value = obj['funding_rates'][productId];
+        const formattedValue = new BigNumber(value).dividedBy(1e18).toNumber();
+        result.push(formattedValue);
+      } else {
+        result.push(0);
+      }
+    } else if (type === 'daily') {
+      if (obj['funding_rates'][productId]) {
+        const value = obj['funding_rates'][productId];
+        const formattedValue =
+          new BigNumber(value).dividedBy(1e18).toNumber() * 24;
+        result.push(formattedValue);
+      } else {
+        result.push(0);
+      }
+    } else if (type === 'annual') {
+      if (obj['funding_rates'][productId]) {
+        const value = obj['funding_rates'][productId];
+        const formattedValue =
+          new BigNumber(value).dividedBy(1e18).toNumber() * 24 * 365;
+        result.push(formattedValue);
+      } else {
+        result.push(0);
       }
     }
   });
 
-  return result;
+  return result.reverse();
 }

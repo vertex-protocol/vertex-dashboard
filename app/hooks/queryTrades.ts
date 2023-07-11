@@ -1,6 +1,4 @@
-import BigNumber from 'bignumber.js';
-
-export function queryProduct(
+export function queryTrades(
   data: any,
   type: string,
   productId: number | string,
@@ -8,9 +6,8 @@ export function queryProduct(
   const result: number[] = [];
   data.forEach((obj: any) => {
     if (obj[type][productId]) {
-      const num = parseInt(obj[type][productId]);
-      const formattedNum = new BigNumber(num).dividedBy(1e18).toNumber();
-      result.push(formattedNum);
+      const num = obj[type][productId];
+      result.push(num);
     } else {
       result.push(0); // Push 0 if the property doesn't exist
     }

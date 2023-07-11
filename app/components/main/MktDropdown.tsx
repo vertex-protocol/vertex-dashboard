@@ -10,7 +10,7 @@ import {
 interface IntervalProps {
   market: string;
   setMarket: React.Dispatch<React.SetStateAction<string>>;
-  values: { value: string; label: string }[];
+  values: { product_id: string; symbol: string }[];
 }
 
 export default function MarketDropdown({
@@ -18,6 +18,10 @@ export default function MarketDropdown({
   setMarket,
   values,
 }: IntervalProps) {
+  if (!values) {
+    return null;
+  }
+
   return (
     <Select defaultValue={market} onValueChange={(value) => setMarket(value)}>
       <SelectTrigger>
@@ -29,8 +33,8 @@ export default function MarketDropdown({
       </SelectTrigger>
       <SelectContent>
         {values.map((item) => (
-          <SelectItem key={item.value} value={item.value}>
-            {item.label}
+          <SelectItem key={item.product_id} value={item.product_id}>
+            {item.symbol}
           </SelectItem>
         ))}
       </SelectContent>

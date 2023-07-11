@@ -27,8 +27,8 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
   const [SpotTrades, setSpotTrades] = useState<number[]>([]);
   const [DailySpotTrades, setDailySpotTrades] = useState<number[]>([]);
 
-  const data = useAppSelector((state) => state.data.snapshots);
-  const dates = queryTime(data);
+  const data = useAppSelector((state) => state.data);
+  const dates = queryTime(data.snapshots);
 
   useEffect(() => {
     fetchSpotData({

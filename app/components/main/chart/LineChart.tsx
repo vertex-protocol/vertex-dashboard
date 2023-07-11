@@ -1,4 +1,5 @@
 import ReactECharts from 'echarts-for-react';
+import numeral from 'numeral';
 
 interface LineBarProps {
   dates: string[];
@@ -46,7 +47,9 @@ export default function LineChart({ dates, data }: LineBarProps) {
           },
         },
         axisLabel: {
-          formatter: '{value}',
+          formatter: (value: number) => {
+            return numeral(value).format('0.0000%');
+          },
         },
       },
     ],
@@ -61,7 +64,7 @@ export default function LineChart({ dates, data }: LineBarProps) {
         },
         tooltip: {
           valueFormatter: function (value: any) {
-            return value as number;
+            return numeral(value).format('0.00000%');
           },
         },
         data: data,
