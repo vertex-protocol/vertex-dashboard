@@ -6,7 +6,7 @@ export function queryProduct(
   productId: number | string,
 ) {
   const result: number[] = [];
-  data.forEach((obj: any) => {
+  data?.snapshots.forEach((obj: any) => {
     if (obj[type][productId]) {
       const num = parseInt(obj[type][productId]);
       const formattedNum = new BigNumber(num).dividedBy(1e18).toNumber();

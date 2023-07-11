@@ -1,5 +1,5 @@
 export interface PerpDataProps {
-  data: any;
+  snapshotData: any;
   market: string;
   setPerpVol: React.Dispatch<React.SetStateAction<number[]>>;
   setDailyPerpVol: React.Dispatch<React.SetStateAction<number[]>>;

@@ -5,7 +5,7 @@ export function queryAllTrades(data: any, type: string, products: any) {
     (product: any) => product.product_id,
   );
 
-  data.forEach((obj: any) => {
+  data?.snapshots.forEach((obj: any) => {
     const keys = Object.keys(obj[type]).map(Number);
     let sum = 0;
 

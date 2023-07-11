@@ -4,7 +4,7 @@ export function queryTrades(
   productId: number | string,
 ) {
   const result: number[] = [];
-  data.forEach((obj: any) => {
+  data?.snapshots.forEach((obj: any) => {
     if (obj[type][productId]) {
       const num = obj[type][productId];
       result.push(num);
