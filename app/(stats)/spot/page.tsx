@@ -31,16 +31,18 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
   const filterdProducts = useFilterProducts(products);
 
   const data = useAppSelector((state) => state.data);
-  const dates = queryTime(data.snapshots);
+  const snapshotData = data.snapshots;
+  const dates = queryTime(snapshotData);
 
   useEffect(() => {
     fetchSpotData({
-      data,
+      snapshotData,
       market,
       setSpotVol,
       setDailySpotVol,
       setSpotTrades,
       setDailySpotTrades,
+      filterdProducts,
     });
   }, [market, interval, data]);
 
@@ -49,21 +51,22 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
       <ThreeGridLayout>
         <Card
           title="Total Spot Volume"
-          stat={2.21}
-          daily={14.08}
-          format={true}
+          stat={SpotVol[SpotVol.length - 1]}
+          currency={true}
+          loading={data.loading}
         />
         <Card
           title="Spot Volume (24h)"
-          stat={2.21}
+          stat={DailySpotVol[DailySpotVol.length - 1]}
           daily={14.08}
-          format={true}
+          currency={true}
+          loading={data.loading}
         />
         <Card
           title="Spot Trades (24h)"
-          stat={1023}
-          daily={14.08}
-          format={false}
+          stat={DailySpotTrades[DailySpotTrades.length - 1]}
+          currency={false}
+          loading={data.loading}
         />
       </ThreeGridLayout>
       <ControlsLayout justify="between">
