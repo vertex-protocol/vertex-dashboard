@@ -10,7 +10,7 @@ import {
 interface IntervalProps {
   market: string;
   setMarket: React.Dispatch<React.SetStateAction<string>>;
-  values: { product_id: string; symbol: string }[];
+  values: any;
 }
 
 export default function MarketDropdown({
