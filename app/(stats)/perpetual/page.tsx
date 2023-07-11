@@ -70,25 +70,25 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
       <FourGridLayout>
         <Card
           title="Total Perpetual Volume"
-          stat={2.21}
+          stat={PerpVol[PerpVol.length - 1]}
           currency={true}
           loading={data.loading}
         />
         <Card
           title="Perpetual Volume (24h)"
-          stat={2.21}
+          stat={DailyPerpVol[DailyPerpVol.length - 1]}
           currency={true}
           loading={data.loading}
         />
         <Card
           title="Total Open Interest"
-          stat={1023}
+          stat={OpenInt[OpenInt.length - 1]}
           currency={true}
           loading={data.loading}
         />
         <Card
           title="Perpetual Trades (24h)"
-          stat={202}
+          stat={DailyPerpTrades[DailyPerpTrades.length - 1]}
           currency={false}
           loading={data.loading}
         />
