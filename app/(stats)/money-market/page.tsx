@@ -6,7 +6,6 @@ import IntervalTab from '../../components/main/IntervalTab';
 import ThreeGridLayout from '../../components/layout/ThreeGridLayout';
 import ControlsLayout from '../../components/layout/ControlsLayout';
 import MktDropdown from '../../components/main/MktDropdown';
-import { MarketValues } from './MarketValues';
 import { IntervalProps } from '@/app/types/IntervalProps';
 import ChartsLayout from '@/app/components/layout/ChartsLayout';
 import ChartContainer from '@/app/components/main/chart/ChartContainer';
@@ -16,9 +15,10 @@ import LineChart from '@/app/components/main/chart/LineChart';
 import { useAppSelector } from '@/app/redux/store';
 import { queryTime } from '@/app/hooks/queryTime';
 import { fetchMMData } from '@/app/hooks/fetchMMData';
+import { useFilterProducts } from '@/app/hooks/useFilterProducts';
 
 export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
-  const [market, setMarket] = useState('all-mkt');
+  const [market, setMarket] = useState('all');
 
   // Deposits
   const [Deposits, setDeposits] = useState<number[]>([]);
@@ -33,6 +33,9 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
 
   // Borrow Rate
   const [BorrowRate, setBorrowRate] = useState<number[]>([]);
+
+  const products = useAppSelector((state) => state.product.products);
+  const filterdProducts = useFilterProducts(products);
 
   const data = useAppSelector((state) => state.data.snapshots);
   const dates = queryTime(data);
@@ -61,7 +64,7 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
         <MktDropdown
           market={market}
           setMarket={setMarket}
-          values={MarketValues}
+          values={filterdProducts?.MMProducts}
         />
         <IntervalTab interval={interval} setInterval={setInterval} />
       </ControlsLayout>
@@ -88,7 +91,7 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
             daily={DailyBorrows}
           />
         </ChartContainer>
-        {market !== 'all-mkt' && (
+        {market !== 'all' && (
           <>
             <ChartContainer>
               <ChartHeader
