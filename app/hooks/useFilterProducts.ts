@@ -11,7 +11,8 @@ export function useFilterProducts(products: Product[] | null) {
     product.symbol.includes('PERP'),
   );
   const SpotProducts = products.filter(
-    (product) => !product.symbol.includes('PERP'),
+    (product) =>
+      !product.symbol.includes('PERP') && !product.symbol.includes('USDC'),
   );
   const MMProducts = products.filter(
     (product) => !product.symbol.includes('PERP'),
