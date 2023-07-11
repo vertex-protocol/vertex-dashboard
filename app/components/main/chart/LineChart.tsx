@@ -1,12 +1,14 @@
 import ReactECharts from 'echarts-for-react';
 import numeral from 'numeral';
+import Spinner from '../Spinner';
 
 interface LineBarProps {
   dates: string[];
   data: number[];
+  loading: boolean;
 }
 
-export default function LineChart({ dates, data }: LineBarProps) {
+export default function LineChart({ dates, data, loading }: LineBarProps) {
   const option = {
     tooltip: {
       trigger: 'axis',
@@ -72,8 +74,12 @@ export default function LineChart({ dates, data }: LineBarProps) {
     ],
   };
   return (
-    <div>
-      <ReactECharts option={option} />
-    </div>
+    <>
+      {loading ? (
+        <Spinner className="h-64" />
+      ) : (
+        <ReactECharts option={option} />
+      )}
+    </>
   );
 }

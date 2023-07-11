@@ -44,12 +44,13 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
   const products = useAppSelector((state) => state.product.products);
   const filterdProducts = useFilterProducts(products);
 
-  const data = useAppSelector((state) => state.data.snapshots);
-  const dates = queryTime(data);
+  const data = useAppSelector((state) => state.data);
+  const snapshotData = data.snapshots;
+  const dates = queryTime(snapshotData);
 
   useEffect(() => {
     fetchPerpData({
-      data,
+      snapshotData,
       market,
       setPerpVol,
       setDailyPerpVol,
@@ -70,26 +71,26 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
         <Card
           title="Total Perpetual Volume"
           stat={2.21}
-          daily={14.08}
           currency={true}
+          loading={data.loading}
         />
         <Card
           title="Perpetual Volume (24h)"
           stat={2.21}
-          daily={14.08}
           currency={true}
+          loading={data.loading}
         />
         <Card
           title="Total Open Interest"
           stat={1023}
-          daily={14.08}
           currency={true}
+          loading={data.loading}
         />
         <Card
           title="Perpetual Trades (24h)"
           stat={202}
-          daily={14}
           currency={false}
+          loading={data.loading}
         />
       </FourGridLayout>
       <ControlsLayout justify="between">
@@ -110,6 +111,8 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={PerpVol}
             daily={DailyPerpVol}
+            currency={true}
+            loading={data.loading}
           />
         </ChartContainer>
         <ChartContainer>
@@ -121,6 +124,8 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={OpenInt}
             daily={DailyOpenInt}
+            currency={true}
+            loading={data.loading}
           />
         </ChartContainer>
         <ChartContainer>
@@ -133,6 +138,8 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={PerpTrades}
             daily={DailyPerpTrades}
+            currency={false}
+            loading={data.loading}
           />
         </ChartContainer>
         {market !== 'all' && (
@@ -142,21 +149,33 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
                 title="Funding Rate (1h)"
                 text="The hourly funding rate over the set period."
               ></ChartHeader>
-              <LineChart dates={dates} data={hourlyFunding} />
+              <LineChart
+                dates={dates}
+                data={hourlyFunding}
+                loading={data.loading}
+              />
             </ChartContainer>
             <ChartContainer>
               <ChartHeader
                 title="Funding Rate (Annualized)"
                 text="The annualized funding rate over the set period."
               ></ChartHeader>
-              <LineChart dates={dates} data={annualFunding} />
+              <LineChart
+                dates={dates}
+                data={annualFunding}
+                loading={data.loading}
+              />
             </ChartContainer>
             <ChartContainer>
               <ChartHeader
                 title="Funding Rate (24h)"
                 text="The daily funding rate over the set period."
               ></ChartHeader>
-              <LineChart dates={dates} data={dailyFunding} />
+              <LineChart
+                dates={dates}
+                data={dailyFunding}
+                loading={data.loading}
+              />
             </ChartContainer>
           </>
         )}
