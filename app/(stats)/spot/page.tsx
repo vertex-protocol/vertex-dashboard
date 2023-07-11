@@ -6,7 +6,6 @@ import IntervalTab from '../../components/main/IntervalTab';
 import ThreeGridLayout from '../../components/layout/ThreeGridLayout';
 import ControlsLayout from '../../components/layout/ControlsLayout';
 import MktDropdown from '../../components/main/MktDropdown';
-import { SpotValues } from './SpotValues';
 import { IntervalProps } from '@/app/types/IntervalProps';
 import ChartsLayout from '@/app/components/layout/ChartsLayout';
 import ChartContainer from '@/app/components/main/chart/ChartContainer';
@@ -15,9 +14,10 @@ import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
 import { useAppSelector } from '@/app/redux/store';
 import { queryTime } from '@/app/hooks/queryTime';
 import { fetchSpotData } from '@/app/hooks/fetchSpotData';
+import { useFilterProducts } from '@/app/hooks/useFilterProducts';
 
 export default function Spot({ interval, setInterval }: IntervalProps) {
-  const [market, setMarket] = useState('all-spot');
+  const [market, setMarket] = useState('all');
 
   // Spot Trading Vol
   const [SpotVol, setSpotVol] = useState<number[]>([]);
@@ -26,6 +26,9 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
   // # of Spot Trades
   const [SpotTrades, setSpotTrades] = useState<number[]>([]);
   const [DailySpotTrades, setDailySpotTrades] = useState<number[]>([]);
+
+  const products = useAppSelector((state) => state.product.products);
+  const filterdProducts = useFilterProducts(products);
 
   const data = useAppSelector((state) => state.data);
   const dates = queryTime(data.snapshots);
@@ -67,7 +70,7 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
         <MktDropdown
           market={market}
           setMarket={setMarket}
-          values={SpotValues}
+          values={filterdProducts?.SpotProducts}
         />
         <IntervalTab interval={interval} setInterval={setInterval} />
       </ControlsLayout>
