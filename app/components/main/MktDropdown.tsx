@@ -32,7 +32,7 @@ export default function MarketDropdown({
         </div>
       </SelectTrigger>
       <SelectContent>
-        {values.map((item) => (
+        {values.map((item: any) => (
           <SelectItem key={item.product_id} value={item.product_id}>
             {item.symbol}
           </SelectItem>
