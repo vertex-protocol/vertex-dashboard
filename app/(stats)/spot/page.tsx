@@ -58,7 +58,6 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
         <Card
           title="Spot Volume (24h)"
           stat={DailySpotVol[DailySpotVol.length - 1]}
-          daily={14.08}
           currency={true}
           loading={data.loading}
         />
@@ -87,6 +86,8 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={SpotVol}
             daily={DailySpotVol}
+            currency={true}
+            loading={data.loading}
           />
         </ChartContainer>
         <ChartContainer>
@@ -99,6 +100,8 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={SpotTrades}
             daily={DailySpotTrades}
+            currency={false}
+            loading={data.loading}
           />
         </ChartContainer>
       </ChartsLayout>
