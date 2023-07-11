@@ -27,7 +27,7 @@ export const fetchPerpData = ({
     const PerpVol = queryAllProduct(
       snapshotData,
       'cumulative_volumes',
-      filterdProducts,
+      filterdProducts.PerpProducts,
     );
     const DailyPerpVol = queryDaily(PerpVol);
 
@@ -38,7 +38,7 @@ export const fetchPerpData = ({
     const OpenInt = queryAllProduct(
       snapshotData,
       'open_interest',
-      filterdProducts,
+      filterdProducts.PerpProducts,
     );
     const DailyOpenInt = queryDaily(OpenInt);
 
@@ -49,7 +49,7 @@ export const fetchPerpData = ({
     const PerpTrades = queryAllTrades(
       snapshotData,
       'cumulative_trades',
-      filterdProducts,
+      filterdProducts.PerpProducts,
     );
     const DailyPerpTrades = queryDaily(PerpTrades);
 

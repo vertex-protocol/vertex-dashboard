@@ -1,9 +1,7 @@
 export function queryAllTrades(data: any, type: string, products: any) {
   const result: number[] = [];
 
-  const productIds = products.PerpProducts.map(
-    (product: any) => product.product_id,
-  );
+  const productIds = products.map((product: any) => product.product_id);
 
   data?.snapshots.forEach((obj: any) => {
     const keys = Object.keys(obj[type]).map(Number);
