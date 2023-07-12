@@ -5,11 +5,13 @@ import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 import statsReducer from './statsSlice';
 import productsSlice from './productsSlice';
+import pricesSlice from './pricesSlice';
 
 export const store = configureStore({
   reducer: {
     data: statsReducer,
     product: productsSlice,
+    prices: pricesSlice,
   },
 });
 
