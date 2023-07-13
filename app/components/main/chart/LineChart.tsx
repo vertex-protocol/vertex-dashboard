@@ -5,10 +5,20 @@ import Spinner from '../Spinner';
 interface LineBarProps {
   dates: string[];
   data: number[];
+  data_1: string;
+  currency: boolean;
   loading: boolean;
 }
 
-export default function LineChart({ dates, data, loading }: LineBarProps) {
+export default function LineChart({
+  dates,
+  data,
+  loading,
+  currency,
+  data_1,
+}: LineBarProps) {
+  const currencyFormat = currency ? '$0.[00]a' : '0.[00000]%';
+
   const option = {
     tooltip: {
       trigger: 'axis',
@@ -50,14 +60,14 @@ export default function LineChart({ dates, data, loading }: LineBarProps) {
         },
         axisLabel: {
           formatter: (value: number) => {
-            return numeral(value).format('0.0000%');
+            return numeral(value).format(currencyFormat);
           },
         },
       },
     ],
     series: [
       {
-        name: 'Cumulative',
+        name: data_1,
         type: 'line',
         showSymbol: false,
         smooth: true,
@@ -66,7 +76,7 @@ export default function LineChart({ dates, data, loading }: LineBarProps) {
         },
         tooltip: {
           valueFormatter: function (value: any) {
-            return numeral(value).format('0.00000%');
+            return numeral(value).format(currencyFormat);
           },
         },
         data: data,

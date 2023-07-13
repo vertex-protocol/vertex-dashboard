@@ -7,6 +7,8 @@ interface LineBarProps {
   dates: string[];
   cumulative: number[] | string[];
   daily: number[];
+  data_1: string;
+  data_2: string;
   loading: boolean;
   currency: boolean;
 }
@@ -15,6 +17,8 @@ export default function LineBarChart({
   dates,
   cumulative,
   daily,
+  data_1,
+  data_2,
   loading,
   currency,
 }: LineBarProps) {
@@ -89,7 +93,7 @@ export default function LineBarChart({
     ],
     series: [
       {
-        name: 'Daily',
+        name: data_1,
         type: 'bar',
         tooltip: {
           valueFormatter: function (value: any) {
@@ -106,7 +110,7 @@ export default function LineBarChart({
         data: daily,
       },
       {
-        name: 'Cumulative',
+        name: data_2,
         type: 'line',
         showSymbol: false,
         smooth: true,
