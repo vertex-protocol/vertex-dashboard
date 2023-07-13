@@ -13,6 +13,7 @@ import Perpetual from './perpetual/page';
 import Spot from './spot/page';
 import MoneyMarket from './money-market/page';
 import { fetchProducts } from '../redux/productsSlice';
+import { fetchPrices } from '../redux/pricesSlice';
 
 export default function DashboardLayout() {
   const router = useRouter();
@@ -33,6 +34,11 @@ export default function DashboardLayout() {
   // fetch products from symbol endpoint
   useEffect(() => {
     dispatch(fetchProducts());
+  }, [dispatch]);
+
+  // fetch prices
+  useEffect(() => {
+    dispatch(fetchPrices());
   }, [dispatch]);
 
   return (
