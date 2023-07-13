@@ -4,6 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { PricesProps } from '../types/PricesDataProps';
+import { queryPrices } from '../hooks/queryPrices';
 
 const initialState: PricesProps = {
   prices: null,
@@ -15,8 +16,9 @@ const base = 'https://prod.vertexprotocol-backend.com';
 
 export const fetchPrices = createAsyncThunk('stats/fetcPrices', async () => {
   const response = await axios.get(`${base}/query?type=all_products`);
-  console.log(response);
-  return response.data;
+  const prices = queryPrices(response.data.data.spot_products);
+
+  return prices;
 });
 
 const pricesSlice = createSlice({
