@@ -14,7 +14,7 @@ export const fetchSpotData = ({
   setDailySpotTrades,
   filterdProducts,
 }: SpotDataProps) => {
-  if (!snapshotData) return; // Return early if data is not available
+  if (!snapshotData) return;
 
   if (market === 'all') {
     // Spot Trading Vol
@@ -24,7 +24,7 @@ export const fetchSpotData = ({
       filterdProducts.SpotProducts,
     );
     const DailySpotVol = queryDaily(SpotVol);
-
+    SpotVol.shift();
     setSpotVol(SpotVol);
     setDailySpotVol(DailySpotVol);
 
@@ -35,21 +35,21 @@ export const fetchSpotData = ({
       filterdProducts.SpotProducts,
     );
     const DailySpotTrades = queryDaily(SpotTrades);
-
+    SpotTrades.shift();
     setSpotTrades(SpotTrades);
     setDailySpotTrades(DailySpotTrades);
   } else {
     // Spot Trading Vol
     const SpotVol = queryProduct(snapshotData, 'cumulative_volumes', market);
     const DailySpotVol = queryDaily(SpotVol);
-
+    SpotVol.shift();
     setSpotVol(SpotVol);
     setDailySpotVol(DailySpotVol);
 
     // Spot Trades
     const SpotTrades = queryTrades(snapshotData, 'cumulative_trades', market);
     const DailySpotTrades = queryDaily(SpotTrades);
-
+    SpotTrades.shift();
     setSpotTrades(SpotTrades);
     setDailySpotTrades(DailySpotTrades);
   }

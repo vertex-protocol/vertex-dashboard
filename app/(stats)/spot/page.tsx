@@ -86,6 +86,8 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={SpotVol}
             daily={DailySpotVol}
+            data_1="Daily Spot Vol"
+            data_2="Cumulative Spot Vol"
             currency={true}
             loading={data.loading}
           />
@@ -93,13 +95,15 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
         <ChartContainer>
           <ChartHeader
             title="# of Spot Trades"
-            text="The daily vs cumulative spot trades over the set period.
+            text="The daily vs cumulative spot trades on Vertex.
             "
           />
           <LineBarChart
             dates={dates}
             cumulative={SpotTrades}
             daily={DailySpotTrades}
+            data_1="Daily Spot Trades"
+            data_2="Cumulative Spot Trades"
             currency={false}
             loading={data.loading}
           />
