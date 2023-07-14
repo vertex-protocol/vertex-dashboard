@@ -20,19 +20,32 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
   const data = useAppSelector((state) => state.data);
 
   const dates = queryTime(data.snapshots);
+
+  // Trading Vol
   const cumulativeVol = queryTotal(data.snapshots, 'cumulative_volumes');
+  const dailyVol = queryDaily(cumulativeVol);
+  cumulativeVol.shift();
+
+  // Fees
   const cumulativeFees = queryTotal(data.snapshots, 'cumulative_taker_fees');
+  const dailyFees = queryDaily(cumulativeFees);
+  cumulativeFees.shift();
+
+  // Liquidation
   const cumulativeLiq = queryTotal(
     data.snapshots,
     'cumulative_liquidation_amount',
   );
-  const cumulativeUsers = queryUsers(data.snapshots);
-  const DAU = queryDAU(data.snapshots);
-
-  const dailyVol = queryDaily(cumulativeVol);
-  const dailyFees = queryDaily(cumulativeFees);
   const dailyLiq = queryDaily(cumulativeLiq);
+  cumulativeLiq.shift();
+
+  // Users
+  const cumulativeUsers = queryUsers(data.snapshots);
   const dailyUsers = queryDaily(cumulativeUsers);
+  cumulativeUsers.shift();
+
+  // DAU
+  const DAU = queryDAU(data.snapshots);
 
   return (
     <>
@@ -58,8 +71,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
         />
         <Card
           title="Fees (24h)"
-          stat={2.21}
-          daily={14.08}
+          stat={dailyFees[dailyFees.length - 1]}
           currency={true}
           loading={data.loading}
         />
@@ -77,6 +89,8 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={cumulativeVol}
             daily={dailyVol}
+            data_1="Daily Volume"
+            data_2="Cumulative Volume"
             loading={data.loading}
             currency={true}
           />
@@ -84,25 +98,29 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
         <ChartContainer>
           <ChartHeader
             title="Users"
-            text="The daily vs cumulative users on Vertex."
+            text="The daily new users vs cumulative users on Vertex."
           />
           <LineBarChart
             dates={dates}
             cumulative={cumulativeUsers}
             daily={dailyUsers}
+            data_1="New Users"
+            data_2="Cumulative Users"
             loading={data.loading}
             currency={false}
           />
         </ChartContainer>
         <ChartContainer>
           <ChartHeader
-            title="Fees"
-            text="The daily vs cumulative fees on Vertex."
+            title="Protocol Fees"
+            text="Cumulative trading fees paid by traders."
           />
           <LineBarChart
             dates={dates}
             cumulative={cumulativeFees}
             daily={dailyFees}
+            data_1="Daily Fees"
+            data_2="Cumulative Fees"
             loading={data.loading}
             currency={true}
           />
@@ -116,6 +134,8 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={cumulativeLiq}
             daily={dailyLiq}
+            data_1="Daily Liquadations"
+            data_2="Cumulative Liquadations"
             loading={data.loading}
             currency={true}
           />
