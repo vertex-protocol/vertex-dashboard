@@ -13,7 +13,7 @@ export function queryTime(data: any) {
     }
   });
 
-  dates.shift(); // Remove the first element
+  dates.pop(); // Remove the first element
 
   return dates.reverse();
 }
