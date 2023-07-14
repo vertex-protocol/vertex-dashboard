@@ -142,7 +142,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
         <ChartContainer>
           <ChartHeader
             title="Liquidations"
-            text="The daily vs cumulative Liquidations on Vertex."
+            text="The daily vs cumulative liquidations on Vertex."
           />
           <LineBarChart
             dates={dates}
