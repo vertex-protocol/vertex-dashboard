@@ -1,5 +1,5 @@
 import { Tabs, TabsList, TabsTrigger } from '../../components/ui/IntervalTabs';
-import { IntervalProps } from '@/app/types/IntervalProps';
+import IntervalProps from '../../types/IntervalProps';
 
 // Values are increased by 1 to calculate daily diff
 export default function IntervalTab({ interval, setInterval }: IntervalProps) {

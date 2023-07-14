@@ -8,10 +8,10 @@ import { fetchData } from '../redux/statsSlice';
 
 import Nav from '../components/main/NavBar';
 import { Tabs, TabsList, TabsTrigger } from '../components/ui/Tabs';
-import Overview from './overview/page';
-import Perpetual from './perpetual/page';
-import Spot from './spot/page';
-import MoneyMarket from './money-market/page';
+import Overview from './overview/OverviewPage';
+import Perpetual from './perpetual/PerpetualPage';
+import Spot from './spot/SpotPage';
+import MoneyMarket from './money-market/MoneyMarketPage';
 import Restricted from '../components/main/Restricted';
 import { fetchProducts } from '../redux/productsSlice';
 import { fetchPrices } from '../redux/pricesSlice';
