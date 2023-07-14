@@ -61,6 +61,7 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
       setAnnualFunding,
       filterdProducts,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [market, interval, data]);
 
   return (
