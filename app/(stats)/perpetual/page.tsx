@@ -6,7 +6,7 @@ import IntervalTab from '../../components/main/IntervalTab';
 import FourGridLayout from '../../components/layout/FourGridLayout';
 import MktDropdown from '../../components/main/MktDropdown';
 import ControlsLayout from '../../components/layout/ControlsLayout';
-import { IntervalProps } from '@/app/types/IntervalProps';
+import IntervalProps from '@/app/types/IntervalProps';
 import { useAppSelector } from '@/app/redux/store';
 import ChartsLayout from '@/app/components/layout/ChartsLayout';
 import ChartContainer from '@/app/components/main/chart/ChartContainer';
