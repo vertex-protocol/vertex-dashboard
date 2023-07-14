@@ -1,103 +1,68 @@
 import { queryProduct } from './queryProduct';
+import { queryAllProduct } from './queryAllProduct';
 import { queryDaily } from './queryDaily';
 import { MMDataProps } from '../types/MMDataProps';
+import { queryRates } from './queryRates';
+import { queryTVL } from './queryTVL';
+import { queryAllTVL } from './queryAllTVL';
 
 export const fetchMMData = ({
-  data,
+  snapshotData,
   market,
-  setDeposits,
-  setDailyDeposits,
+  setTVL,
+  setNetFlows,
   setBorrows,
   setDailyBorrows,
   setDepositRate,
   setBorrowRate,
+  filterdProducts,
+  prices,
 }: MMDataProps) => {
-  if (!data) return; // Return early if data is not available
+  if (!snapshotData) return; // Return early if data is not available
 
-  switch (market) {
-    case 'all-mkt':
-      // Deposits
-      const allDeposit = queryProduct(data, 'total_deposits', [0, 1, 3]);
-      const allDailyDeposits = queryDaily(allDeposit);
-      setDeposits(allDeposit);
-      setDailyDeposits(allDailyDeposits);
+  if (market === 'all') {
+    // TVL & Net Inflows/ Outflows
+    const allTVL = queryAllTVL(
+      snapshotData,
+      prices,
+      filterdProducts.MMProducts,
+    );
+    const NetFlows = queryDaily(allTVL);
+    allTVL.shift();
+    setTVL(allTVL);
+    setNetFlows(NetFlows);
 
-      // Borrows
-      const allBorrows = queryProduct(data, 'total_borrows', [0, 1, 3]);
-      const allDailyBorrows = queryDaily(allBorrows);
-      setBorrows(allBorrows);
-      setDailyBorrows(allDailyBorrows);
+    // Borrows
+    const Borrows = queryAllProduct(
+      snapshotData,
+      'total_borrows',
+      filterdProducts.MMProducts,
+    );
+    const DailyBorrows = queryDaily(Borrows);
+    setBorrows(Borrows);
+    setDailyBorrows(DailyBorrows);
+  } else {
+    // TVL & Net Inflows/Outflows
+    const Deposits = queryProduct(snapshotData, 'total_deposits', market);
+    const TVL = queryTVL(Deposits, prices, market);
+    const NetFlows = queryDaily(Deposits);
+    const NetFlowsIn$ = NetFlows.map((obj: number) => obj * prices[market]);
+    TVL.shift();
+    setTVL(TVL);
+    setNetFlows(NetFlowsIn$);
 
-      break;
+    // Borrows
+    const Borrows = queryProduct(snapshotData, 'total_borrows', market);
+    const DailyBorrows = queryDaily(Borrows);
+    setBorrows(Borrows);
+    setDailyBorrows(DailyBorrows);
 
-    case 'usdc':
-      // USDC Deposits
-      const USDCdeposit = queryProduct(data, 'total_deposits', [0]);
-      const DailyUSDCdeposit = queryDaily(USDCdeposit);
-      setDeposits(USDCdeposit);
-      setDailyDeposits(DailyUSDCdeposit);
+    // Deposit Rates
+    const DepositRates = queryRates(snapshotData, 'deposit_rates', market);
+    setDepositRate(DepositRates);
 
-      // USDC Borrows
-      const USDCborrow = queryProduct(data, 'total_borrows', [0]);
-      const DailyUSDCborrow = queryDaily(USDCborrow);
-      setBorrows(USDCborrow);
-      setDailyBorrows(DailyUSDCborrow);
-
-      // USDC Deposit Rates
-      const USDCdepositRate = queryProduct(data, 'deposit_rates', [0]);
-      setDepositRate(USDCdepositRate);
-
-      // USDC Borrow Rates
-      const USDCborrowRate = queryProduct(data, 'borrow_rates', [0]);
-      setBorrowRate(USDCborrowRate);
-
-      break;
-
-    case 'btc':
-      // BTC Deposits
-      const BTCdeposit = queryProduct(data, 'total_deposits', [1]);
-      const DailyBTCdeposit = queryDaily(BTCdeposit);
-      setDeposits(BTCdeposit);
-      setDailyDeposits(DailyBTCdeposit);
-
-      // BTC Borrows
-      const BTCborrow = queryProduct(data, 'total_borrows', [1]);
-      const DailyBTCborrow = queryDaily(BTCborrow);
-      setBorrows(BTCborrow);
-      setDailyBorrows(DailyBTCborrow);
-
-      // BTC Deposit Rates
-      const BTCdepositRate = queryProduct(data, 'deposit_rates', [1]);
-      setDepositRate(BTCdepositRate);
-
-      // BTC Borrow Rates
-      const BTCborrowRate = queryProduct(data, 'borrow_rates', [1]);
-      setBorrowRate(BTCborrowRate);
-
-    case 'eth':
-      // ETH Deposits
-      const ETHdeposit = queryProduct(data, 'total_deposits', [3]);
-      const DailyETHdeposit = queryDaily(ETHdeposit);
-      setDeposits(ETHdeposit);
-      setDailyDeposits(DailyETHdeposit);
-
-      // ETH Borrows
-      const ETHborrow = queryProduct(data, 'total_borrows', [3]);
-      const DailyETHborrow = queryDaily(ETHborrow);
-      setBorrows(ETHborrow);
-      setDailyBorrows(DailyETHborrow);
-
-      // ETH Deposit Rates
-      const ETHdepositRate = queryProduct(data, 'deposit_rates', [3]);
-      setDepositRate(ETHdepositRate);
-
-      // ETH Borrow Rates
-      const ETHborrowRate = queryProduct(data, 'borrow_rates', [3]);
-      setBorrowRate(ETHborrowRate);
-
-      break;
-
-    default:
-      break;
+    // Borrow Rates
+    const BorrowRates = queryRates(snapshotData, 'borrow_rates', market);
+    setBorrowRate(BorrowRates);
   }
 };

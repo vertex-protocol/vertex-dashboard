@@ -20,9 +20,11 @@ import { useFilterProducts } from '@/app/hooks/useFilterProducts';
 export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
   const [market, setMarket] = useState('all');
 
-  // Deposits
-  const [Deposits, setDeposits] = useState<number[]>([]);
-  const [dailyDeposits, setDailyDeposits] = useState<number[]>([]);
+  // TODO: add Cummulative & Daily Deposits
+
+  // TVL & Net Flow
+  const [TVL, setTVL] = useState<number[]>([]);
+  const [netFlows, setNetFlows] = useState<number[]>([]);
 
   // Borrows
   const [Borrows, setBorrows] = useState<number[]>([]);
@@ -37,28 +39,48 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
   const products = useAppSelector((state) => state.product.products);
   const filterdProducts = useFilterProducts(products);
 
-  const data = useAppSelector((state) => state.data.snapshots);
-  const dates = queryTime(data);
+  const data = useAppSelector((state) => state.data);
+  const snapshotData = data.snapshots;
+  const dates = queryTime(snapshotData);
+
+  const prices = useAppSelector((state) => state.prices.prices);
 
   useEffect(() => {
     fetchMMData({
-      data,
+      snapshotData,
       market,
-      setDeposits,
-      setDailyDeposits,
+      setTVL,
+      setNetFlows,
       setBorrows,
       setDailyBorrows,
       setDepositRate,
       setBorrowRate,
+      filterdProducts,
+      prices,
     });
   }, [market, interval, data]);
 
   return (
     <>
       <ThreeGridLayout>
-        <Card title="Total TVL" stat={2.21} daily={14.08} format={true} />
-        <Card title="Deposited (24h)" stat={2.21} daily={14.08} format={true} />
-        <Card title="Borrowed (24h)" stat={1.23} daily={14.08} format={true} />
+        <Card
+          title="Total TVL"
+          stat={TVL[TVL.length - 1]}
+          currency={true}
+          loading={data.loading}
+        />
+        <Card
+          title="Deposits (24h)"
+          stat={0}
+          currency={true}
+          loading={data.loading}
+        />
+        <Card
+          title="Borrows (24h)"
+          stat={0}
+          currency={true}
+          loading={data.loading}
+        />
       </ThreeGridLayout>
       <ControlsLayout justify="between">
         <MktDropdown
@@ -71,13 +93,32 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
       <ChartsLayout>
         <ChartContainer>
           <ChartHeader
+            title="TVL & Net Inflows/Outflows"
+            text="The TVL and Net Inflows/Outflows of the selected market."
+          />
+          <LineBarChart
+            dates={dates}
+            cumulative={TVL}
+            daily={netFlows}
+            data_1="Net Flows"
+            data_2="TVL"
+            currency={true}
+            loading={data.loading}
+          />
+        </ChartContainer>
+        <ChartContainer>
+          <ChartHeader
             title="Deposits"
             text="The daily vs cumulative deposits on Vertex."
           />
           <LineBarChart
             dates={dates}
-            cumulative={Deposits}
-            daily={dailyDeposits}
+            cumulative={Borrows}
+            daily={DailyBorrows}
+            data_1="Daily Deposits"
+            data_2="Cummulative Deposits"
+            currency={true}
+            loading={data.loading}
           />
         </ChartContainer>
         <ChartContainer>
@@ -89,6 +130,10 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={Borrows}
             daily={DailyBorrows}
+            data_1="Daily Borrows"
+            data_2="Cummulative Borrows"
+            currency={true}
+            loading={data.loading}
           />
         </ChartContainer>
         {market !== 'all' && (
@@ -98,14 +143,26 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
                 title="Deposit Rate"
                 text="The deposit rate over the set period."
               />
-              <LineChart dates={dates} data={DepositRate} />
+              <LineChart
+                dates={dates}
+                data={DepositRate}
+                data_1="Deposit Rate"
+                format={'0.[00000]%'}
+                loading={data.loading}
+              />
             </ChartContainer>
             <ChartContainer>
               <ChartHeader
                 title="Borrow Rate"
                 text="The borrow rate over the set period."
               />
-              <LineChart dates={dates} data={BorrowRate} />
+              <LineChart
+                dates={dates}
+                data={BorrowRate}
+                data_1="Borrow Rate"
+                format={'0.[00000]%'}
+                loading={data.loading}
+              />
             </ChartContainer>
           </>
         )}
