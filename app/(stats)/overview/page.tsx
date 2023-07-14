@@ -8,6 +8,7 @@ import ChartsLayout from '../../components/layout/ChartsLayout';
 import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
 import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
+import LineChart from '@/app/components/main/chart/LineChart';
 import { IntervalProps } from '@/app/types/IntervalProps';
 import { useAppSelector } from '@/app/redux/store';
 import { queryTime } from '@/app/hooks/queryTime';
@@ -65,7 +66,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
         />
         <Card
           title="Daily Active Users"
-          stat={DAU}
+          stat={DAU[DAU.length - 1]}
           currency={false}
           loading={data.loading}
         />
@@ -108,6 +109,19 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             data_2="Cumulative Users"
             loading={data.loading}
             currency={false}
+          />
+        </ChartContainer>
+        <ChartContainer>
+          <ChartHeader
+            title="Daily Active Users"
+            text="The daily active users on Vertex."
+          ></ChartHeader>
+          <LineChart
+            dates={dates}
+            data={DAU}
+            data_1="DAU"
+            format={'0.a'}
+            loading={data.loading}
           />
         </ChartContainer>
         <ChartContainer>

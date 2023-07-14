@@ -124,7 +124,7 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
             dates={dates}
             data={OpenInt}
             data_1="Open Interest"
-            currency={true}
+            format={'$0.[00]a'}
             loading={data.loading}
           />
         </ChartContainer>
@@ -155,7 +155,7 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
                 dates={dates}
                 data={hourlyFunding}
                 data_1="Hourly Funding"
-                currency={false}
+                format={'0.[00000]%'}
                 loading={data.loading}
               />
             </ChartContainer>
@@ -168,7 +168,7 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
                 dates={dates}
                 data={annualFunding}
                 data_1="Annualized Funding"
-                currency={false}
+                format={'0.[00000]%'}
                 loading={data.loading}
               />
             </ChartContainer>
@@ -181,7 +181,7 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
                 dates={dates}
                 data={dailyFunding}
                 data_1="Daily Funding"
-                currency={false}
+                format={'0.[00000]%'}
                 loading={data.loading}
               />
             </ChartContainer>

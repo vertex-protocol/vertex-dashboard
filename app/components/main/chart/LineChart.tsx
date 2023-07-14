@@ -6,7 +6,7 @@ interface LineBarProps {
   dates: string[];
   data: number[];
   data_1: string;
-  currency: boolean;
+  format: string;
   loading: boolean;
 }
 
@@ -14,11 +14,9 @@ export default function LineChart({
   dates,
   data,
   loading,
-  currency,
+  format,
   data_1,
 }: LineBarProps) {
-  const currencyFormat = currency ? '$0.[00]a' : '0.[00000]%';
-
   const option = {
     tooltip: {
       trigger: 'axis',
@@ -60,7 +58,7 @@ export default function LineChart({
         },
         axisLabel: {
           formatter: (value: number) => {
-            return numeral(value).format(currencyFormat);
+            return numeral(value).format(format);
           },
         },
       },
@@ -76,7 +74,7 @@ export default function LineChart({
         },
         tooltip: {
           valueFormatter: function (value: any) {
-            return numeral(value).format(currencyFormat);
+            return numeral(value).format(format);
           },
         },
         data: data,
