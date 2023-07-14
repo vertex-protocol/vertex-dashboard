@@ -32,6 +32,6 @@ export function queryFundingRates(data: any, type: string, productId: any) {
       }
     }
   });
-
+  result.pop(); // delete first element to line up w/ dates
   return result.reverse();
 }

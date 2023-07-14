@@ -4,7 +4,6 @@ export interface PerpDataProps {
   setPerpVol: React.Dispatch<React.SetStateAction<number[]>>;
   setDailyPerpVol: React.Dispatch<React.SetStateAction<number[]>>;
   setOpenInt: React.Dispatch<React.SetStateAction<number[]>>;
-  setDailyOpenInt: React.Dispatch<React.SetStateAction<number[]>>;
   setPerpTrades: React.Dispatch<React.SetStateAction<number[]>>;
   setDailyPerpTrades: React.Dispatch<React.SetStateAction<number[]>>;
   setHourlyFunding: React.Dispatch<React.SetStateAction<number[]>>;

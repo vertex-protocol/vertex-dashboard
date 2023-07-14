@@ -26,7 +26,6 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
 
   // Open Interest
   const [OpenInt, setOpenInt] = useState<number[]>([]);
-  const [DailyOpenInt, setDailyOpenInt] = useState<number[]>([]);
 
   // # of Perp Trades
   const [PerpTrades, setPerpTrades] = useState<number[]>([]);
@@ -55,7 +54,6 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
       setPerpVol,
       setDailyPerpVol,
       setOpenInt,
-      setDailyOpenInt,
       setPerpTrades,
       setDailyPerpTrades,
       setHourlyFunding,
@@ -81,7 +79,7 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
           loading={data.loading}
         />
         <Card
-          title="Total Open Interest"
+          title="Open Interest"
           stat={OpenInt[OpenInt.length - 1]}
           currency={true}
           loading={data.loading}
@@ -111,19 +109,21 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={PerpVol}
             daily={DailyPerpVol}
+            data_1="Daily Perp Vol"
+            data_2="Cumulative Perp Vol"
             currency={true}
             loading={data.loading}
           />
         </ChartContainer>
         <ChartContainer>
           <ChartHeader
-            title="Total Open Interest"
-            text="The daily vs cumulative open interest on Vertex."
+            title="Open Interest"
+            text="The open interest on Vertex."
           ></ChartHeader>
-          <LineBarChart
+          <LineChart
             dates={dates}
-            cumulative={OpenInt}
-            daily={DailyOpenInt}
+            data={OpenInt}
+            data_1="Open Interest"
             currency={true}
             loading={data.loading}
           />
@@ -131,13 +131,15 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
         <ChartContainer>
           <ChartHeader
             title="# of Perp Trades"
-            text="The daily vs cumulative perp trades over the set period.
+            text="The daily vs cumulative perp trades on Vertex.
             "
           ></ChartHeader>
           <LineBarChart
             dates={dates}
             cumulative={PerpTrades}
             daily={DailyPerpTrades}
+            data_1="Daily Perp Trades"
+            data_2="Cumulative Perp Trades"
             currency={false}
             loading={data.loading}
           />
@@ -152,6 +154,8 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
               <LineChart
                 dates={dates}
                 data={hourlyFunding}
+                data_1="Hourly Funding"
+                currency={false}
                 loading={data.loading}
               />
             </ChartContainer>
@@ -163,6 +167,8 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
               <LineChart
                 dates={dates}
                 data={annualFunding}
+                data_1="Annualized Funding"
+                currency={false}
                 loading={data.loading}
               />
             </ChartContainer>
@@ -174,6 +180,8 @@ export default function Perps({ interval, setInterval }: IntervalProps) {
               <LineChart
                 dates={dates}
                 data={dailyFunding}
+                data_1="Daily Funding"
+                currency={false}
                 loading={data.loading}
               />
             </ChartContainer>

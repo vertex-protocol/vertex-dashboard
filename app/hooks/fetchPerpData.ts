@@ -12,7 +12,6 @@ export const fetchPerpData = ({
   setPerpVol,
   setDailyPerpVol,
   setOpenInt,
-  setDailyOpenInt,
   setPerpTrades,
   setDailyPerpTrades,
   setHourlyFunding,
@@ -20,7 +19,7 @@ export const fetchPerpData = ({
   setAnnualFunding,
   filterdProducts,
 }: PerpDataProps) => {
-  if (!snapshotData) return; // Return early if data is not available
+  if (!snapshotData) return;
 
   if (market === 'all') {
     // Perp Trading Vol
@@ -30,7 +29,7 @@ export const fetchPerpData = ({
       filterdProducts.PerpProducts,
     );
     const DailyPerpVol = queryDaily(PerpVol);
-
+    PerpVol.shift(); // remove first element to line it up w/ dates and daily
     setPerpVol(PerpVol);
     setDailyPerpVol(DailyPerpVol);
 
@@ -40,10 +39,8 @@ export const fetchPerpData = ({
       'open_interest',
       filterdProducts.PerpProducts,
     );
-    const DailyOpenInt = queryDaily(OpenInt);
-
+    OpenInt.shift();
     setOpenInt(OpenInt);
-    setDailyOpenInt(DailyOpenInt);
 
     // Perp Trades
     const PerpTrades = queryAllTrades(
@@ -52,28 +49,26 @@ export const fetchPerpData = ({
       filterdProducts.PerpProducts,
     );
     const DailyPerpTrades = queryDaily(PerpTrades);
-
+    PerpTrades.shift();
     setPerpTrades(PerpTrades);
     setDailyPerpTrades(DailyPerpTrades);
   } else {
     // Perp Trading Vol
     const PerpVol = queryProduct(snapshotData, 'cumulative_volumes', market);
     const DailyPerpVol = queryDaily(PerpVol);
-
+    PerpVol.shift();
     setPerpVol(PerpVol);
     setDailyPerpVol(DailyPerpVol);
 
     // Open Interest
     const OpenInt = queryProduct(snapshotData, 'open_interest', market);
-    const DailyOpenInt = queryDaily(OpenInt);
-
+    OpenInt.shift();
     setOpenInt(OpenInt);
-    setDailyOpenInt(DailyOpenInt);
 
     // Perp Trades
     const PerpTrades = queryTrades(snapshotData, 'cumulative_trades', market);
     const DailyPerpTrades = queryDaily(PerpTrades);
-
+    PerpTrades.shift();
     setPerpTrades(PerpTrades);
     setDailyPerpTrades(DailyPerpTrades);
 
