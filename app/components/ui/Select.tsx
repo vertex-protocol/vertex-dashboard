@@ -12,11 +12,7 @@ const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className="flex h-10 w-60 items-center bg-gray-3 border border-gray-2 rounded text-gray-1 text-sm focus:outline-none justify-between px-3"
-    {...props}
-  >
+  <SelectPrimitive.Trigger ref={ref} className={className} {...props}>
     {children}
   </SelectPrimitive.Trigger>
 ));
@@ -29,7 +25,7 @@ const SelectContent = React.forwardRef<
   <SelectPrimitive.Portal>
     <SelectPrimitive.Content
       ref={ref}
-      className="bg-gray-3 border border-gray-2 rounded text-gray-1 text-sm focus:outline-none w-60 mt-2 cursor-pointer"
+      className={className}
       position={position}
       {...props}
     >

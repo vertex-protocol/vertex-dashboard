@@ -2,6 +2,7 @@
 
 import Card from '../../components/main/Card';
 import IntervalTab from '../../components/main/IntervalTab';
+import IntervalDropdown from '@/app/components/main/IntervalDropdown';
 import FourGridLayout from '../../components/layout/FourGridLayout';
 import ControlsLayout from '../../components/layout/ControlsLayout';
 import ChartsLayout from '../../components/layout/ChartsLayout';
@@ -16,8 +17,10 @@ import { queryUsers } from '@/app/hooks/queryUsers';
 import { queryDaily } from '@/app/hooks/queryDaily';
 import { queryDAU } from '@/app/hooks/queryDAU';
 import IntervalProps from '../../types/IntervalProps';
+import { useViewportWidth } from '../../hooks/useViewportWidth';
 
 export default function Overview({ interval, setInterval }: IntervalProps) {
+  const { isMobile } = useViewportWidth();
   const data = useAppSelector((state) => state.data);
 
   const dates = queryTime(data.snapshots);
@@ -78,7 +81,11 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
         />
       </FourGridLayout>
       <ControlsLayout justify="end">
-        <IntervalTab interval={interval} setInterval={setInterval} />
+        {isMobile ? (
+          <IntervalDropdown interval={interval} setInterval={setInterval} />
+        ) : (
+          <IntervalTab interval={interval} setInterval={setInterval} />
+        )}
       </ControlsLayout>
       <ChartsLayout>
         <ChartContainer>

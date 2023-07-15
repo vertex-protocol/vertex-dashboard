@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Card from '../../components/main/Card';
 import IntervalTab from '../../components/main/IntervalTab';
+import IntervalDropdown from '@/app/components/main/IntervalDropdown';
 import ThreeGridLayout from '../../components/layout/ThreeGridLayout';
 import ControlsLayout from '../../components/layout/ControlsLayout';
 import MktDropdown from '../../components/main/MktDropdown';
@@ -15,8 +16,10 @@ import { queryTime } from '@/app/hooks/queryTime';
 import { fetchSpotData } from '@/app/hooks/fetchSpotData';
 import { useFilterProducts } from '@/app/hooks/useFilterProducts';
 import IntervalProps from '../../types/IntervalProps';
+import { useViewportWidth } from '@/app/hooks/useViewportWidth';
 
 export default function Spot({ interval, setInterval }: IntervalProps) {
+  const { isMobile } = useViewportWidth();
   const [market, setMarket] = useState('all');
 
   // Spot Trading Vol
@@ -74,7 +77,11 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
           setMarket={setMarket}
           values={filterdProducts?.SpotProducts}
         />
-        <IntervalTab interval={interval} setInterval={setInterval} />
+        {isMobile ? (
+          <IntervalDropdown interval={interval} setInterval={setInterval} />
+        ) : (
+          <IntervalTab interval={interval} setInterval={setInterval} />
+        )}
       </ControlsLayout>
       <ChartsLayout>
         <ChartContainer>

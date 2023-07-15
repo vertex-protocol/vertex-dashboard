@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Card from '../../components/main/Card';
 import IntervalTab from '../../components/main/IntervalTab';
+import IntervalDropdown from '@/app/components/main/IntervalDropdown';
 import FourGridLayout from '../../components/layout/FourGridLayout';
 import MktDropdown from '../../components/main/MktDropdown';
 import ControlsLayout from '../../components/layout/ControlsLayout';
@@ -16,8 +17,10 @@ import { queryTime } from '@/app/hooks/queryTime';
 import { fetchPerpData } from '@/app/hooks/fetchPerpData';
 import { useFilterProducts } from '@/app/hooks/useFilterProducts';
 import IntervalProps from '../../types/IntervalProps';
+import { useViewportWidth } from '../../hooks/useViewportWidth';
 
 export default function Perpetual({ interval, setInterval }: IntervalProps) {
+  const { isMobile } = useViewportWidth();
   const [market, setMarket] = useState('all');
 
   // Perp Trading Vol
@@ -98,7 +101,11 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
           setMarket={setMarket}
           values={filterdProducts?.PerpProducts}
         />
-        <IntervalTab interval={interval} setInterval={setInterval} />
+        {isMobile ? (
+          <IntervalDropdown interval={interval} setInterval={setInterval} />
+        ) : (
+          <IntervalTab interval={interval} setInterval={setInterval} />
+        )}
       </ControlsLayout>
       <ChartsLayout>
         <ChartContainer>

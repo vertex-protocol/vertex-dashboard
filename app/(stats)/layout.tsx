@@ -16,6 +16,7 @@ import Restricted from '../components/main/Restricted';
 import { fetchProducts } from '../redux/productsSlice';
 import { fetchPrices } from '../redux/pricesSlice';
 import { useAppSelector } from '../redux/store';
+import { useViewportWidth } from '../hooks/useViewportWidth';
 
 export default function DashboardLayout() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function DashboardLayout() {
   const [interval, setInterval] = useState('31');
   const [path, setPath] = useState(pathname);
   const error = useAppSelector((state) => state.data.error);
+  const { isMobile } = useViewportWidth();
 
   const handleTabChange = (value: string) => {
     setPath(value);
@@ -51,13 +53,16 @@ export default function DashboardLayout() {
       ) : (
         <>
           <Nav />
-          <div className="px-10 mt-4">
+          <div className={`px-${isMobile ? '4' : '10'} mt-4`}>
             <Tabs value={path} onValueChange={handleTabChange}>
               <TabsList>
                 <TabsTrigger value="/overview">Overview</TabsTrigger>
                 <TabsTrigger value="/perpetual">Perpetual</TabsTrigger>
                 <TabsTrigger value="/spot">Spot</TabsTrigger>
-                <TabsTrigger value="/money-market">Money Market</TabsTrigger>
+                <TabsTrigger value="/money-market">
+                  {' '}
+                  {isMobile ? 'MM' : 'Money Market'}
+                </TabsTrigger>
               </TabsList>
             </Tabs>
             {path === '/overview' && (
