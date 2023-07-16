@@ -1,16 +1,18 @@
 import { queryProduct } from './queryProduct';
-import { queryAllProduct } from './queryAllProduct';
 import { queryDaily } from './queryDaily';
 import { MMDataProps } from '../types/MMDataProps';
 import { queryRates } from './queryRates';
-import { queryTVL } from './queryTVL';
+import { queryPrice } from './queryPrice';
 import { queryAllTVL } from './queryAllTVL';
+import { queryAllFlows } from './queryAllFlows';
 
 export const fetchMMData = ({
   snapshotData,
   market,
   setTVL,
   setNetFlows,
+  setDeposits,
+  setDailyDeposits,
   setBorrows,
   setDailyBorrows,
   setDepositRate,
@@ -32,29 +34,52 @@ export const fetchMMData = ({
     setTVL(allTVL);
     setNetFlows(NetFlows);
 
-    // Borrows
-    const Borrows = queryAllProduct(
+    // Deposits
+    const Deposits = queryAllFlows(
       snapshotData,
-      'total_borrows',
+      'cumulative_inflows',
       filterdProducts.MMProducts,
+      prices,
+    );
+    const DailyDeposits = queryDaily(Deposits);
+    Deposits.shift();
+    setDeposits(Deposits);
+    setDailyDeposits(DailyDeposits);
+
+    // Borrows
+    const Borrows = queryAllFlows(
+      snapshotData,
+      'cumulative_outflows',
+      filterdProducts.MMProducts,
+      prices,
     );
     const DailyBorrows = queryDaily(Borrows);
+    Borrows.shift();
     setBorrows(Borrows);
     setDailyBorrows(DailyBorrows);
   } else {
     // TVL & Net Inflows/Outflows
-    const Deposits = queryProduct(snapshotData, 'total_deposits', market);
-    const TVL = queryTVL(Deposits, prices, market);
-    const NetFlows = queryDaily(Deposits);
-    const NetFlowsIn$ = NetFlows.map((obj: number) => obj * prices[market]);
+    const TotalDeposits = queryProduct(snapshotData, 'total_deposits', market);
+    const TVL = queryPrice(TotalDeposits, prices, market);
+    const NetFlows = queryDaily(TVL);
     TVL.shift();
     setTVL(TVL);
-    setNetFlows(NetFlowsIn$);
+    setNetFlows(NetFlows);
+
+    // Deposits
+    const Deposits = queryProduct(snapshotData, 'cumulative_inflows', market);
+    const DollarDeposits = queryPrice(Deposits, prices, market);
+    const DailyDeposits = queryDaily(DollarDeposits);
+    DollarDeposits.shift();
+    setDeposits(DollarDeposits);
+    setDailyDeposits(DailyDeposits);
 
     // Borrows
-    const Borrows = queryProduct(snapshotData, 'total_borrows', market);
-    const DailyBorrows = queryDaily(Borrows);
-    setBorrows(Borrows);
+    const Borrows = queryProduct(snapshotData, 'cumulative_outflows', market);
+    const DollarBorrows = queryPrice(Borrows, prices, market);
+    const DailyBorrows = queryDaily(DollarBorrows);
+    DollarBorrows.shift();
+    setBorrows(DollarBorrows);
     setDailyBorrows(DailyBorrows);
 
     // Deposit Rates

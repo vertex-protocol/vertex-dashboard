@@ -3,6 +3,8 @@ export interface MMDataProps {
   market: string;
   setTVL: React.Dispatch<React.SetStateAction<number[]>>;
   setNetFlows: React.Dispatch<React.SetStateAction<number[]>>;
+  setDeposits: React.Dispatch<React.SetStateAction<number[]>>;
+  setDailyDeposits: React.Dispatch<React.SetStateAction<number[]>>;
   setBorrows: React.Dispatch<React.SetStateAction<number[]>>;
   setDailyBorrows: React.Dispatch<React.SetStateAction<number[]>>;
   setDepositRate: React.Dispatch<React.SetStateAction<number[]>>;

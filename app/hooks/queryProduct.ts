@@ -8,7 +8,7 @@ export function queryProduct(
   const result: number[] = [];
   data?.snapshots.forEach((obj: any) => {
     if (obj[type][productId]) {
-      const num = parseInt(obj[type][productId]);
+      const num = Math.abs(parseInt(obj[type][productId]));
       const formattedNum = new BigNumber(num).dividedBy(1e18).toNumber();
       result.push(formattedNum);
     } else {

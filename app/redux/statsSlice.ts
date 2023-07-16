@@ -33,6 +33,7 @@ export const fetchData = createAsyncThunk(
         },
       },
     );
+    console.log(response);
     return response.data;
   },
 );

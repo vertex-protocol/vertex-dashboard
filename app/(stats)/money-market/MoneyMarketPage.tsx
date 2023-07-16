@@ -23,11 +23,13 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
   const { isMobile } = useViewportWidth();
   const [market, setMarket] = useState('all');
 
-  // TODO: add Cummulative & Daily Deposits
-
   // TVL & Net Flow
   const [TVL, setTVL] = useState<number[]>([]);
   const [netFlows, setNetFlows] = useState<number[]>([]);
+
+  // Deposits
+  const [Deposits, setDeposits] = useState<number[]>([]);
+  const [DailyDeposits, setDailyDeposits] = useState<number[]>([]);
 
   // Borrows
   const [Borrows, setBorrows] = useState<number[]>([]);
@@ -54,6 +56,8 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
       market,
       setTVL,
       setNetFlows,
+      setDeposits,
+      setDailyDeposits,
       setBorrows,
       setDailyBorrows,
       setDepositRate,
@@ -74,13 +78,13 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
         />
         <Card
           title="Deposits (24h)"
-          stat={0}
+          stat={DailyDeposits[DailyDeposits.length - 1]}
           currency={true}
           loading={data.loading}
         />
         <Card
           title="Borrows (24h)"
-          stat={0}
+          stat={DailyBorrows[DailyBorrows.length - 1]}
           currency={true}
           loading={data.loading}
         />
@@ -120,8 +124,8 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
           />
           <LineBarChart
             dates={dates}
-            cumulative={Borrows}
-            daily={DailyBorrows}
+            cumulative={Deposits}
+            daily={DailyDeposits}
             data_1="Daily Deposits"
             data_2="Cummulative Deposits"
             currency={true}
