@@ -36,7 +36,7 @@ export const fetchPerpData = ({
     // Open Interest
     const OpenInt = queryAllProduct(
       snapshotData,
-      'open_interest',
+      'open_interests',
       filterdProducts.PerpProducts,
     );
     OpenInt.shift();
@@ -61,7 +61,7 @@ export const fetchPerpData = ({
     setDailyPerpVol(DailyPerpVol);
 
     // Open Interest
-    const OpenInt = queryProduct(snapshotData, 'open_interest', market);
+    const OpenInt = queryProduct(snapshotData, 'open_interests', market);
     OpenInt.shift();
     setOpenInt(OpenInt);
 

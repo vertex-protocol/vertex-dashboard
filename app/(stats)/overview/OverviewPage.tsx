@@ -38,7 +38,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
   // Liquidation
   const cumulativeLiq = queryTotal(
     data.snapshots,
-    'cumulative_liquidation_amount',
+    'cumulative_liquidation_amounts',
   );
   const dailyLiq = queryDaily(cumulativeLiq);
   cumulativeLiq.shift();
