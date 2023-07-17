@@ -32,8 +32,8 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
   const [DailyDeposits, setDailyDeposits] = useState<number[]>([]);
 
   // Borrows
-  const [Borrows, setBorrows] = useState<number[]>([]);
-  const [DailyBorrows, setDailyBorrows] = useState<number[]>([]);
+  const [Withdraws, setWithdraws] = useState<number[]>([]);
+  const [DailyWithdraws, setDailyWithdraws] = useState<number[]>([]);
 
   // Deposit Rate
   const [DepositRate, setDepositRate] = useState<number[]>([]);
@@ -58,8 +58,8 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
       setNetFlows,
       setDeposits,
       setDailyDeposits,
-      setBorrows,
-      setDailyBorrows,
+      setWithdraws,
+      setDailyWithdraws,
       setDepositRate,
       setBorrowRate,
       filterdProducts,
@@ -83,8 +83,8 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
           loading={data.loading}
         />
         <Card
-          title="Borrows (24h)"
-          stat={DailyBorrows[DailyBorrows.length - 1]}
+          title="Withdrawals (24h)"
+          stat={DailyWithdraws[DailyWithdraws.length - 1]}
           currency={true}
           loading={data.loading}
         />
@@ -127,22 +127,22 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
             cumulative={Deposits}
             daily={DailyDeposits}
             data_1="Daily Deposits"
-            data_2="Cummulative Deposits"
+            data_2="Cumulative Deposits"
             currency={true}
             loading={data.loading}
           />
         </ChartContainer>
         <ChartContainer>
           <ChartHeader
-            title="Borrows"
-            text="The daily vs cumulative borrows on Vertex."
+            title="Withdraws"
+            text="The daily vs cumulative withdrawals on Vertex."
           />
           <LineBarChart
             dates={dates}
-            cumulative={Borrows}
-            daily={DailyBorrows}
-            data_1="Daily Borrows"
-            data_2="Cummulative Borrows"
+            cumulative={Withdraws}
+            daily={DailyWithdraws}
+            data_1="Daily Withdrawals"
+            data_2="Cumulative Withdrawals"
             currency={true}
             loading={data.loading}
           />

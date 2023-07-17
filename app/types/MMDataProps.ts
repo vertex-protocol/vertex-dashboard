@@ -5,8 +5,8 @@ export interface MMDataProps {
   setNetFlows: React.Dispatch<React.SetStateAction<number[]>>;
   setDeposits: React.Dispatch<React.SetStateAction<number[]>>;
   setDailyDeposits: React.Dispatch<React.SetStateAction<number[]>>;
-  setBorrows: React.Dispatch<React.SetStateAction<number[]>>;
-  setDailyBorrows: React.Dispatch<React.SetStateAction<number[]>>;
+  setWithdraws: React.Dispatch<React.SetStateAction<number[]>>;
+  setDailyWithdraws: React.Dispatch<React.SetStateAction<number[]>>;
   setDepositRate: React.Dispatch<React.SetStateAction<number[]>>;
   setBorrowRate: React.Dispatch<React.SetStateAction<number[]>>;
   filterdProducts: any;

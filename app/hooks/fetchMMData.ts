@@ -14,8 +14,8 @@ export const fetchMMData = ({
   setNetFlows,
   setDeposits,
   setDailyDeposits,
-  setBorrows,
-  setDailyBorrows,
+  setWithdraws,
+  setDailyWithdraws,
   setDepositRate,
   setBorrowRate,
   filterdProducts,
@@ -56,8 +56,8 @@ export const fetchMMData = ({
     );
     const DailyBorrows = queryDaily(Borrows);
     Borrows.shift();
-    setBorrows(Borrows);
-    setDailyBorrows(DailyBorrows);
+    setWithdraws(Borrows);
+    setDailyWithdraws(DailyBorrows);
   } else {
     // TVL & Net Inflows/Outflows
     const TotalDeposits = queryDeposit(snapshotData, 'total_deposits', market);
@@ -80,8 +80,8 @@ export const fetchMMData = ({
     const DollarBorrows = queryPrice(Borrows, prices, market);
     const DailyBorrows = queryDaily(DollarBorrows);
     DollarBorrows.shift();
-    setBorrows(DollarBorrows);
-    setDailyBorrows(DailyBorrows);
+    setWithdraws(DollarBorrows);
+    setDailyWithdraws(DailyBorrows);
 
     // Deposit Rates
     const DepositRates = queryRates(snapshotData, 'deposit_rates', market);
