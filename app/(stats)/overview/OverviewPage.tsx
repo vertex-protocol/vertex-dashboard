@@ -16,6 +16,7 @@ import { queryAllProduct } from '@/app/hooks/queryAllProduct';
 import { queryUsers } from '@/app/hooks/queryUsers';
 import { queryDaily } from '@/app/hooks/queryDaily';
 import { queryDAU } from '@/app/hooks/queryDAU';
+import { queryFees } from '@/app/hooks/queryFees';
 import IntervalProps from '../../types/IntervalProps';
 import { useViewportWidth } from '../../hooks/useViewportWidth';
 import { useFilterProducts } from '@/app/hooks/useFilterProducts';
@@ -39,9 +40,8 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
   cumulativeVol.shift();
 
   // Fees
-  const cumulativeFees = queryAllProduct(
+  const cumulativeFees = queryFees(
     data.snapshots,
-    'cumulative_taker_fees',
     filterdProducts?.AllProducts,
   );
   const dailyFees = queryDaily(cumulativeFees);
