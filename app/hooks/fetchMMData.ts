@@ -5,6 +5,7 @@ import { queryRates } from './queryRates';
 import { queryPrice } from './queryPrice';
 import { queryAllTVL } from './queryAllTVL';
 import { queryAllFlows } from './queryAllFlows';
+import { queryDeposit } from './queryDeposits';
 
 export const fetchMMData = ({
   snapshotData,
@@ -59,7 +60,7 @@ export const fetchMMData = ({
     setDailyBorrows(DailyBorrows);
   } else {
     // TVL & Net Inflows/Outflows
-    const TotalDeposits = queryProduct(snapshotData, 'total_deposits', market);
+    const TotalDeposits = queryDeposit(snapshotData, 'total_deposits', market);
     const TVL = queryPrice(TotalDeposits, prices, market);
     const NetFlows = queryDaily(TVL);
     TVL.shift();

@@ -19,6 +19,7 @@ export function useFilterProducts(products: Product[] | null) {
   );
 
   const filteredProducts = {
+    AllProducts: products,
     PerpProducts: [{ product_id: 'all', symbol: 'ALL-PERP' }, ...PerpProducts],
     SpotProducts: [{ product_id: 'all', symbol: 'ALL-SPOT' }, ...SpotProducts],
     MMProducts: [{ product_id: 'all', symbol: 'ALL-MKTS' }, ...MMProducts],

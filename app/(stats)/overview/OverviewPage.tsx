@@ -12,33 +12,46 @@ import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
 import LineChart from '@/app/components/main/chart/LineChart';
 import { useAppSelector } from '@/app/redux/store';
 import { queryTime } from '@/app/hooks/queryTime';
-import { queryTotal } from '@/app/hooks/queryTotal';
+import { queryAllProduct } from '@/app/hooks/queryAllProduct';
 import { queryUsers } from '@/app/hooks/queryUsers';
 import { queryDaily } from '@/app/hooks/queryDaily';
 import { queryDAU } from '@/app/hooks/queryDAU';
 import IntervalProps from '../../types/IntervalProps';
 import { useViewportWidth } from '../../hooks/useViewportWidth';
+import { useFilterProducts } from '@/app/hooks/useFilterProducts';
 
 export default function Overview({ interval, setInterval }: IntervalProps) {
   const { isMobile } = useViewportWidth();
   const data = useAppSelector((state) => state.data);
 
+  const products = useAppSelector((state) => state.product.products);
+  const filterdProducts = useFilterProducts(products);
+
   const dates = queryTime(data.snapshots);
 
   // Trading Vol
-  const cumulativeVol = queryTotal(data.snapshots, 'cumulative_volumes');
+  const cumulativeVol = queryAllProduct(
+    data.snapshots,
+    'cumulative_volumes',
+    filterdProducts?.AllProducts,
+  );
   const dailyVol = queryDaily(cumulativeVol);
   cumulativeVol.shift();
 
   // Fees
-  const cumulativeFees = queryTotal(data.snapshots, 'cumulative_taker_fees');
+  const cumulativeFees = queryAllProduct(
+    data.snapshots,
+    'cumulative_taker_fees',
+    filterdProducts?.AllProducts,
+  );
   const dailyFees = queryDaily(cumulativeFees);
   cumulativeFees.shift();
 
   // Liquidation
-  const cumulativeLiq = queryTotal(
+  const cumulativeLiq = queryAllProduct(
     data.snapshots,
     'cumulative_liquidation_amounts',
+    filterdProducts?.AllProducts,
   );
   const dailyLiq = queryDaily(cumulativeLiq);
   cumulativeLiq.shift();
