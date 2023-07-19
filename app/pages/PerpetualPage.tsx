@@ -117,8 +117,8 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={PerpVol}
             daily={DailyPerpVol}
-            data_1="Daily Perp Vol"
-            data_2="Cumulative Perp Vol"
+            data_1="Daily Perp Vol."
+            data_2="Cum. Perp Vol."
             currency={true}
             loading={data.loading}
           />
@@ -147,7 +147,7 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
             cumulative={PerpTrades}
             daily={DailyPerpTrades}
             data_1="Daily Perp Trades"
-            data_2="Cumulative Perp Trades"
+            data_2="Cum. Perp Trades"
             currency={false}
             loading={data.loading}
           />

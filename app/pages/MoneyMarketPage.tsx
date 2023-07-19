@@ -128,7 +128,7 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
             cumulative={Deposits}
             daily={DailyDeposits}
             data_1="Daily Deposits"
-            data_2="Cumulative Deposits"
+            data_2="Cum. Deposits"
             currency={true}
             loading={data.loading}
           />
@@ -143,7 +143,7 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
             cumulative={Withdraws}
             daily={DailyWithdraws}
             data_1="Daily Withdrawals"
-            data_2="Cumulative Withdrawals"
+            data_2="Cum. Withdrawals"
             currency={true}
             loading={data.loading}
           />

@@ -94,8 +94,8 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={SpotVol}
             daily={DailySpotVol}
-            data_1="Daily Spot Vol"
-            data_2="Cumulative Spot Vol"
+            data_1="Daily Spot Vol."
+            data_2="Cum. Spot Vol."
             currency={true}
             loading={data.loading}
           />
@@ -111,7 +111,7 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
             cumulative={SpotTrades}
             daily={DailySpotTrades}
             data_1="Daily Spot Trades"
-            data_2="Cumulative Spot Trades"
+            data_2="Cum. Spot Trades"
             currency={false}
             loading={data.loading}
           />

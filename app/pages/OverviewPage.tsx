@@ -110,8 +110,8 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={cumulativeVol}
             daily={dailyVol}
-            data_1="Daily Volume"
-            data_2="Cumulative Volume"
+            data_1="Daily Vol."
+            data_2="Cum. Vol."
             loading={data.loading}
             currency={true}
           />
@@ -126,7 +126,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             cumulative={cumulativeUsers}
             daily={dailyUsers}
             data_1="New Users"
-            data_2="Cumulative Users"
+            data_2="Cum. Users"
             loading={data.loading}
             currency={false}
           />
@@ -154,7 +154,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             cumulative={cumulativeFees}
             daily={dailyFees}
             data_1="Daily Fees"
-            data_2="Cumulative Fees"
+            data_2="Cum. Fees"
             loading={data.loading}
             currency={true}
           />
@@ -168,8 +168,8 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={cumulativeLiq}
             daily={dailyLiq}
-            data_1="Daily Liquidations"
-            data_2="Cumulative Liquidations"
+            data_1="Daily Liqs"
+            data_2="Cum. Liqs"
             loading={data.loading}
             currency={true}
           />
