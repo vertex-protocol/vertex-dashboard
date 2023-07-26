@@ -62,7 +62,7 @@ export default function Dashboard() {
                   value="perpetual"
                   onClick={() => handleTabClick('perpetual')}
                 >
-                  Perpetual
+                  Perpetuals
                 </TabsTrigger>
                 <TabsTrigger
                   value="spot"
@@ -74,7 +74,7 @@ export default function Dashboard() {
                   value="money-market"
                   onClick={() => handleTabClick('money-market')}
                 >
-                  {isMobile ? 'MM' : 'Money Market'}
+                  {isMobile ? 'MMs' : 'Money Markets'}
                 </TabsTrigger>
               </TabsList>
             </Tabs>
