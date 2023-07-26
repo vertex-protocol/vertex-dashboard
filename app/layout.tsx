@@ -10,7 +10,7 @@ const DMSans = DM_Sans({
 
 export const metadata = {
   title: 'Vertex Stats',
-  description: 'A dashboard of Vertex Protocol',
+  description: 'Dashboards for Vertex metrics. Volumes, new users, TVL...',
 };
 
 export default function RootLayout({
