@@ -23,6 +23,15 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
   const { isMobile } = useViewportWidth();
   const [market, setMarket] = useState('all');
 
+  // All TVL
+  const [AllTVL, setAllTVL] = useState<number[]>([]);
+
+  // All Deposits
+  const [AllDailyDeposits, setAllDailyDeposits] = useState<number[]>([]);
+
+  // All Withdrawals
+  const [AllDailyWithdraws, setAllDailyWithdraws] = useState<number[]>([]);
+
   // TVL & Net Flow
   const [TVL, setTVL] = useState<number[]>([]);
   const [netFlows, setNetFlows] = useState<number[]>([]);
@@ -54,6 +63,9 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
     fetchMMData({
       snapshotData,
       market,
+      setAllTVL,
+      setAllDailyDeposits,
+      setAllDailyWithdraws,
       setTVL,
       setNetFlows,
       setDeposits,
@@ -73,19 +85,19 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
       <ThreeGridLayout>
         <Card
           title="Total TVL"
-          stat={TVL[TVL.length - 1]}
+          stat={AllTVL[AllTVL.length - 1]}
           currency={true}
           loading={data.loading}
         />
         <Card
           title="Deposits (24h)"
-          stat={DailyDeposits[DailyDeposits.length - 1]}
+          stat={AllDailyDeposits[AllDailyDeposits.length - 1]}
           currency={true}
           loading={data.loading}
         />
         <Card
           title="Withdrawals (24h)"
-          stat={DailyWithdraws[DailyWithdraws.length - 1]}
+          stat={AllDailyWithdraws[AllDailyWithdraws.length - 1]}
           currency={true}
           loading={data.loading}
         />

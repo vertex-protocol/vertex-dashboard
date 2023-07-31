@@ -23,6 +23,18 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
   const { isMobile } = useViewportWidth();
   const [market, setMarket] = useState('all');
 
+  // Total Perp Trading Vol
+  const [AllPerpVol, setAllPerpVol] = useState<number[]>([]);
+
+  // Daily Perp Trading Vol
+  const [AllDailyPerpVol, setAllDailyPerpVol] = useState<number[]>([]);
+
+  // Total Open Interest
+  const [AllOpenInt, setAllOpenInt] = useState<number[]>([]);
+
+  // Total Perp Trades
+  const [AllDailyPerpTrades, setAllDailyPerpTrades] = useState<number[]>([]);
+
   // Perp Trading Vol
   const [PerpVol, setPerpVol] = useState<number[]>([]);
   const [DailyPerpVol, setDailyPerpVol] = useState<number[]>([]);
@@ -54,6 +66,10 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
     fetchPerpData({
       snapshotData,
       market,
+      setAllPerpVol,
+      setAllDailyPerpVol,
+      setAllOpenInt,
+      setAllDailyPerpTrades,
       setPerpVol,
       setDailyPerpVol,
       setOpenInt,
@@ -72,25 +88,25 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
       <FourGridLayout>
         <Card
           title="Total Perpetual Volume"
-          stat={PerpVol[PerpVol.length - 1]}
+          stat={AllPerpVol[AllPerpVol.length - 1]}
           currency={true}
           loading={data.loading}
         />
         <Card
           title="Perpetual Volume (24h)"
-          stat={DailyPerpVol[DailyPerpVol.length - 1]}
+          stat={AllDailyPerpVol[AllDailyPerpVol.length - 1]}
           currency={true}
           loading={data.loading}
         />
         <Card
           title="Open Interest"
-          stat={OpenInt[OpenInt.length - 1]}
+          stat={AllOpenInt[AllOpenInt.length - 1]}
           currency={true}
           loading={data.loading}
         />
         <Card
           title="Perpetual Trades (24h)"
-          stat={DailyPerpTrades[DailyPerpTrades.length - 1]}
+          stat={AllDailyPerpTrades[AllDailyPerpTrades.length - 1]}
           currency={false}
           loading={data.loading}
         />

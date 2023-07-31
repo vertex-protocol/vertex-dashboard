@@ -8,6 +8,9 @@ import { SpotDataProps } from '../types/SpotDataProps';
 export const fetchSpotData = ({
   snapshotData,
   market,
+  setAllSpotVol,
+  setAllDailySpotVol,
+  setAllDailySpotTrades,
   setSpotVol,
   setDailySpotVol,
   setSpotTrades,
@@ -25,7 +28,9 @@ export const fetchSpotData = ({
     );
     const DailySpotVol = queryDaily(SpotVol);
     SpotVol.shift();
+    setAllSpotVol(SpotVol);
     setSpotVol(SpotVol);
+    setAllDailySpotVol(DailySpotVol);
     setDailySpotVol(DailySpotVol);
 
     // Spot Trades
@@ -37,8 +42,31 @@ export const fetchSpotData = ({
     const DailySpotTrades = queryDaily(SpotTrades);
     SpotTrades.shift();
     setSpotTrades(SpotTrades);
+    setAllDailySpotTrades(DailySpotTrades);
     setDailySpotTrades(DailySpotTrades);
   } else {
+    // All Spot Trading Vol
+    const AllSpotVol = queryAllProduct(
+      snapshotData,
+      'cumulative_volumes',
+      filterdProducts.SpotProducts,
+    );
+    const AllDailySpotVol = queryDaily(AllSpotVol);
+    AllSpotVol.shift();
+    setAllSpotVol(AllSpotVol);
+    setAllDailySpotVol(AllDailySpotVol);
+
+    // All Spot Trades
+    const AllSpotTrades = queryAllTrades(
+      snapshotData,
+      'cumulative_trades',
+      filterdProducts.SpotProducts,
+    );
+    const AllDailySpotTrades = queryDaily(AllSpotTrades);
+    AllSpotTrades.shift();
+    setAllDailySpotTrades(AllDailySpotTrades);
+
+    /* --------------------------------------- */
     // Spot Trading Vol
     const SpotVol = queryProduct(snapshotData, 'cumulative_volumes', market);
     const DailySpotVol = queryDaily(SpotVol);

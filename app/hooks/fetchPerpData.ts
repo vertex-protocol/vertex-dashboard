@@ -9,6 +9,10 @@ import { queryAllTrades } from './queryAllTrades';
 export const fetchPerpData = ({
   snapshotData,
   market,
+  setAllPerpVol,
+  setAllDailyPerpVol,
+  setAllOpenInt,
+  setAllDailyPerpTrades,
   setPerpVol,
   setDailyPerpVol,
   setOpenInt,
@@ -22,7 +26,7 @@ export const fetchPerpData = ({
   if (!snapshotData) return;
 
   if (market === 'all') {
-    // Perp Trading Vol
+    // All Perp Trading Vol
     const PerpVol = queryAllProduct(
       snapshotData,
       'cumulative_volumes',
@@ -30,19 +34,22 @@ export const fetchPerpData = ({
     );
     const DailyPerpVol = queryDaily(PerpVol);
     PerpVol.shift(); // remove first element to line it up w/ dates and daily
+    setAllPerpVol(PerpVol);
     setPerpVol(PerpVol);
+    setAllDailyPerpVol(DailyPerpVol);
     setDailyPerpVol(DailyPerpVol);
 
-    // Open Interest
+    // All Open Interest
     const OpenInt = queryAllProduct(
       snapshotData,
       'open_interests',
       filterdProducts.PerpProducts,
     );
     OpenInt.shift();
+    setAllOpenInt(OpenInt);
     setOpenInt(OpenInt);
 
-    // Perp Trades
+    // All Perp Trades
     const PerpTrades = queryAllTrades(
       snapshotData,
       'cumulative_trades',
@@ -51,8 +58,39 @@ export const fetchPerpData = ({
     const DailyPerpTrades = queryDaily(PerpTrades);
     PerpTrades.shift();
     setPerpTrades(PerpTrades);
+    setAllDailyPerpTrades(DailyPerpTrades);
     setDailyPerpTrades(DailyPerpTrades);
   } else {
+    // All Perp Trading Vol
+    const AllPerpVol = queryAllProduct(
+      snapshotData,
+      'cumulative_volumes',
+      filterdProducts.PerpProducts,
+    );
+    const AllDailyPerpVol = queryDaily(AllPerpVol);
+    AllPerpVol.shift(); // remove first element to line it up w/ dates and daily
+    setAllPerpVol(AllPerpVol);
+    setAllDailyPerpVol(AllDailyPerpVol);
+
+    // All Open Interest
+    const AllOpenInt = queryAllProduct(
+      snapshotData,
+      'open_interests',
+      filterdProducts.PerpProducts,
+    );
+    AllOpenInt.shift();
+    setAllOpenInt(AllOpenInt);
+
+    // All Perp Trades
+    const AllPerpTrades = queryAllTrades(
+      snapshotData,
+      'cumulative_trades',
+      filterdProducts.PerpProducts,
+    );
+    const AllDailyPerpTrades = queryDaily(AllPerpTrades);
+    AllPerpTrades.shift();
+    setAllDailyPerpTrades(AllDailyPerpTrades);
+    /* --------------------------------------- */
     // Perp Trading Vol
     const PerpVol = queryProduct(snapshotData, 'cumulative_volumes', market);
     const DailyPerpVol = queryDaily(PerpVol);

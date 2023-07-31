@@ -22,6 +22,15 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
   const { isMobile } = useViewportWidth();
   const [market, setMarket] = useState('all');
 
+  // All Spot Trading Vol
+  const [AllSpotVol, setAllSpotVol] = useState<number[]>([]);
+
+  // All Daily Spot Vol
+  const [AllDailySpotVol, setAllDailySpotVol] = useState<number[]>([]);
+
+  // All Spot Trades
+  const [AllDailySpotTrades, setAllDailySpotTrades] = useState<number[]>([]);
+
   // Spot Trading Vol
   const [SpotVol, setSpotVol] = useState<number[]>([]);
   const [DailySpotVol, setDailySpotVol] = useState<number[]>([]);
@@ -41,6 +50,9 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
     fetchSpotData({
       snapshotData,
       market,
+      setAllSpotVol,
+      setAllDailySpotVol,
+      setAllDailySpotTrades,
       setSpotVol,
       setDailySpotVol,
       setSpotTrades,
@@ -55,19 +67,19 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
       <ThreeGridLayout>
         <Card
           title="Total Spot Volume"
-          stat={SpotVol[SpotVol.length - 1]}
+          stat={AllSpotVol[AllSpotVol.length - 1]}
           currency={true}
           loading={data.loading}
         />
         <Card
           title="Spot Volume (24h)"
-          stat={DailySpotVol[DailySpotVol.length - 1]}
+          stat={AllDailySpotVol[AllDailySpotVol.length - 1]}
           currency={true}
           loading={data.loading}
         />
         <Card
           title="Spot Trades (24h)"
-          stat={DailySpotTrades[DailySpotTrades.length - 1]}
+          stat={AllDailySpotTrades[AllDailySpotTrades.length - 1]}
           currency={false}
           loading={data.loading}
         />

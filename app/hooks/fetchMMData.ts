@@ -10,6 +10,9 @@ import { queryDeposit } from './queryDeposits';
 export const fetchMMData = ({
   snapshotData,
   market,
+  setAllTVL,
+  setAllDailyDeposits,
+  setAllDailyWithdraws,
   setTVL,
   setNetFlows,
   setDeposits,
@@ -32,6 +35,7 @@ export const fetchMMData = ({
     );
     const NetFlows = queryDaily(allTVL);
     allTVL.shift();
+    setAllTVL(allTVL);
     setTVL(allTVL);
     setNetFlows(NetFlows);
 
@@ -45,6 +49,7 @@ export const fetchMMData = ({
     const DailyDeposits = queryDaily(Deposits);
     Deposits.shift();
     setDeposits(Deposits);
+    setAllDailyDeposits(DailyDeposits);
     setDailyDeposits(DailyDeposits);
 
     // Borrows
@@ -57,8 +62,42 @@ export const fetchMMData = ({
     const DailyBorrows = queryDaily(Borrows);
     Borrows.shift();
     setWithdraws(Borrows);
+    setAllDailyWithdraws(DailyBorrows);
     setDailyWithdraws(DailyBorrows);
   } else {
+    // TVL & Net Inflows/ Outflows
+    const allTVL = queryAllTVL(
+      snapshotData,
+      prices,
+      filterdProducts.MMProducts,
+    );
+    const AllNetFlows = queryDaily(allTVL);
+    allTVL.shift();
+    setAllTVL(allTVL);
+
+    // Deposits
+    const AllDeposits = queryAllFlows(
+      snapshotData,
+      'cumulative_inflows',
+      filterdProducts.MMProducts,
+      prices,
+    );
+    const AllDailyDeposits = queryDaily(AllDeposits);
+    AllDeposits.shift();
+    setAllDailyDeposits(AllDailyDeposits);
+
+    // Borrows
+    const AllBorrows = queryAllFlows(
+      snapshotData,
+      'cumulative_outflows',
+      filterdProducts.MMProducts,
+      prices,
+    );
+    const AllDailyBorrows = queryDaily(AllBorrows);
+    AllBorrows.shift();
+    setAllDailyWithdraws(AllDailyBorrows);
+
+    /* --------------------------------------- */
     // TVL & Net Inflows/Outflows
     const TotalDeposits = queryDeposit(snapshotData, 'total_deposits', market);
     const TVL = queryPrice(TotalDeposits, prices, market);
