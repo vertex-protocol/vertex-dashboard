@@ -31,7 +31,7 @@ export default function MarketDropdown({
           <ChevronDownIcon className="h-4 w-4 ml-3" />
         </div>
       </SelectTrigger>
-      <SelectContent className="bg-gray-3 border border-gray-2 rounded text-gray-1 text-sm focus:outline-none w-60 mt-2 cursor-pointer">
+      <SelectContent className="bg-gray-3 border border-gray-2 rounded text-gray-1 text-sm focus:outline-none w-60 mt-2 cursor-pointer max-h-56">
         {values.map((item: any) => (
           <SelectItem key={item.product_id} value={item.product_id}>
             {item.symbol}
