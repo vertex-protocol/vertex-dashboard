@@ -81,8 +81,8 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
           loading={data.loading}
         />
         <Card
-          title="Daily Active Users"
-          stat={DAU[DAU.length - 1]}
+          title="Total Users"
+          stat={cumulativeUsers[cumulativeUsers.length - 1]}
           currency={false}
           loading={data.loading}
         />
