@@ -3,7 +3,7 @@ import { queryDaily } from './queryDaily';
 import { MMDataProps } from '../types/MMDataProps';
 import { queryRates } from './queryRates';
 import { queryPrice } from './queryPrice';
-import { queryAllTVL } from './queryAllTVL';
+import { queryTVL } from './queryTVL';
 import { queryAllFlows } from './queryAllFlows';
 import { queryDeposit } from './queryDeposits';
 
@@ -24,15 +24,11 @@ export const fetchMMData = ({
   filterdProducts,
   prices,
 }: MMDataProps) => {
-  if (!snapshotData) return; // Return early if data is not available
+  if (!snapshotData) return;
 
   if (market === 'all') {
     // TVL & Net Inflows/ Outflows
-    const allTVL = queryAllTVL(
-      snapshotData,
-      prices,
-      filterdProducts.MMProducts,
-    );
+    const allTVL = queryTVL(snapshotData);
     const NetFlows = queryDaily(allTVL);
     allTVL.shift();
     setAllTVL(allTVL);
@@ -65,13 +61,8 @@ export const fetchMMData = ({
     setAllDailyWithdraws(DailyBorrows);
     setDailyWithdraws(DailyBorrows);
   } else {
-    // TVL & Net Inflows/ Outflows
-    const allTVL = queryAllTVL(
-      snapshotData,
-      prices,
-      filterdProducts.MMProducts,
-    );
-    const AllNetFlows = queryDaily(allTVL);
+    // Total TVL
+    const allTVL = queryTVL(snapshotData);
     allTVL.shift();
     setAllTVL(allTVL);
 
