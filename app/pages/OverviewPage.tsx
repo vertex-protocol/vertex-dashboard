@@ -134,7 +134,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
         <ChartContainer>
           <ChartHeader
             title="Daily Active Users"
-            text="The daily active users on Vertex."
+            text="The daily active users on Vertex. Updated hourly on a daily interval (9:00AM EST)."
           ></ChartHeader>
           <LineChart
             dates={dates}
