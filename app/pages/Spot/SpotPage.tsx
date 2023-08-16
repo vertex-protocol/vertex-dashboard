@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Card from '../components/main/Card';
-import IntervalTab from '../components/main/IntervalTab';
+import Card from '../../components/main/Card';
+import IntervalTab from '../../components/main/IntervalTab';
 import IntervalDropdown from '@/app/components/main/IntervalDropdown';
-import ThreeGridLayout from '../components/layout/ThreeGridLayout';
-import ControlsLayout from '../components/layout/ControlsLayout';
-import MktDropdown from '../components/main/MktDropdown';
+import ThreeGridLayout from '../../components/layout/ThreeGridLayout';
+import ControlsLayout from '../../components/layout/ControlsLayout';
+import MktDropdown from '../../components/main/MktDropdown';
 import ChartsLayout from '@/app/components/layout/ChartsLayout';
 import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
@@ -15,7 +15,7 @@ import { useAppSelector } from '@/app/redux/store';
 import { queryTime } from '@/app/hooks/queryTime';
 import { fetchSpotData } from '@/app/hooks/fetchSpotData';
 import { useFilterProducts } from '@/app/hooks/useFilterProducts';
-import IntervalProps from '../types/IntervalProps';
+import IntervalProps from '../../types/IntervalProps';
 import { useViewportWidth } from '@/app/hooks/useViewportWidth';
 
 export default function Spot({ interval, setInterval }: IntervalProps) {

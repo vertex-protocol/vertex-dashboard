@@ -7,10 +7,10 @@ import { fetchData } from './redux/statsSlice';
 
 import Nav from './components/main/NavBar';
 import { Tabs, TabsList, TabsTrigger } from './components/ui/Tabs';
-import Overview from './pages/OverviewPage';
-import Perpetual from './pages/PerpetualPage';
-import Spot from './pages/SpotPage';
-import MoneyMarket from './pages/MoneyMarketPage';
+import Overview from './pages/Overview/OverviewPage';
+import Perpetual from './pages/Perpetuals/PerpetualPage';
+import Spot from './pages/Spot/SpotPage';
+import MoneyMarket from './pages/MoneyMarket/MoneyMarketPage';
 import Restricted from './components/main/Restricted';
 import { fetchProducts } from './redux/productsSlice';
 import { fetchPrices } from './redux/pricesSlice';

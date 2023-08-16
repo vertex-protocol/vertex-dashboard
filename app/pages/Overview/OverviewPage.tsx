@@ -1,11 +1,11 @@
 'use client';
 
-import Card from '../components/main/Card';
-import IntervalTab from '../components/main/IntervalTab';
+import Card from '../../components/main/Card';
+import IntervalTab from '../../components/main/IntervalTab';
 import IntervalDropdown from '@/app/components/main/IntervalDropdown';
-import FourGridLayout from '../components/layout/FourGridLayout';
-import ControlsLayout from '../components/layout/ControlsLayout';
-import ChartsLayout from '../components/layout/ChartsLayout';
+import FourGridLayout from '../../components/layout/FourGridLayout';
+import ControlsLayout from '../../components/layout/ControlsLayout';
+import ChartsLayout from '../../components/layout/ChartsLayout';
 import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
 import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
@@ -17,8 +17,8 @@ import { queryUsers } from '@/app/hooks/queryUsers';
 import { queryDaily } from '@/app/hooks/queryDaily';
 import { queryDAU } from '@/app/hooks/queryDAU';
 import { queryFees } from '@/app/hooks/queryFees';
-import IntervalProps from '../types/IntervalProps';
-import { useViewportWidth } from '../hooks/useViewportWidth';
+import IntervalProps from '../../types/IntervalProps';
+import { useViewportWidth } from '../../hooks/useViewportWidth';
 import { useFilterProducts } from '@/app/hooks/useFilterProducts';
 
 export default function Overview({ interval, setInterval }: IntervalProps) {

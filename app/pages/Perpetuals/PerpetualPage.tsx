@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Card from '../components/main/Card';
-import IntervalTab from '../components/main/IntervalTab';
+import Card from '../../components/main/Card';
+import IntervalTab from '../../components/main/IntervalTab';
 import IntervalDropdown from '@/app/components/main/IntervalDropdown';
-import FourGridLayout from '../components/layout/FourGridLayout';
-import MktDropdown from '../components/main/MktDropdown';
-import ControlsLayout from '../components/layout/ControlsLayout';
+import FourGridLayout from '../../components/layout/FourGridLayout';
+import MktDropdown from '../../components/main/MktDropdown';
+import ControlsLayout from '../../components/layout/ControlsLayout';
 import { useAppSelector } from '@/app/redux/store';
 import ChartsLayout from '@/app/components/layout/ChartsLayout';
 import ChartContainer from '@/app/components/main/chart/ChartContainer';
@@ -16,8 +16,8 @@ import LineChart from '@/app/components/main/chart/LineChart';
 import { queryTime } from '@/app/hooks/queryTime';
 import { fetchPerpData } from '@/app/hooks/fetchPerpData';
 import { useFilterProducts } from '@/app/hooks/useFilterProducts';
-import IntervalProps from '../types/IntervalProps';
-import { useViewportWidth } from '../hooks/useViewportWidth';
+import IntervalProps from '../../types/IntervalProps';
+import { useViewportWidth } from '../../hooks/useViewportWidth';
 
 export default function Perpetual({ interval, setInterval }: IntervalProps) {
   const { isMobile } = useViewportWidth();
