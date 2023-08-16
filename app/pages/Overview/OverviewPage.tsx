@@ -10,87 +10,57 @@ import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
 import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
 import LineChart from '@/app/components/main/chart/LineChart';
-import { useAppSelector } from '@/app/redux/store';
-import { queryTime } from '@/app/hooks/queryTime';
-import { queryAllProduct } from '@/app/hooks/queryAllProduct';
-import { queryUsers } from '@/app/hooks/queryUsers';
-import { queryDaily } from '@/app/hooks/queryDaily';
-import { queryDAU } from '@/app/hooks/queryDAU';
-import { queryFees } from '@/app/hooks/queryFees';
 import IntervalProps from '../../types/IntervalProps';
 import { useViewportWidth } from '../../hooks/useViewportWidth';
-import { useFilterProducts } from '@/app/hooks/useFilterProducts';
+import { useOverviewData } from './hooks/useOverviewData';
 
 export default function Overview({ interval, setInterval }: IntervalProps) {
   const { isMobile } = useViewportWidth();
-  const data = useAppSelector((state) => state.data);
 
-  const products = useAppSelector((state) => state.product.products);
-  const filterdProducts = useFilterProducts(products);
-
-  const dates = queryTime(data.snapshots);
-
-  // Trading Vol
-  const cumulativeVol = queryAllProduct(
-    data.snapshots,
-    'cumulative_volumes',
-    filterdProducts?.AllProducts,
-  );
-  const dailyVol = queryDaily(cumulativeVol);
-  cumulativeVol.shift();
-
-  // Fees
-  const cumulativeFees = queryFees(
-    data.snapshots,
-    filterdProducts?.AllProducts,
-  );
-  const dailyFees = queryDaily(cumulativeFees);
-  cumulativeFees.shift();
-
-  // Liquidation
-  const cumulativeLiq = queryAllProduct(
-    data.snapshots,
-    'cumulative_liquidation_amounts',
-    filterdProducts?.AllProducts,
-  );
-  const dailyLiq = queryDaily(cumulativeLiq);
-  cumulativeLiq.shift();
-
-  // Users
-  const cumulativeUsers = queryUsers(data.snapshots);
-  const dailyUsers = queryDaily(cumulativeUsers);
-  cumulativeUsers.shift();
-
-  // DAU
-  const DAU = queryDAU(data.snapshots);
+  const {
+    isLoading,
+    dates,
+    cumulativeTradingVolume,
+    dailyTradingVolume,
+    cumulativeUsers,
+    dailyUsers,
+    dailyActiveUsers,
+    cumulativeFees,
+    dailyFees,
+    cumulativeLiquidations,
+    dailyLiquidations,
+    totalTradingVolume,
+    pastDayTradingVolume,
+    totalUsers,
+    pastDayFees,
+  } = useOverviewData();
 
   return (
     <>
       <FourGridLayout>
         <Card
           title="Total Trading Volume"
-          stat={cumulativeVol[cumulativeVol.length - 1]}
-          daily={14.08}
+          stat={totalTradingVolume}
           currency={true}
-          loading={data.loading}
+          loading={isLoading}
         />
         <Card
           title="Trading Volume (24h)"
-          stat={dailyVol[dailyVol.length - 1]}
+          stat={pastDayTradingVolume}
           currency={true}
-          loading={data.loading}
+          loading={isLoading}
         />
         <Card
           title="Total Users"
-          stat={cumulativeUsers[cumulativeUsers.length - 1]}
+          stat={totalUsers}
           currency={false}
-          loading={data.loading}
+          loading={isLoading}
         />
         <Card
           title="Fees (24h)"
-          stat={dailyFees[dailyFees.length - 1]}
+          stat={pastDayFees}
           currency={true}
-          loading={data.loading}
+          loading={isLoading}
         />
       </FourGridLayout>
       <ControlsLayout justify="end">
@@ -108,11 +78,11 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
           />
           <LineBarChart
             dates={dates}
-            cumulative={cumulativeVol}
-            daily={dailyVol}
+            cumulative={cumulativeTradingVolume}
+            daily={dailyTradingVolume}
             data_1="Daily Vol."
             data_2="Cum. Vol."
-            loading={data.loading}
+            loading={isLoading}
             currency={true}
           />
         </ChartContainer>
@@ -127,7 +97,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             daily={dailyUsers}
             data_1="New Users"
             data_2="Cum. Users"
-            loading={data.loading}
+            loading={isLoading}
             currency={false}
           />
         </ChartContainer>
@@ -138,10 +108,10 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
           ></ChartHeader>
           <LineChart
             dates={dates}
-            data={DAU}
+            data={dailyActiveUsers}
             data_1="DAU"
             format={'0.a'}
-            loading={data.loading}
+            loading={isLoading}
           />
         </ChartContainer>
         <ChartContainer>
@@ -155,7 +125,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             daily={dailyFees}
             data_1="Daily Fees"
             data_2="Cum. Fees"
-            loading={data.loading}
+            loading={isLoading}
             currency={true}
           />
         </ChartContainer>
@@ -166,11 +136,11 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
           />
           <LineBarChart
             dates={dates}
-            cumulative={cumulativeLiq}
-            daily={dailyLiq}
+            cumulative={cumulativeLiquidations}
+            daily={dailyLiquidations}
             data_1="Daily Liqs"
             data_2="Cum. Liqs"
-            loading={data.loading}
+            loading={isLoading}
             currency={true}
           />
         </ChartContainer>

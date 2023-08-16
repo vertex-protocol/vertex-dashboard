@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import StartData from '../data/StartData.json';
+import StartData from '../../../data/StartData.json';
 
 interface StartDataInterface {
   [key: string]: any;
@@ -14,7 +14,7 @@ export function queryFees(data: any, products: any) {
 
   const productIds = products.map((product: any) => product.product_id);
 
-  data?.snapshots.forEach((obj: any) => {
+  data?.forEach((obj: any) => {
     const keys = Object.keys(obj['cumulative_taker_fees']).map(Number);
     let sum = 0;
 
