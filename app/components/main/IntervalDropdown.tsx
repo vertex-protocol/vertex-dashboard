@@ -31,11 +31,3 @@ export default function IntervalDropdown({
     </Select>
   );
 }
-
-/*
-        {values.map((item: any) => (
-          <SelectItem key={item.product_id} value={item.product_id}>
-            {item.symbol}
-          </SelectItem>
-        ))}
-*/
