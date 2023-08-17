@@ -6,7 +6,7 @@ import { queryAllProductNew } from '@/app/hooks/queryAllProductNew';
 import { queryAllTradesNew } from '@/app/hooks/queryAllTradesNew';
 import { queryProductNew } from '@/app/hooks/queryProductNew';
 import { queryTradesNew } from '@/app/hooks/queryTradesNew';
-import { queryFundingRatesNew } from '@/app/hooks/queryFundingRatesNew';
+import { queryFundingRatesNew } from '@/app/pages/Perpetuals/hooks/queryFundingRatesNew';
 
 export function usePerpetualData(market: string | number) {
   const snapshotData = useAppSelector((state) => state.data);
