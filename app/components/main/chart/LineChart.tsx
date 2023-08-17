@@ -4,7 +4,7 @@ import Spinner from '../Spinner';
 
 interface LineBarProps {
   dates: string[];
-  data: number[];
+  data: number[] | undefined;
   data_1: string;
   format: string;
   loading: boolean;

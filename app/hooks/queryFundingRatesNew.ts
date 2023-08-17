@@ -1,9 +1,9 @@
 import BigNumber from 'bignumber.js';
 
-export function queryFundingRates(data: any, type: string, productId: any) {
+export function queryFundingRatesNew(data: any, type: string, productId: any) {
   const result: number[] = [];
 
-  data?.snapshots.forEach((obj: any) => {
+  data?.forEach((obj: any) => {
     if (type === 'hourly') {
       if (obj['funding_rates'][productId]) {
         const value = obj['funding_rates'][productId];

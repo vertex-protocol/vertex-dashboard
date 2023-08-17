@@ -1,121 +1,76 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Card from '../../components/main/Card';
 import IntervalTab from '../../components/main/IntervalTab';
 import IntervalDropdown from '@/app/components/main/IntervalDropdown';
 import FourGridLayout from '../../components/layout/FourGridLayout';
 import MktDropdown from '../../components/main/MktDropdown';
 import ControlsLayout from '../../components/layout/ControlsLayout';
-import { useAppSelector } from '@/app/redux/store';
 import ChartsLayout from '@/app/components/layout/ChartsLayout';
 import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
 import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
 import LineChart from '@/app/components/main/chart/LineChart';
-import { queryTime } from '@/app/hooks/queryTime';
-import { fetchPerpData } from '@/app/hooks/fetchPerpData';
-import { useFilterProducts } from '@/app/hooks/useFilterProducts';
 import IntervalProps from '../../types/IntervalProps';
 import { useViewportWidth } from '../../hooks/useViewportWidth';
+import { usePerpetualData } from './hooks/usePerpetualData';
+import { useState } from 'react';
 
 export default function Perpetual({ interval, setInterval }: IntervalProps) {
   const { isMobile } = useViewportWidth();
   const [market, setMarket] = useState('all');
 
-  // Total Perp Trading Vol
-  const [AllPerpVol, setAllPerpVol] = useState<number[]>([]);
-
-  // Daily Perp Trading Vol
-  const [AllDailyPerpVol, setAllDailyPerpVol] = useState<number[]>([]);
-
-  // Total Open Interest
-  const [AllOpenInt, setAllOpenInt] = useState<number[]>([]);
-
-  // Total Perp Trades
-  const [AllDailyPerpTrades, setAllDailyPerpTrades] = useState<number[]>([]);
-
-  // Perp Trading Vol
-  const [PerpVol, setPerpVol] = useState<number[]>([]);
-  const [DailyPerpVol, setDailyPerpVol] = useState<number[]>([]);
-
-  // Open Interest
-  const [OpenInt, setOpenInt] = useState<number[]>([]);
-
-  // # of Perp Trades
-  const [PerpTrades, setPerpTrades] = useState<number[]>([]);
-  const [DailyPerpTrades, setDailyPerpTrades] = useState<number[]>([]);
-
-  // Hourly Funding Rate
-  const [hourlyFunding, setHourlyFunding] = useState<number[]>([]);
-
-  // Hourly Funding Rate
-  const [dailyFunding, setDailyFunding] = useState<number[]>([]);
-
-  // Hourly Funding Rate
-  const [annualFunding, setAnnualFunding] = useState<number[]>([]);
-
-  const products = useAppSelector((state) => state.product.products);
-  const filterdProducts = useFilterProducts(products);
-
-  const data = useAppSelector((state) => state.data);
-  const snapshotData = data.snapshots;
-  const dates = queryTime(snapshotData);
-
-  useEffect(() => {
-    fetchPerpData({
-      snapshotData,
-      market,
-      setAllPerpVol,
-      setAllDailyPerpVol,
-      setAllOpenInt,
-      setAllDailyPerpTrades,
-      setPerpVol,
-      setDailyPerpVol,
-      setOpenInt,
-      setPerpTrades,
-      setDailyPerpTrades,
-      setHourlyFunding,
-      setDailyFunding,
-      setAnnualFunding,
-      filterdProducts,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [market, interval, data]);
+  const {
+    isLoading,
+    perpProducts,
+    dates,
+    cumulativePerpTradingVolume,
+    dailyPerpTradingVolume,
+    openInterest,
+    cumulativePerpTrades,
+    dailyPerpTrades,
+    hourlyFunding,
+    dailyFunding,
+    annualFunding,
+    totalPerpVolume,
+    lastDayPerpVolume,
+    totalOpenInterest,
+    lastDayPerpTrades,
+  } = usePerpetualData(market);
 
   return (
     <>
       <FourGridLayout>
         <Card
           title="Total Perpetual Volume"
-          stat={AllPerpVol[AllPerpVol.length - 1]}
+          stat={totalPerpVolume}
           currency={true}
-          loading={data.loading}
+          loading={isLoading}
         />
         <Card
           title="Perpetual Volume (24h)"
-          stat={AllDailyPerpVol[AllDailyPerpVol.length - 1]}
+          stat={lastDayPerpVolume}
           currency={true}
-          loading={data.loading}
+          loading={isLoading}
         />
         <Card
           title="Open Interest"
-          stat={AllOpenInt[AllOpenInt.length - 1]}
+          stat={totalOpenInterest}
           currency={true}
-          loading={data.loading}
+          loading={isLoading}
         />
         <Card
           title="Perpetual Trades (24h)"
-          stat={AllDailyPerpTrades[AllDailyPerpTrades.length - 1]}
+          stat={lastDayPerpTrades}
           currency={false}
-          loading={data.loading}
+          loading={isLoading}
         />
       </FourGridLayout>
       <ControlsLayout justify="between">
         <MktDropdown
           market={market}
           setMarket={setMarket}
-          values={filterdProducts?.PerpProducts}
+          values={perpProducts}
         />
         {isMobile ? (
           <IntervalDropdown interval={interval} setInterval={setInterval} />
@@ -131,12 +86,12 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
           ></ChartHeader>
           <LineBarChart
             dates={dates}
-            cumulative={PerpVol}
-            daily={DailyPerpVol}
+            cumulative={cumulativePerpTradingVolume}
+            daily={dailyPerpTradingVolume}
             data_1="Daily Perp Vol."
             data_2="Cum. Perp Vol."
             currency={true}
-            loading={data.loading}
+            loading={isLoading}
           />
         </ChartContainer>
         <ChartContainer>
@@ -146,10 +101,10 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
           ></ChartHeader>
           <LineChart
             dates={dates}
-            data={OpenInt}
+            data={openInterest}
             data_1="Open Interest"
             format={'$0.[00]a'}
-            loading={data.loading}
+            loading={isLoading}
           />
         </ChartContainer>
         <ChartContainer>
@@ -160,12 +115,12 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
           ></ChartHeader>
           <LineBarChart
             dates={dates}
-            cumulative={PerpTrades}
-            daily={DailyPerpTrades}
+            cumulative={cumulativePerpTrades}
+            daily={dailyPerpTrades}
             data_1="Daily Perp Trades"
             data_2="Cum. Perp Trades"
             currency={false}
-            loading={data.loading}
+            loading={isLoading}
           />
         </ChartContainer>
         {market !== 'all' && (
@@ -180,7 +135,7 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
                 data={hourlyFunding}
                 data_1="Hourly Funding"
                 format={'0.[00000]%'}
-                loading={data.loading}
+                loading={isLoading}
               />
             </ChartContainer>
             <ChartContainer>
@@ -193,7 +148,7 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
                 data={annualFunding}
                 data_1="Annualized Funding"
                 format={'0.[00000]%'}
-                loading={data.loading}
+                loading={isLoading}
               />
             </ChartContainer>
             <ChartContainer>
@@ -206,7 +161,7 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
                 data={dailyFunding}
                 data_1="Daily Funding"
                 format={'0.[00000]%'}
-                loading={data.loading}
+                loading={isLoading}
               />
             </ChartContainer>
           </>
