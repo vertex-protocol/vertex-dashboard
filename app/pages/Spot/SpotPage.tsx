@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Card from '../../components/main/Card';
 import IntervalTab from '../../components/main/IntervalTab';
 import IntervalDropdown from '@/app/components/main/IntervalDropdown';
@@ -11,84 +11,53 @@ import ChartsLayout from '@/app/components/layout/ChartsLayout';
 import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
 import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
-import { useAppSelector } from '@/app/redux/store';
-import { queryTime } from '@/app/hooks/queryTime';
-import { fetchSpotData } from '@/app/hooks/fetchSpotData';
-import { useFilterProducts } from '@/app/hooks/useFilterProducts';
 import IntervalProps from '../../types/IntervalProps';
 import { useViewportWidth } from '@/app/hooks/useViewportWidth';
+import { useSpotData } from './hooks/useSpotData';
 
 export default function Spot({ interval, setInterval }: IntervalProps) {
   const { isMobile } = useViewportWidth();
   const [market, setMarket] = useState('all');
-
-  // All Spot Trading Vol
-  const [AllSpotVol, setAllSpotVol] = useState<number[]>([]);
-
-  // All Daily Spot Vol
-  const [AllDailySpotVol, setAllDailySpotVol] = useState<number[]>([]);
-
-  // All Spot Trades
-  const [AllDailySpotTrades, setAllDailySpotTrades] = useState<number[]>([]);
-
-  // Spot Trading Vol
-  const [SpotVol, setSpotVol] = useState<number[]>([]);
-  const [DailySpotVol, setDailySpotVol] = useState<number[]>([]);
-
-  // # of Spot Trades
-  const [SpotTrades, setSpotTrades] = useState<number[]>([]);
-  const [DailySpotTrades, setDailySpotTrades] = useState<number[]>([]);
-
-  const products = useAppSelector((state) => state.product.products);
-  const filterdProducts = useFilterProducts(products);
-
-  const data = useAppSelector((state) => state.data);
-  const snapshotData = data.snapshots;
-  const dates = queryTime(snapshotData);
-
-  useEffect(() => {
-    fetchSpotData({
-      snapshotData,
-      market,
-      setAllSpotVol,
-      setAllDailySpotVol,
-      setAllDailySpotTrades,
-      setSpotVol,
-      setDailySpotVol,
-      setSpotTrades,
-      setDailySpotTrades,
-      filterdProducts,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [market, interval, data]);
+  const {
+    isLoading,
+    spotProducts,
+    dates,
+    cumulativeSpotTradingVolume,
+    dailySpotTradingVolume,
+    cumulativeSpotTrades,
+    dailySpotTrades,
+    totalSpotVol,
+    lastDaySpotTradingVolume,
+    lastDaySpotTrades,
+  } = useSpotData(market);
 
   return (
     <>
       <ThreeGridLayout>
         <Card
           title="Total Spot Volume"
-          stat={AllSpotVol[AllSpotVol.length - 1]}
+          stat={totalSpotVol}
           currency={true}
-          loading={data.loading}
+          loading={isLoading}
         />
         <Card
           title="Spot Volume (24h)"
-          stat={AllDailySpotVol[AllDailySpotVol.length - 1]}
+          stat={lastDaySpotTradingVolume}
           currency={true}
-          loading={data.loading}
+          loading={isLoading}
         />
         <Card
           title="Spot Trades (24h)"
-          stat={AllDailySpotTrades[AllDailySpotTrades.length - 1]}
+          stat={lastDaySpotTrades}
           currency={false}
-          loading={data.loading}
+          loading={isLoading}
         />
       </ThreeGridLayout>
       <ControlsLayout justify="between">
         <MktDropdown
           market={market}
           setMarket={setMarket}
-          values={filterdProducts?.SpotProducts}
+          values={spotProducts}
         />
         {isMobile ? (
           <IntervalDropdown interval={interval} setInterval={setInterval} />
@@ -104,12 +73,12 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
           />
           <LineBarChart
             dates={dates}
-            cumulative={SpotVol}
-            daily={DailySpotVol}
+            cumulative={cumulativeSpotTradingVolume}
+            daily={dailySpotTradingVolume}
             data_1="Daily Spot Vol."
             data_2="Cum. Spot Vol."
             currency={true}
-            loading={data.loading}
+            loading={isLoading}
           />
         </ChartContainer>
         <ChartContainer>
@@ -120,12 +89,12 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
           />
           <LineBarChart
             dates={dates}
-            cumulative={SpotTrades}
-            daily={DailySpotTrades}
+            cumulative={cumulativeSpotTrades}
+            daily={dailySpotTrades}
             data_1="Daily Spot Trades"
             data_2="Cum. Spot Trades"
             currency={false}
-            loading={data.loading}
+            loading={isLoading}
           />
         </ChartContainer>
       </ChartsLayout>
