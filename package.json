@@ -24,6 +24,7 @@
     "echarts-for-react": "^3.0.2",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
+    "lodash": "^4.17.21",
     "next": "^13.4.8",
     "numeral": "^2.0.6",
     "postcss": "8.4.24",

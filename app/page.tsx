@@ -22,6 +22,9 @@ export default function Dashboard() {
   const [interval, setInterval] = useState('31');
   const error = useAppSelector((state) => state.data.error);
   const { isMobile } = useViewportWidth();
+  const isAllTimeInterval = interval === 'all';
+  const intervalText = isAllTimeInterval ? 'weekly' : 'daily';
+  const intervalSubText = isAllTimeInterval ? '(past week)' : '(24h)';
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
@@ -79,16 +82,36 @@ export default function Dashboard() {
               </TabsList>
             </Tabs>
             {selectedTab === 'overview' && (
-              <Overview interval={interval} setInterval={setInterval} />
+              <Overview
+                interval={interval}
+                setInterval={setInterval}
+                intervalText={intervalText}
+                intervalSubText={intervalSubText}
+              />
             )}
             {selectedTab === 'perpetual' && (
-              <Perpetual interval={interval} setInterval={setInterval} />
+              <Perpetual
+                interval={interval}
+                setInterval={setInterval}
+                intervalText={intervalText}
+                intervalSubText={intervalSubText}
+              />
             )}
             {selectedTab === 'spot' && (
-              <Spot interval={interval} setInterval={setInterval} />
+              <Spot
+                interval={interval}
+                setInterval={setInterval}
+                intervalText={intervalText}
+                intervalSubText={intervalSubText}
+              />
             )}
             {selectedTab === 'money-market' && (
-              <MoneyMarket interval={interval} setInterval={setInterval} />
+              <MoneyMarket
+                interval={interval}
+                setInterval={setInterval}
+                intervalText={intervalText}
+                intervalSubText={intervalSubText}
+              />
             )}
           </div>
         </>

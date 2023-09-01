@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Card from '../../components/main/Card';
-import IntervalTab from '../../components/main/IntervalTab';
 import IntervalDropdown from '@/app/components/main/IntervalDropdown';
 import ThreeGridLayout from '../../components/layout/ThreeGridLayout';
 import ControlsLayout from '../../components/layout/ControlsLayout';
@@ -12,12 +11,16 @@ import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
 import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
 import LineChart from '@/app/components/main/chart/LineChart';
-import IntervalProps from '../../types/IntervalProps';
-import { useViewportWidth } from '@/app/hooks/useViewportWidth';
 import { useMoneyMarketData } from './hooks/useMoneyMarketData';
+import { PageProps } from '@/app/types/types';
+const _ = require('lodash');
 
-export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
-  const { isMobile } = useViewportWidth();
+export default function MoneyMarket({
+  interval,
+  setInterval,
+  intervalText,
+  intervalSubText,
+}: PageProps) {
   const [market, setMarket] = useState('all');
   const {
     isLoading,
@@ -46,13 +49,13 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
           loading={isLoading}
         />
         <Card
-          title="Deposits (24h)"
+          title={`Deposits ${intervalSubText}`}
           stat={pastDayDeposits}
           currency={true}
           loading={isLoading}
         />
         <Card
-          title="Withdrawals (24h)"
+          title={`Withdrawals ${intervalSubText}`}
           stat={pastDayWithdrawals}
           currency={true}
           loading={isLoading}
@@ -64,11 +67,7 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
           setMarket={setMarket}
           values={mmProducts}
         />
-        {isMobile ? (
-          <IntervalDropdown interval={interval} setInterval={setInterval} />
-        ) : (
-          <IntervalTab interval={interval} setInterval={setInterval} />
-        )}
+        <IntervalDropdown interval={interval} setInterval={setInterval} />
       </ControlsLayout>
       <ChartsLayout>
         <ChartContainer>
@@ -89,13 +88,13 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
         <ChartContainer>
           <ChartHeader
             title="Deposits"
-            text="The daily vs cumulative deposits on Vertex."
+            text={`The ${intervalText} vs cumulative deposits on Vertex.`}
           />
           <LineBarChart
             dates={dates}
             cumulative={cumulativeDeposits}
             daily={dailyDeposits}
-            data_1="Daily Deposits"
+            data_1={`${_.capitalize(intervalText)} Deposits`}
             data_2="Cum. Deposits"
             currency={true}
             loading={isLoading}
@@ -104,13 +103,13 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
         <ChartContainer>
           <ChartHeader
             title="Withdraws"
-            text="The daily vs cumulative withdrawals on Vertex."
+            text={`The ${intervalText} vs cumulative withdrawals on Vertex.`}
           />
           <LineBarChart
             dates={dates}
             cumulative={cumulativeWithdrawals}
             daily={dailyWithdrawals}
-            data_1="Daily Withdrawals"
+            data_1={`${_.capitalize(intervalText)} Withdrawals`}
             data_2="Cum. Withdrawals"
             currency={true}
             loading={isLoading}

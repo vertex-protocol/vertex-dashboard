@@ -16,14 +16,17 @@ const base = 'https://prod.vertexprotocol-backend.com';
 export const fetchData = createAsyncThunk(
   'stats/fetchData',
   async ({ interval }: { interval: string }) => {
-    const intInterval = parseInt(interval);
+    const isAll = interval === 'all';
+    const intInterval = isAll ? 100 : parseInt(interval);
+    const granularity = isAll ? 604800 : 86400;
+
     const response = await axios.post(
       `${base}/indexer`,
       {
         market_snapshots: {
           interval: {
             count: intInterval,
-            granularity: 86400,
+            granularity: granularity,
           },
         },
       },

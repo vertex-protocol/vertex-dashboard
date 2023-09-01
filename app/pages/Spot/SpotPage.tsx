@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Card from '../../components/main/Card';
-import IntervalTab from '../../components/main/IntervalTab';
 import IntervalDropdown from '@/app/components/main/IntervalDropdown';
 import ThreeGridLayout from '../../components/layout/ThreeGridLayout';
 import ControlsLayout from '../../components/layout/ControlsLayout';
@@ -11,12 +10,16 @@ import ChartsLayout from '@/app/components/layout/ChartsLayout';
 import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
 import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
-import IntervalProps from '../../types/IntervalProps';
-import { useViewportWidth } from '@/app/hooks/useViewportWidth';
 import { useSpotData } from './hooks/useSpotData';
+import { PageProps } from '@/app/types/types';
+const _ = require('lodash');
 
-export default function Spot({ interval, setInterval }: IntervalProps) {
-  const { isMobile } = useViewportWidth();
+export default function Spot({
+  interval,
+  setInterval,
+  intervalText,
+  intervalSubText,
+}: PageProps) {
   const [market, setMarket] = useState('all');
   const {
     isLoading,
@@ -41,13 +44,13 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
           loading={isLoading}
         />
         <Card
-          title="Spot Volume (24h)"
+          title={`Spot Volume ${intervalSubText}`}
           stat={lastDaySpotTradingVolume}
           currency={true}
           loading={isLoading}
         />
         <Card
-          title="Spot Trades (24h)"
+          title={`Spot Trades ${intervalSubText}`}
           stat={lastDaySpotTrades}
           currency={false}
           loading={isLoading}
@@ -59,23 +62,19 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
           setMarket={setMarket}
           values={spotProducts}
         />
-        {isMobile ? (
-          <IntervalDropdown interval={interval} setInterval={setInterval} />
-        ) : (
-          <IntervalTab interval={interval} setInterval={setInterval} />
-        )}
+        <IntervalDropdown interval={interval} setInterval={setInterval} />
       </ControlsLayout>
       <ChartsLayout>
         <ChartContainer>
           <ChartHeader
             title="Spot Trading Volume"
-            text="The daily vs cumulative spot trading volume on Vertex."
+            text={`The ${intervalText} vs cumulative spot trading volume on Vertex.`}
           />
           <LineBarChart
             dates={dates}
             cumulative={cumulativeSpotTradingVolume}
             daily={dailySpotTradingVolume}
-            data_1="Daily Spot Vol."
+            data_1={`${_.capitalize(intervalText)} Spot Vol`}
             data_2="Cum. Spot Vol."
             currency={true}
             loading={isLoading}
@@ -84,14 +83,13 @@ export default function Spot({ interval, setInterval }: IntervalProps) {
         <ChartContainer>
           <ChartHeader
             title="# of Spot Trades"
-            text="The daily vs cumulative spot trades on Vertex.
-            "
+            text={`The ${intervalText} vs cumulative spot trades on Vertex.`}
           />
           <LineBarChart
             dates={dates}
             cumulative={cumulativeSpotTrades}
             daily={dailySpotTrades}
-            data_1="Daily Spot Trades"
+            data_1={`${_.capitalize(intervalText)} Spot Trades`}
             data_2="Cum. Spot Trades"
             currency={false}
             loading={isLoading}

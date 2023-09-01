@@ -1,7 +1,6 @@
 'use client';
 
 import Card from '../../components/main/Card';
-import IntervalTab from '../../components/main/IntervalTab';
 import IntervalDropdown from '@/app/components/main/IntervalDropdown';
 import FourGridLayout from '../../components/layout/FourGridLayout';
 import ControlsLayout from '../../components/layout/ControlsLayout';
@@ -10,13 +9,16 @@ import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
 import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
 import LineChart from '@/app/components/main/chart/LineChart';
-import IntervalProps from '../../types/IntervalProps';
-import { useViewportWidth } from '../../hooks/useViewportWidth';
 import { useOverviewData } from './hooks/useOverviewData';
+import { PageProps } from '@/app/types/types';
+const _ = require('lodash');
 
-export default function Overview({ interval, setInterval }: IntervalProps) {
-  const { isMobile } = useViewportWidth();
-
+export default function Overview({
+  interval,
+  setInterval,
+  intervalText,
+  intervalSubText,
+}: PageProps) {
   const {
     isLoading,
     dates,
@@ -45,7 +47,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
           loading={isLoading}
         />
         <Card
-          title="Trading Volume (24h)"
+          title={`Trading Volume ${intervalSubText}`}
           stat={pastDayTradingVolume}
           currency={true}
           loading={isLoading}
@@ -57,30 +59,26 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
           loading={isLoading}
         />
         <Card
-          title="Fees (24h)"
+          title={`Fees ${intervalSubText}`}
           stat={pastDayFees}
           currency={true}
           loading={isLoading}
         />
       </FourGridLayout>
       <ControlsLayout justify="end">
-        {isMobile ? (
-          <IntervalDropdown interval={interval} setInterval={setInterval} />
-        ) : (
-          <IntervalTab interval={interval} setInterval={setInterval} />
-        )}
+        <IntervalDropdown interval={interval} setInterval={setInterval} />
       </ControlsLayout>
       <ChartsLayout>
         <ChartContainer>
           <ChartHeader
             title="Trading Volume"
-            text="The daily vs cumulative trading volume on Vertex."
+            text={`The ${intervalText} vs cumulative trading volume on Vertex.`}
           />
           <LineBarChart
             dates={dates}
             cumulative={cumulativeTradingVolume}
             daily={dailyTradingVolume}
-            data_1="Daily Vol."
+            data_1={`${_.capitalize(intervalText)} Vol.`}
             data_2="Cum. Vol."
             loading={isLoading}
             currency={true}
@@ -89,7 +87,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
         <ChartContainer>
           <ChartHeader
             title="Users"
-            text="The daily new users vs cumulative users on Vertex."
+            text={`The ${intervalText} new users vs cumulative users on Vertex.`}
           />
           <LineBarChart
             dates={dates}
@@ -103,13 +101,13 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
         </ChartContainer>
         <ChartContainer>
           <ChartHeader
-            title="Daily Active Users"
-            text="The daily active users on Vertex. Updated hourly on a daily interval (9:00AM EST)."
+            title={`${_.capitalize(intervalText)} Active Users`}
+            text={`The ${intervalText} active users on Vertex. Updated hourly on a daily interval (9:00AM EST).`}
           ></ChartHeader>
           <LineChart
             dates={dates}
             data={dailyActiveUsers}
-            data_1="DAU"
+            data_1="Active Users"
             format={'0.a'}
             loading={isLoading}
           />
@@ -123,7 +121,7 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
             dates={dates}
             cumulative={cumulativeFees}
             daily={dailyFees}
-            data_1="Daily Fees"
+            data_1={`${_.capitalize(intervalText)} Fees`}
             data_2="Cum. Fees"
             loading={isLoading}
             currency={true}
@@ -132,13 +130,13 @@ export default function Overview({ interval, setInterval }: IntervalProps) {
         <ChartContainer>
           <ChartHeader
             title="Liquidations"
-            text="The daily vs cumulative liquidations on Vertex."
+            text={`The ${intervalText} vs cumulative liquidations on Vertex.`}
           />
           <LineBarChart
             dates={dates}
             cumulative={cumulativeLiquidations}
             daily={dailyLiquidations}
-            data_1="Daily Liqs"
+            data_1={`${_.capitalize(intervalText)} Liqs`}
             data_2="Cum. Liqs"
             loading={isLoading}
             currency={true}

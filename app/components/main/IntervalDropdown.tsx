@@ -8,6 +8,7 @@ import {
   SelectItem,
 } from '@/app/components/ui/Select';
 
+// Values are increased by 1 to calculate daily diff
 export default function IntervalDropdown({
   interval,
   setInterval,
@@ -27,6 +28,7 @@ export default function IntervalDropdown({
         <SelectItem value="8">7D</SelectItem>
         <SelectItem value="31">30D</SelectItem>
         <SelectItem value="91">90D</SelectItem>
+        <SelectItem value="all">ALL</SelectItem>
       </SelectContent>
     </Select>
   );

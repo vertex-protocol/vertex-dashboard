@@ -1,7 +1,6 @@
 'use client';
 
 import Card from '../../components/main/Card';
-import IntervalTab from '../../components/main/IntervalTab';
 import IntervalDropdown from '@/app/components/main/IntervalDropdown';
 import FourGridLayout from '../../components/layout/FourGridLayout';
 import MktDropdown from '../../components/main/MktDropdown';
@@ -11,13 +10,17 @@ import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
 import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
 import LineChart from '@/app/components/main/chart/LineChart';
-import IntervalProps from '../../types/IntervalProps';
-import { useViewportWidth } from '../../hooks/useViewportWidth';
 import { usePerpetualData } from './hooks/usePerpetualData';
 import { useState } from 'react';
+import { PageProps } from '@/app/types/types';
+const _ = require('lodash');
 
-export default function Perpetual({ interval, setInterval }: IntervalProps) {
-  const { isMobile } = useViewportWidth();
+export default function Perpetual({
+  interval,
+  setInterval,
+  intervalText,
+  intervalSubText,
+}: PageProps) {
   const [market, setMarket] = useState('all');
 
   const {
@@ -48,7 +51,7 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
           loading={isLoading}
         />
         <Card
-          title="Perpetual Volume (24h)"
+          title={`Perpetual Volume ${intervalSubText}`}
           stat={lastDayPerpVolume}
           currency={true}
           loading={isLoading}
@@ -60,7 +63,7 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
           loading={isLoading}
         />
         <Card
-          title="Perpetual Trades (24h)"
+          title={`Perpetual Trades ${intervalSubText}`}
           stat={lastDayPerpTrades}
           currency={false}
           loading={isLoading}
@@ -72,23 +75,19 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
           setMarket={setMarket}
           values={perpProducts}
         />
-        {isMobile ? (
-          <IntervalDropdown interval={interval} setInterval={setInterval} />
-        ) : (
-          <IntervalTab interval={interval} setInterval={setInterval} />
-        )}
+        <IntervalDropdown interval={interval} setInterval={setInterval} />
       </ControlsLayout>
       <ChartsLayout>
         <ChartContainer>
           <ChartHeader
             title="Perpetual Trading Volume"
-            text="The daily vs cumulative perp trading volume on Vertex."
+            text={`The ${intervalText} vs cumulative perp trading volume on Vertex.`}
           ></ChartHeader>
           <LineBarChart
             dates={dates}
             cumulative={cumulativePerpTradingVolume}
             daily={dailyPerpTradingVolume}
-            data_1="Daily Perp Vol."
+            data_1={`${_.capitalize(intervalText)} Perp Vol`}
             data_2="Cum. Perp Vol."
             currency={true}
             loading={isLoading}
@@ -110,14 +109,13 @@ export default function Perpetual({ interval, setInterval }: IntervalProps) {
         <ChartContainer>
           <ChartHeader
             title="# of Perp Trades"
-            text="The daily vs cumulative perp trades on Vertex.
-            "
+            text={`The ${intervalText} vs cumulative perp trades on Vertex.`}
           ></ChartHeader>
           <LineBarChart
             dates={dates}
             cumulative={cumulativePerpTrades}
             daily={dailyPerpTrades}
-            data_1="Daily Perp Trades"
+            data_1={`${_.capitalize(intervalText)} Perp Trades`}
             data_2="Cum. Perp Trades"
             currency={false}
             loading={isLoading}
