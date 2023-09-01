@@ -15,7 +15,7 @@ export function queryAllFlows(
 
   const productIds = products.map((product: any) => product.product_id);
 
-  data?.snapshots.forEach((obj: any) => {
+  data?.forEach((obj: any) => {
     const keys = Object.keys(obj[type]).map(Number);
     let sum = 0;
 

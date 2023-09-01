@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 export function queryTVL(data: any) {
   const TvlData: any = [];
 
-  data?.snapshots.forEach((obj: any) => {
+  data?.forEach((obj: any) => {
     if (obj?.hasOwnProperty('tvl')) {
       let TVL = new BigNumber(obj.tvl).dividedBy(1e18).toNumber();
 

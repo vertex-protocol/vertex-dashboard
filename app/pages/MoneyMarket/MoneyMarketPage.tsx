@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Card from '../../components/main/Card';
 import IntervalTab from '../../components/main/IntervalTab';
 import IntervalDropdown from '@/app/components/main/IntervalDropdown';
@@ -12,101 +12,57 @@ import ChartContainer from '@/app/components/main/chart/ChartContainer';
 import ChartHeader from '@/app/components/main/chart/ChartHeader';
 import LineBarChart from '@/app/components/main/chart/LineBar_Chart';
 import LineChart from '@/app/components/main/chart/LineChart';
-import { useAppSelector } from '@/app/redux/store';
-import { queryTime } from '@/app/hooks/queryTime';
-import { fetchMMData } from '@/app/hooks/fetchMMData';
-import { useFilterProducts } from '@/app/hooks/useFilterProducts';
 import IntervalProps from '../../types/IntervalProps';
 import { useViewportWidth } from '@/app/hooks/useViewportWidth';
+import { useMoneyMarketData } from './hooks/useMoneyMarketData';
 
 export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
   const { isMobile } = useViewportWidth();
   const [market, setMarket] = useState('all');
-
-  // All TVL
-  const [AllTVL, setAllTVL] = useState<number[]>([]);
-
-  // All Deposits
-  const [AllDailyDeposits, setAllDailyDeposits] = useState<number[]>([]);
-
-  // All Withdrawals
-  const [AllDailyWithdraws, setAllDailyWithdraws] = useState<number[]>([]);
-
-  // TVL & Net Flow
-  const [TVL, setTVL] = useState<number[]>([]);
-  const [netFlows, setNetFlows] = useState<number[]>([]);
-
-  // Deposits
-  const [Deposits, setDeposits] = useState<number[]>([]);
-  const [DailyDeposits, setDailyDeposits] = useState<number[]>([]);
-
-  // Borrows
-  const [Withdraws, setWithdraws] = useState<number[]>([]);
-  const [DailyWithdraws, setDailyWithdraws] = useState<number[]>([]);
-
-  // Deposit Rate
-  const [DepositRate, setDepositRate] = useState<number[]>([]);
-
-  // Borrow Rate
-  const [BorrowRate, setBorrowRate] = useState<number[]>([]);
-
-  const products = useAppSelector((state) => state.product.products);
-  const filterdProducts = useFilterProducts(products);
-
-  const data = useAppSelector((state) => state.data);
-  const snapshotData = data.snapshots;
-  const dates = queryTime(snapshotData);
-
-  const prices = useAppSelector((state) => state.prices.prices);
-
-  useEffect(() => {
-    fetchMMData({
-      snapshotData,
-      market,
-      setAllTVL,
-      setAllDailyDeposits,
-      setAllDailyWithdraws,
-      setTVL,
-      setNetFlows,
-      setDeposits,
-      setDailyDeposits,
-      setWithdraws,
-      setDailyWithdraws,
-      setDepositRate,
-      setBorrowRate,
-      filterdProducts,
-      prices,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [market, interval, data]);
+  const {
+    isLoading,
+    dates,
+    mmProducts,
+    totalTvl,
+    pastDayDeposits,
+    pastDayWithdrawals,
+    cumulativeTvl,
+    netFlows,
+    cumulativeDeposits,
+    dailyDeposits,
+    cumulativeWithdrawals,
+    dailyWithdrawals,
+    depositRate,
+    borrowRate,
+  } = useMoneyMarketData(market);
 
   return (
     <>
       <ThreeGridLayout>
         <Card
           title="Total TVL"
-          stat={AllTVL[AllTVL.length - 1]}
+          stat={totalTvl}
           currency={true}
-          loading={data.loading}
+          loading={isLoading}
         />
         <Card
           title="Deposits (24h)"
-          stat={AllDailyDeposits[AllDailyDeposits.length - 1]}
+          stat={pastDayDeposits}
           currency={true}
-          loading={data.loading}
+          loading={isLoading}
         />
         <Card
           title="Withdrawals (24h)"
-          stat={AllDailyWithdraws[AllDailyWithdraws.length - 1]}
+          stat={pastDayWithdrawals}
           currency={true}
-          loading={data.loading}
+          loading={isLoading}
         />
       </ThreeGridLayout>
       <ControlsLayout justify="between">
         <MktDropdown
           market={market}
           setMarket={setMarket}
-          values={filterdProducts?.MMProducts}
+          values={mmProducts}
         />
         {isMobile ? (
           <IntervalDropdown interval={interval} setInterval={setInterval} />
@@ -122,12 +78,12 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
           />
           <LineBarChart
             dates={dates}
-            cumulative={TVL}
+            cumulative={cumulativeTvl}
             daily={netFlows}
             data_1="Net Flows"
             data_2="TVL"
             currency={true}
-            loading={data.loading}
+            loading={isLoading}
           />
         </ChartContainer>
         <ChartContainer>
@@ -137,12 +93,12 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
           />
           <LineBarChart
             dates={dates}
-            cumulative={Deposits}
-            daily={DailyDeposits}
+            cumulative={cumulativeDeposits}
+            daily={dailyDeposits}
             data_1="Daily Deposits"
             data_2="Cum. Deposits"
             currency={true}
-            loading={data.loading}
+            loading={isLoading}
           />
         </ChartContainer>
         <ChartContainer>
@@ -152,12 +108,12 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
           />
           <LineBarChart
             dates={dates}
-            cumulative={Withdraws}
-            daily={DailyWithdraws}
+            cumulative={cumulativeWithdrawals}
+            daily={dailyWithdrawals}
             data_1="Daily Withdrawals"
             data_2="Cum. Withdrawals"
             currency={true}
-            loading={data.loading}
+            loading={isLoading}
           />
         </ChartContainer>
         {market !== 'all' && (
@@ -169,10 +125,10 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
               />
               <LineChart
                 dates={dates}
-                data={DepositRate}
+                data={depositRate}
                 data_1="Deposit Rate"
                 format={'0.[00000]%'}
-                loading={data.loading}
+                loading={isLoading}
               />
             </ChartContainer>
             <ChartContainer>
@@ -182,10 +138,10 @@ export default function MoneyMarket({ interval, setInterval }: IntervalProps) {
               />
               <LineChart
                 dates={dates}
-                data={BorrowRate}
+                data={borrowRate}
                 data_1="Borrow Rate"
                 format={'0.[00000]%'}
-                loading={data.loading}
+                loading={isLoading}
               />
             </ChartContainer>
           </>
