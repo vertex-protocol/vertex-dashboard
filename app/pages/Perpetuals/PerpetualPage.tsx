@@ -45,13 +45,13 @@ export default function Perpetual({
     <>
       <FourGridLayout>
         <Card
-          title="Total Perpetual Volume"
+          title="Total Perp Volume"
           stat={totalPerpVolume}
           currency={true}
           loading={isLoading}
         />
         <Card
-          title={`Perpetual Volume ${intervalSubText}`}
+          title={`Perp Volume ${intervalSubText}`}
           stat={lastDayPerpVolume}
           currency={true}
           loading={isLoading}
@@ -63,7 +63,7 @@ export default function Perpetual({
           loading={isLoading}
         />
         <Card
-          title={`Perpetual Trades ${intervalSubText}`}
+          title={`Perp Trades ${intervalSubText}`}
           stat={lastDayPerpTrades}
           currency={false}
           loading={isLoading}
@@ -80,7 +80,7 @@ export default function Perpetual({
       <ChartsLayout>
         <ChartContainer>
           <ChartHeader
-            title="Perpetual Trading Volume"
+            title="Perp Trading Volume"
             text={`The ${intervalText} vs cumulative perp trading volume on Vertex.`}
           ></ChartHeader>
           <LineBarChart

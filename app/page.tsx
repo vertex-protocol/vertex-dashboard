@@ -65,7 +65,7 @@ export default function Dashboard() {
                   value="perpetual"
                   onClick={() => handleTabClick('perpetual')}
                 >
-                  Perpetuals
+                  Perps
                 </TabsTrigger>
                 <TabsTrigger
                   value="spot"
