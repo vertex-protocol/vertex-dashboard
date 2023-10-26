@@ -4,9 +4,11 @@ import vertexLogo from '../../public/vertex-logo.svg';
 export default function NavBar() {
   return (
     <nav className="flex justify-between py-4 px-10 bg-gray-3 border-b border-gray-2 text-white">
-      <Image src={vertexLogo} alt="vertex-logo" width={100} />
+      <a href="https://vertexprotocol.com" target="_blank">
+        <Image src={vertexLogo} alt="vertex-logo" width={100} />
+      </a>
       <div className="flex gap-4">
-        <a href="https://vertexprotocol.com/" target="_blank">
+        <a href="https://app.vertexprotocol.com/markets" target="_blank">
           App
         </a>
         <a
