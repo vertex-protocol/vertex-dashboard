@@ -20,10 +20,8 @@ export default function Restricted() {
             <p>North Korea</p>
             <p>Russia</p>
             <p>Syria</p>
-            <p>
-              Ukraine (Crimea, Donetsk, Kherson, Luhansk, and Zaporizhzhia
-              regions)
-            </p>
+            <p>Ukraine</p>
+            <p>United Kingdom</p>
             <p>United States of America</p>
           </div>
         </div>
