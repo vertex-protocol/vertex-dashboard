@@ -51,6 +51,7 @@ export default function Overview({
           stat={pastDayTradingVolume}
           currency={true}
           loading={isLoading}
+          tooltipContent="test"
         />
         <Card
           title="Total Users"
@@ -72,7 +73,7 @@ export default function Overview({
         <ChartContainer>
           <ChartHeader
             title="Trading Volume"
-            text={`The ${intervalText} vs cumulative trading volume on Vertex.`}
+            text={`The ${intervalText} vs cumulative trading volume on Vertex. 24h period starts at 0:00 UTC.`}
           />
           <LineBarChart
             dates={dates}
@@ -102,7 +103,7 @@ export default function Overview({
         <ChartContainer>
           <ChartHeader
             title={`${_.capitalize(intervalText)} Active Users`}
-            text={`The ${intervalText} active users on Vertex. Updated hourly on a daily interval (9:00AM EST).`}
+            text={`The ${intervalText} active users on Vertex. Updated hourly on a daily interval at 14:00 UTC.`}
           ></ChartHeader>
           <LineChart
             dates={dates}
@@ -115,7 +116,7 @@ export default function Overview({
         <ChartContainer>
           <ChartHeader
             title="Protocol Fees"
-            text="Cumulative trading fees paid by traders."
+            text="The daily trading fees vs cumulative trading fees paid by traders."
           />
           <LineBarChart
             dates={dates}
