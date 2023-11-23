@@ -42,7 +42,7 @@ export default function Card({
               width={18}
               height={18}
               data-tooltip-id="my-tooltip"
-              data-tooltip-content="24h period starts at 0:00 UTC."
+              data-tooltip-content={tooltipContent}
             />
           )}
           <Tooltip
