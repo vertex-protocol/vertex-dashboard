@@ -80,6 +80,8 @@ export default function Overview({
             daily={dailyTradingVolume}
             data_1={`${_.capitalize(intervalText)} Vol.`}
             data_2="Cum. Vol."
+            // 0 values breaks log scale so we update to linear when interval is all
+            yAxisScaleLeft={interval === 'all' ? 'value' : 'log'}
             loading={isLoading}
             currency={true}
           />

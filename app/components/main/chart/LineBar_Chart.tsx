@@ -11,6 +11,8 @@ interface LineBarProps {
   data_2: string;
   loading: boolean;
   currency: boolean;
+  yAxisScaleLeft?: string;
+  yAxisScaleRight?: string;
 }
 
 export default function LineBarChart({
@@ -21,6 +23,8 @@ export default function LineBarChart({
   data_2,
   loading,
   currency,
+  yAxisScaleLeft = 'value',
+  yAxisScaleRight = 'value',
 }: LineBarProps) {
   const currencyFormat = currency ? '$0.a' : '0.a';
   const tooltipFormat = currency ? '$0.[00]a' : '0.[00]a';
@@ -67,12 +71,15 @@ export default function LineBarChart({
     ],
     yAxis: [
       {
-        type: 'value',
+        type: yAxisScaleLeft,
+        // logBase is only relevant when type: 'log'
+        logBase: 10,
         splitLine: {
           lineStyle: {
             color: '#323237',
           },
         },
+        position: 'left',
         axisLabel: {
           formatter: (value: number) => {
             return numeral(value).format(currencyFormat);
@@ -80,10 +87,12 @@ export default function LineBarChart({
         },
       },
       {
-        type: 'value',
+        type: yAxisScaleRight,
+        logBase: 10,
         splitLine: {
           show: false,
         },
+        position: 'right',
         axisLabel: {
           formatter: (value: number) => {
             return numeral(value).format(currencyFormat);
