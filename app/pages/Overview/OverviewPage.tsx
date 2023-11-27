@@ -51,7 +51,6 @@ export default function Overview({
           stat={pastDayTradingVolume}
           currency={true}
           loading={isLoading}
-          tooltipContent="24h period starts at 0:00 UTC."
         />
         <Card
           title="Total Users"
@@ -64,7 +63,6 @@ export default function Overview({
           stat={pastDayFees}
           currency={true}
           loading={isLoading}
-          tooltipContent="24h period starts at 0:00 UTC."
         />
       </FourGridLayout>
       <ControlsLayout justify="end">
@@ -74,7 +72,7 @@ export default function Overview({
         <ChartContainer>
           <ChartHeader
             title="Trading Volume"
-            text={`The ${intervalText} vs cumulative trading volume on Vertex. 24h period starts at 0:00 UTC.`}
+            text={`The ${intervalText} vs cumulative trading volume on Vertex.`}
           />
           <LineBarChart
             dates={dates}

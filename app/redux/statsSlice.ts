@@ -27,6 +27,7 @@ export const fetchData = createAsyncThunk(
           interval: {
             count: intInterval,
             granularity: granularity,
+            max_time: Date.now(),
           },
         },
       },
