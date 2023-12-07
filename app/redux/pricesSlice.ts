@@ -12,7 +12,7 @@ const initialState: PricesProps = {
   error: false,
 };
 
-const base = 'https://prod.vertexprotocol-backend.com';
+const base = 'https://gateway.prod.vertexprotocol.com/v1';
 
 export const fetchPrices = createAsyncThunk('stats/fetcPrices', async () => {
   const response = await axios.get(`${base}/query?type=all_products`);

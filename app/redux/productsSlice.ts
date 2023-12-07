@@ -11,7 +11,7 @@ const initialState: ProductsProps = {
   error: false,
 };
 
-const base = 'https://prod.vertexprotocol-backend.com';
+const base = 'https://gateway.prod.vertexprotocol.com/v1';
 
 export const fetchProducts = createAsyncThunk(
   'stats/fetcProducts',
