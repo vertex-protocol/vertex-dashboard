@@ -11,7 +11,7 @@ const initialState: StatsProps = {
   error: false,
 };
 
-const base = 'https://prod.vertexprotocol-backend.com';
+const base = 'https://archive.prod.vertexprotocol.com/v1';
 
 export const fetchData = createAsyncThunk(
   'stats/fetchData',
@@ -21,7 +21,7 @@ export const fetchData = createAsyncThunk(
     const granularity = isAll ? 604800 : 86400;
 
     const response = await axios.post(
-      `${base}/indexer`,
+      `${base}`,
       {
         market_snapshots: {
           interval: {
