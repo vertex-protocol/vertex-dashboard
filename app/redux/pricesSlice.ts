@@ -5,6 +5,8 @@ import axios from 'axios';
 
 import { PricesProps } from '../types/PricesDataProps';
 import { queryPrices } from '../hooks/queryPrices';
+import { ChainType } from '@/app/types/types';
+import { VERTEX_API_LINKS } from '@/app/consts';
 
 const initialState: PricesProps = {
   prices: null,
@@ -12,14 +14,17 @@ const initialState: PricesProps = {
   error: false,
 };
 
-const base = 'https://gateway.prod.vertexprotocol.com/v1';
+export const fetchPrices = createAsyncThunk(
+  'stats/fetcPrices',
+  async ({ chain }: { chain: ChainType }) => {
+    const baseUrl = VERTEX_API_LINKS[chain].gateway;
 
-export const fetchPrices = createAsyncThunk('stats/fetcPrices', async () => {
-  const response = await axios.get(`${base}/query?type=all_products`);
-  const prices = queryPrices(response.data.data.spot_products);
+    const response = await axios.get(`${baseUrl}/query?type=all_products`);
+    const prices = queryPrices(response.data.data.spot_products);
 
-  return prices;
-});
+    return prices;
+  },
+);
 
 const pricesSlice = createSlice({
   name: 'prices',

@@ -1,5 +1,4 @@
 import { ChevronDownIcon } from '@radix-ui/react-icons';
-import IntervalProps from '@/app/types/IntervalProps';
 import {
   Select,
   SelectTrigger,
@@ -8,11 +7,16 @@ import {
   SelectItem,
 } from '@/app/components/ui/Select';
 
+interface IntervalDropdownProps {
+  interval: string;
+  setInterval: (interval: string) => void;
+}
+
 // Values are increased by 1 to calculate daily diff
 export default function IntervalDropdown({
   interval,
   setInterval,
-}: IntervalProps) {
+}: IntervalDropdownProps) {
   return (
     <Select
       defaultValue={interval}

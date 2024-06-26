@@ -2,8 +2,10 @@
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { VERTEX_API_LINKS } from '@/app/consts';
 
 import { StatsProps } from '../types/statsProps';
+import { ChainType } from '@/app/types/types';
 
 const initialState: StatsProps = {
   snapshots: null,
@@ -11,17 +13,22 @@ const initialState: StatsProps = {
   error: false,
 };
 
-const base = 'https://archive.prod.vertexprotocol.com/v1';
+interface Props {
+  interval: string;
+  chain: ChainType;
+}
 
 export const fetchData = createAsyncThunk(
   'stats/fetchData',
-  async ({ interval }: { interval: string }) => {
+  async ({ interval, chain }: Props) => {
     const isAll = interval === 'all';
     const intInterval = isAll ? 100 : parseInt(interval);
     const granularity = isAll ? 604800 : 86400;
 
+    const baseUrl = VERTEX_API_LINKS[chain].archive;
+
     const response = await axios.post(
-      `${base}`,
+      `${baseUrl}`,
       {
         market_snapshots: {
           interval: {

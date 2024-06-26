@@ -1,8 +1,7 @@
 'use client';
 
 import Card from '../../components/main/Card';
-import IntervalDropdown from '@/app/components/main/IntervalDropdown';
-import FourGridLayout from '../../components/layout/FourGridLayout';
+import IntervalDropdown from '@/app/components/main/IntervalDropdown';import FourGridLayout from '../../components/layout/FourGridLayout';
 import ControlsLayout from '../../components/layout/ControlsLayout';
 import ChartsLayout from '../../components/layout/ChartsLayout';
 import ChartContainer from '@/app/components/main/chart/ChartContainer';

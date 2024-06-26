@@ -7,9 +7,9 @@ import {
   SelectItem,
 } from '@/app/components/ui/Select';
 
-interface IntervalProps {
+interface MarketDropdownProps {
   market: string;
-  setMarket: React.Dispatch<React.SetStateAction<string>>;
+  setMarket: (market: string) => void;
   values: any;
 }
 
@@ -17,7 +17,7 @@ export default function MarketDropdown({
   market,
   setMarket,
   values,
-}: IntervalProps) {
+}: MarketDropdownProps) {
   if (!values) {
     return null;
   }

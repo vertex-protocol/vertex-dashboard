@@ -16,10 +16,12 @@ import { fetchProducts } from './redux/productsSlice';
 import { fetchPrices } from './redux/pricesSlice';
 import { useAppSelector } from './redux/store';
 import { useViewportWidth } from './hooks/useViewportWidth';
+import { ChainType } from '@/app/types/types';
 
 export default function Dashboard() {
   const [selectedTab, setSelectedTab] = useState('overview');
   const [interval, setInterval] = useState('31');
+  const [chain, setChain] = useState<ChainType>('arbitrum');
   const error = useAppSelector((state) => state.data.error);
   const { isMobile } = useViewportWidth();
   const isAllTimeInterval = interval === 'all';
@@ -28,18 +30,18 @@ export default function Dashboard() {
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(fetchData({ interval }));
-  }, [dispatch, interval]);
+    dispatch(fetchData({ interval, chain }));
+  }, [dispatch, interval, chain]);
 
   // fetch products from symbol endpoint
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    dispatch(fetchProducts({ chain }));
+  }, [dispatch, chain]);
 
   // fetch prices
   useEffect(() => {
-    dispatch(fetchPrices());
-  }, [dispatch]);
+    dispatch(fetchPrices({ chain }));
+  }, [dispatch, chain]);
 
   const handleTabClick = (value: string) => {
     setSelectedTab(value);
@@ -51,7 +53,7 @@ export default function Dashboard() {
         <Restricted />
       ) : (
         <>
-          <Nav />
+          <Nav chain={chain} setChain={setChain} />
           <div className="px-4 md:px-10 mt-4">
             <Tabs value={selectedTab} onValueChange={setSelectedTab}>
               <TabsList>
