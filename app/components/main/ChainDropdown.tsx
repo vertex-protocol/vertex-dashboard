@@ -15,7 +15,10 @@ interface ChainDropdownProps {
 
 export function ChainDropdown({ chain, setChain }: ChainDropdownProps) {
   return (
-    <Select defaultValue={chain} onValueChange={(value: ChainType) => setChain(value)}>
+    <Select
+      defaultValue={chain}
+      onValueChange={(value: ChainType) => setChain(value)}
+    >
       <SelectTrigger className="flex h-10 w-28 items-center bg-gray-3 border border-gray-2 rounded text-gray-1 text-sm focus:outline-none justify-between px-3">
         <div className="flex items-center">
           <SelectValue />
@@ -25,6 +28,7 @@ export function ChainDropdown({ chain, setChain }: ChainDropdownProps) {
       <SelectContent className="bg-gray-3 border border-gray-2 rounded text-gray-1 text-sm focus:outline-none w-28 mt-2 cursor-pointer">
         <SelectItem value="arbitrum">Arbitrum</SelectItem>
         <SelectItem value="mantle">Mantle</SelectItem>
+        <SelectItem value="sei">Sei</SelectItem>
       </SelectContent>
     </Select>
   );

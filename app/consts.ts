@@ -7,4 +7,8 @@ export const VERTEX_API_LINKS = {
     gateway: 'https://gateway.mantle-prod.vertexprotocol.com/v1',
     archive: 'https://archive.mantle-prod.vertexprotocol.com/v1',
   },
+  sei: {
+    gateway: 'https://gateway.sei-prod.vertexprotocol.com/v1',
+    archive: 'https://archive.sei-prod.vertexprotocol.com/v1',
+  },
 };

@@ -5,4 +5,4 @@ export interface PageProps {
   intervalSubText: string;
 }
 
-export type ChainType = 'arbitrum' | 'mantle';
+export type ChainType = 'arbitrum' | 'mantle' | 'sei';
