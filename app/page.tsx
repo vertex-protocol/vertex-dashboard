@@ -16,12 +16,13 @@ import { fetchProducts } from './redux/productsSlice';
 import { fetchPrices } from './redux/pricesSlice';
 import { useAppSelector } from './redux/store';
 import { useViewportWidth } from './hooks/useViewportWidth';
-import { ChainType } from '@/app/types/types';
+import { ChainType, NetworkType } from '@/app/types/types';
 
 export default function Dashboard() {
   const [selectedTab, setSelectedTab] = useState('overview');
   const [interval, setInterval] = useState('31');
   const [chain, setChain] = useState<ChainType>('arbitrum');
+  const [network, setNetwork] = useState<NetworkType>('mainnet');
   const error = useAppSelector((state) => state.data.error);
   const { isMobile } = useViewportWidth();
   const isAllTimeInterval = interval === 'all';
@@ -30,18 +31,18 @@ export default function Dashboard() {
 
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(fetchData({ interval, chain }));
-  }, [dispatch, interval, chain]);
+    dispatch(fetchData({ interval, chain, network }));
+  }, [dispatch, interval, chain, network]);
 
   // fetch products from symbol endpoint
   useEffect(() => {
-    dispatch(fetchProducts({ chain }));
-  }, [dispatch, chain]);
+    dispatch(fetchProducts({ chain, network }));
+  }, [dispatch, chain, network]);
 
   // fetch prices
   useEffect(() => {
-    dispatch(fetchPrices({ chain }));
-  }, [dispatch, chain]);
+    dispatch(fetchPrices({ chain, network }));
+  }, [dispatch, chain, network]);
 
   const handleTabClick = (value: string) => {
     setSelectedTab(value);
@@ -53,7 +54,12 @@ export default function Dashboard() {
         <Restricted />
       ) : (
         <>
-          <Nav chain={chain} setChain={setChain} />
+          <Nav
+            chain={chain}
+            setChain={setChain}
+            network={network}
+            setNetwork={setNetwork}
+          />
           <div className="px-4 md:px-10 mt-4">
             <Tabs value={selectedTab} onValueChange={setSelectedTab}>
               <TabsList>

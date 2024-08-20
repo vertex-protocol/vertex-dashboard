@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { ProductsProps } from '../types/productsProps';
-import { ChainType } from '@/app/types/types';
+import { ChainType, NetworkType } from '@/app/types/types';
 import { VERTEX_API_LINKS } from '@/app/consts';
 
 const initialState: ProductsProps = {
@@ -15,8 +15,8 @@ const initialState: ProductsProps = {
 
 export const fetchProducts = createAsyncThunk(
   'stats/fetcProducts',
-  async ({ chain }: { chain: ChainType }) => {
-    const baseUrl = VERTEX_API_LINKS[chain].gateway;
+  async ({ chain, network }: { chain: ChainType; network: NetworkType }) => {
+    const baseUrl = VERTEX_API_LINKS[chain][network].gateway;
 
     const response = await axios.get(`${baseUrl}/symbols`);
     return response.data;

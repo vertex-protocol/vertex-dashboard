@@ -5,7 +5,7 @@ import axios from 'axios';
 import { VERTEX_API_LINKS } from '@/app/consts';
 
 import { StatsProps } from '../types/statsProps';
-import { ChainType } from '@/app/types/types';
+import { ChainType, NetworkType } from '@/app/types/types';
 
 const initialState: StatsProps = {
   snapshots: null,
@@ -16,16 +16,17 @@ const initialState: StatsProps = {
 interface Props {
   interval: string;
   chain: ChainType;
+  network: NetworkType;
 }
 
 export const fetchData = createAsyncThunk(
   'stats/fetchData',
-  async ({ interval, chain }: Props) => {
+  async ({ interval, chain, network }: Props) => {
     const isAll = interval === 'all';
     const intInterval = isAll ? 100 : parseInt(interval);
     const granularity = isAll ? 604800 : 86400;
 
-    const baseUrl = VERTEX_API_LINKS[chain].archive;
+    const baseUrl = VERTEX_API_LINKS[chain][network].archive;
 
     const response = await axios.post(
       `${baseUrl}`,

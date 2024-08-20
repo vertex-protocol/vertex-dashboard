@@ -6,3 +6,5 @@ export interface PageProps {
 }
 
 export type ChainType = 'arbitrum' | 'mantle' | 'sei';
+
+export type NetworkType = 'mainnet' | 'testnet';
