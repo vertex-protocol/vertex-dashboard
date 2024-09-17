@@ -22,6 +22,7 @@ interface Props {
 export const fetchData = createAsyncThunk(
   'stats/fetchData',
   async ({ interval, chain, network }: Props) => {
+    const isMainnet = network === 'mainnet';
     const isAll = interval === 'all';
     const intInterval = isAll ? 100 : parseInt(interval);
     const granularity = isAll ? 604800 : 86400;
@@ -35,7 +36,7 @@ export const fetchData = createAsyncThunk(
           interval: {
             count: intInterval,
             granularity: granularity,
-            max_time: Date.now(),
+            max_time: isMainnet ? Date.now() : Math.floor(Date.now() / 1000),
           },
         },
       },

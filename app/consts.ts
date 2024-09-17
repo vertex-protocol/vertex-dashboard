@@ -29,4 +29,14 @@ export const VERTEX_API_LINKS = {
       archive: 'https://archive.sei-test.vertexprotocol.com/v1',
     },
   },
+  base: {
+    mainnet: {
+      gateway: 'https://gateway.base-prod.vertexprotocol.com/v1',
+      archive: 'https://archive.base-prod.vertexprotocol.com/v1',
+    },
+    testnet: {
+      gateway: 'https://gateway.base-test.vertexprotocol.com/v1',
+      archive: 'https://archive.base-test.vertexprotocol.com/v1',
+    },
+  },
 };

@@ -29,6 +29,7 @@ export function ChainDropdown({ chain, setChain }: ChainDropdownProps) {
         <SelectItem value="arbitrum">Arbitrum</SelectItem>
         <SelectItem value="mantle">Mantle</SelectItem>
         <SelectItem value="sei">Sei</SelectItem>
+        <SelectItem value="base">Base</SelectItem>
       </SelectContent>
     </Select>
   );
