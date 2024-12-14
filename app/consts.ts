@@ -39,4 +39,14 @@ export const VERTEX_API_LINKS = {
       archive: 'https://archive.base-test.vertexprotocol.com/v1',
     },
   },
+  sonic: {
+    mainnet: {
+      gateway: 'https://gateway.sonic-prod.vertexprotocol.com/v1',
+      archive: 'https://archive.sonic-prod.vertexprotocol.com/v1',
+    },
+    testnet: {
+      gateway: 'https://gateway.sonic-test.vertexprotocol.com/v1',
+      archive: 'https://archive.sonic-test.vertexprotocol.com/v1',
+    },
+  },
 };
