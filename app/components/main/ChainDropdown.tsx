@@ -31,6 +31,7 @@ export function ChainDropdown({ chain, setChain }: ChainDropdownProps) {
         <SelectItem value="sei">Sei</SelectItem>
         <SelectItem value="base">Base</SelectItem>
         <SelectItem value="sonic">Sonic</SelectItem>
+        <SelectItem value="abstract">Abstract</SelectItem>
       </SelectContent>
     </Select>
   );

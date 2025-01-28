@@ -5,6 +5,6 @@ export interface PageProps {
   intervalSubText: string;
 }
 
-export type ChainType = 'arbitrum' | 'mantle' | 'sei' | 'base' | 'sonic';
+export type ChainType = 'arbitrum' | 'mantle' | 'sei' | 'base' | 'sonic' | 'abstract';
 
 export type NetworkType = 'mainnet' | 'testnet';

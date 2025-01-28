@@ -49,4 +49,14 @@ export const VERTEX_API_LINKS = {
       archive: 'https://archive.sonic-test.vertexprotocol.com/v1',
     },
   },
+  abstract: {
+    mainnet: {
+      gateway: 'https://gateway.abstract-prod.vertexprotocol.com/v1',
+      archive: 'https://archive.abstract-prod.vertexprotocol.com/v1',
+    },
+    testnet: {
+      gateway: 'https://gateway.abstract-test.vertexprotocol.com/v1',
+      archive: 'https://archive.abstract-test.vertexprotocol.com/v1',
+    },
+  },
 };
